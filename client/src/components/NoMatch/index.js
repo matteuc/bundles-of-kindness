@@ -10,12 +10,12 @@ const NoMatch = () => {
                     <h1>404</h1>
                 </div>
                 <h2>You seem lost...</h2>
-                <form>
+                {/* <form>
                     <p></p>
                     <Button as={Link} to="/" style={{ backgroundColor: "#ffc038", outlineColor: "#000", color: "#000" }}>
                         ...Lets get you home.  <i className="fas fa-home fa-2x"></i>
                     </Button>
-                </form>
+                </form> */}
             </div>
         </div>
     )
