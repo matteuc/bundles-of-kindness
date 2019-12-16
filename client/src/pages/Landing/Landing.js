@@ -42,13 +42,13 @@ function Landing() {
           <Grid item xs={12}>
             <Paper className={classes.paper}>Intro to Press</Paper>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Paper className={classes.paper}>Press #1</Paper>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Paper className={classes.paper}>Press #2</Paper>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Paper className={classes.paper}>Press #3</Paper>
           </Grid>
 

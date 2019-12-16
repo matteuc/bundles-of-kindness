@@ -81,7 +81,7 @@ function App() {
           borderBottom: "2px solid #5B27BC"
         }}
       >
-        <Box style={{minHeight: "100vh"}}>
+        <Box >
 
         <Switch >
           <Route exact path="/" component={Landing} />
@@ -90,8 +90,7 @@ function App() {
           {/* <PrivateRoute exact path="/private-page" component={PrivateRoute} user={userInfo} /> */}
           <Route component={NoMatch} />
         </Switch>
-        <Footer color={"rgb(246, 246, 246)"}>
-          <Box p={3}>
+        {/* <Footer color={"rgb(246, 246, 246)"}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={3}>
                 <Paper className={classes.paper}>Sitemap section #1</Paper>
@@ -100,9 +99,8 @@ function App() {
                 <Paper className={classes.paper}>Sitemap section #2</Paper>
               </Grid>
             </Grid>
-          </Box>
 
-        </Footer>
+        </Footer> */}
         </Box>
       </NavBarApp>
 
