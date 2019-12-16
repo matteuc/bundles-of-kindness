@@ -6,12 +6,25 @@ import PrivateRoute from "./components/PrivateRoute";
 // import API from './utils/API';
 import "./App.css";
 
+import { Box, Grid, Paper } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+
 // import FAIcon from "./components/FAIcon";
 // import Loading from "./components/Loading";
 import Landing from "./pages/Landing/index";
+import Footer from "./components/Footer";
 import NoMatch from "./components/NoMatch";
 import NavBarApp from "./components/NavBarApp";
+
 import Logo from "./assets/logo.PNG";
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'left',
+    color: theme.palette.text.secondary,
+  },
+}));
 
 function App() {
   // const user = {
@@ -43,26 +56,23 @@ function App() {
   //   );
   // }
 
+  const classes = useStyles();
 
   return (
     <div className="App">
       <NavBarApp
         color="rgb(248, 235, 255)"
         accentColor="#5B27BC"
-        title={<img style={{marginTop: "10px",height: "40px"}} src={Logo} />}
+        title={<img style={{ marginTop: "10px", width: "225px" }} src={Logo} />}
         center
         routes={[
           {
-            name: "Link One",
-            path: "/link-one"
+            name: "Donate",
+            path: "/donate"
           },
           {
-            name: "Link Two",
-            path: "/link-two"
-          },
-          {
-            name: "Link Three",
-            path: "/link-three"
+            name: "Sponsors",
+            path: "/sponsors"
           }
         ]}
         activeStyle={{
@@ -74,6 +84,19 @@ function App() {
           {/* <PrivateRoute exact path="/private-page" component={PrivateRoute} user={userInfo} /> */}
           <Route component={NoMatch} />
         </Switch>
+        <Footer color={"rgb(246, 246, 246)"}>
+          <Box p={3}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={3}>
+                <Paper className={classes.paper}>Sitemap section #1</Paper>
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Paper className={classes.paper}>Sitemap section #2</Paper>
+              </Grid>
+            </Grid>
+          </Box>
+
+        </Footer>
       </NavBarApp>
 
     </div>
