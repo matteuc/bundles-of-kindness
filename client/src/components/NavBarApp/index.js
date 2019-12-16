@@ -25,6 +25,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 const drawerWidth = 240;
 const navHeight = 64;
+const mobNavHeight = 56;
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -90,6 +92,14 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 0,
     marginTop: navHeight
   },
+  contentMarginTop: {
+    marginTop: navHeight
+
+  },
+  mobileContentMarginTop: {
+    marginTop: mobNavHeight
+
+  },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
@@ -123,7 +133,7 @@ function ScrollTop(props) {
 
 function NavBarApp(props) {
 
-  const isMobileSize = useMediaQuery({ query: '(max-width: 992px)' })
+  const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -251,7 +261,7 @@ function NavBarApp(props) {
         </Fab>
       </ScrollTop>
       <main
-        className={clsx(classes.content, {
+        className={clsx(isMobileSize ? classes.mobileContentMarginTop : classes.contentMarginTop, classes.content, {
           [classes.contentShift]: open,
         })}
       >

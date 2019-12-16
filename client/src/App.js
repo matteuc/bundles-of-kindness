@@ -12,6 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 // import FAIcon from "./components/FAIcon";
 // import Loading from "./components/Loading";
 import Landing from "./pages/Landing/index";
+import Donate from "./pages/Donate/index";
+import Sponsors from "./pages/Sponsors/index";
 import Footer from "./components/Footer";
 import NoMatch from "./components/NoMatch";
 import NavBarApp from "./components/NavBarApp";
@@ -79,8 +81,12 @@ function App() {
           borderBottom: "2px solid #5B27BC"
         }}
       >
-        <Switch>
+        <Box style={{minHeight: "100vh"}}>
+
+        <Switch >
           <Route exact path="/" component={Landing} />
+          <Route exact path="/donate" component={Donate} />
+          <Route exact path="/sponsors" component={Sponsors} />
           {/* <PrivateRoute exact path="/private-page" component={PrivateRoute} user={userInfo} /> */}
           <Route component={NoMatch} />
         </Switch>
@@ -97,6 +103,7 @@ function App() {
           </Box>
 
         </Footer>
+        </Box>
       </NavBarApp>
 
     </div>
