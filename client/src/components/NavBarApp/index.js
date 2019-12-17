@@ -24,6 +24,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import Overlay from "../Overlay";
+import "../../utils/hover.min.css";
+import "./main.css"
 
 const drawerWidth = 240;
 const navHeight = 64;
@@ -244,7 +246,8 @@ function NavBarApp(props) {
                   key={idx}
                   to={route.path}
                   style={{ textDecoration: "none", color: props.accentColor }}
-                  activeStyle={props.activeStyle}>
+                  activeStyle={props.activeStyle}
+                  className="hvr-underline-from-center nav-link">
                   <Button color="inherit">{route.name}</Button>
                 </NavLink>
 

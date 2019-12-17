@@ -305,8 +305,8 @@ function Landing() {
 
                 <Box style={{ display: "flex", color: "rgb(255, 255, 255)" }} >
 
-                  <Fab style={{ margin: "auto", backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Send Email">
-                    <span style={{ color: "rgb(255, 255, 255)" }}>
+                  <Fab style={{ margin: "auto", backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Send Email" className="hvr-forward">
+                    <span style={{ color: "rgb(255, 255, 255)" }} >
                     <FAIcon size="lg" name="paper-plane" solid style={{ marginRight: "10px" }} />
                     Send
 

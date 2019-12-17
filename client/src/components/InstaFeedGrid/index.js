@@ -2,6 +2,7 @@ import React from "react";
 import { GridList, GridListTile } from "@material-ui/core";
 // import { makeStyles } from '@material-ui/core/styles';
 import { buildUrl } from "react-instafeed";
+import "../../utils/hover.min.css";
 import "./main.css";
 
 import useAbortableFetch from './useAbortableFetch'

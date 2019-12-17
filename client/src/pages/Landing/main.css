@@ -85,4 +85,7 @@
   vertical-align: middle;
 }
 
+.hvr-grow-rotate.ig-icon .hvr-grow-rotate.fb-icon {
+    transform: scale(1.5) rotate(4deg);
+}
 
