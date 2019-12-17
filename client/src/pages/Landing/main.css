@@ -85,7 +85,16 @@
   vertical-align: middle;
 }
 
-.hvr-grow-rotate.ig-icon .hvr-grow-rotate.fb-icon {
+.hvr-grow-rotate:hover {
     transform: scale(1.5) rotate(4deg);
+}
+
+button.hvr-forward {
+    transition: unset;
+    transition-duration: 0.3s;
+}
+
+button.hvr-forward:hover {
+    transform: translateX(12px) translateY(-6px);
 }
 
