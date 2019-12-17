@@ -165,6 +165,9 @@ function Landing() {
                   <FAIcon size={"2x"} className="hvr-grow-rotate fb-icon" name={"facebook"} brand />
                 </a>
               </Typography>
+              <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              </Typography>
               <InstaFeedGrid token="10670215999.1677ed0.5afe6ea7f7f84bfba62f5e883714a7f3" limit={9} postHeight={"auto"} width="100%" height="auto" />
             </Grid>
 

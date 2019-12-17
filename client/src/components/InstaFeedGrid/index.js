@@ -1,9 +1,11 @@
 import React from "react";
-import { GridList, GridListTile, Hidden } from "@material-ui/core";
+import { GridList, GridListTile, Box } from "@material-ui/core";
 // import { makeStyles } from '@material-ui/core/styles';
 import { buildUrl } from "react-instafeed";
+import "./main.css";
 
 import useAbortableFetch from './useAbortableFetch'
+import FAIcon from "../FAIcon";
 
 
 // import scrapeFeed from "./scrapeFeed.js";
@@ -31,7 +33,6 @@ const InstaFeedGrid = (props) => {
     if (!json) return null
 
     const { data } = json
-    console.log(json);
 
     return (
         <>
@@ -42,8 +43,8 @@ const InstaFeedGrid = (props) => {
                         return (
 
                             <a target="_blank" rel="noopener noreferrer" key={index} href={link} >
-                                <GridListTile cols={1} style={{ overflow: "hidden", backgroundImage: `url(${image.url})`, backgroundSize: "cover", backgroundPosition: "center center", backgroundRepeat: "no-repeat"}}>
-                                    <img style={{objectFit: "cover"}} width="100%" height="100%" src={image.url} alt={`${type === "image" ? "Photo" : "Video"} from Instagram`} />
+                                <GridListTile cols={1} className="post-tile" style={{ overflow: "hidden", backgroundImage: `url(${image.url})`, backgroundSize: "cover", backgroundPosition: "center center", backgroundRepeat: "no-repeat"}}>
+
                                 </GridListTile>
                             </a>
 

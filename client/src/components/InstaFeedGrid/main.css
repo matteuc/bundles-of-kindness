@@ -1,0 +1,11 @@
+.post-tile {
+    height: 0;
+    padding-bottom: 100%;
+    width: 100%;
+}
+
+.post-tile:hover {
+    opacity: 0.5;
+}
+
+
