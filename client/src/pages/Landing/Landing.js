@@ -218,11 +218,14 @@ function Landing() {
                   />
                 </FormControl>
 
-                <Box style={{ display: "flex" }}>
+                <Box style={{ display: "flex", color: "rgb(255, 255, 255)" }} >
 
-                  <Fab style={{ margin: "auto" }} variant="extended" type="submit" aria-label="Send Email">
+                  <Fab style={{ margin: "auto", backgroundColor: "rgb(91, 39, 188)" }} variant="extended" type="submit" aria-label="Send Email">
+                    <span style={{ color: "rgb(255, 255, 255)" }}>
                     <FAIcon size="lg" name="paper-plane" solid style={{ marginRight: "10px" }} />
                     Send
+
+                    </span>
                 </Fab>
                 </Box>
               </form>
