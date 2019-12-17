@@ -30,6 +30,9 @@ import Logo from "./assets/logo.PNG";
 //   },
 // }));
 
+const MAIN_COLOR = "rgb(248, 235, 255)";
+const ACCENT_COLOR = "rgb(91, 39, 188)";
+
 function App() {
   // const user = {
   //   name: "Matt Chen",
@@ -65,8 +68,8 @@ function App() {
   return (
     <div className="App">
       <NavBarApp
-        color="rgb(248, 235, 255)"
-        accentColor="#5B27BC"
+        color={MAIN_COLOR}
+        accentColor={ACCENT_COLOR}
         title={<img alt="Bundles of Kindness logo" style={{ marginTop: "10px", width: "225px" }} src={Logo} />}
         center
         routes={[
@@ -80,7 +83,7 @@ function App() {
           }
         ]}
         activeStyle={{
-          borderBottom: "2px solid #5B27BC"
+          borderBottom: `2px solid ${ACCENT_COLOR}`
         }}
       >
         <Box >
