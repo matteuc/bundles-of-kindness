@@ -1,12 +1,10 @@
 import React from "react";
-import { GridList, GridListTile, Box } from "@material-ui/core";
+import { GridList, GridListTile } from "@material-ui/core";
 // import { makeStyles } from '@material-ui/core/styles';
 import { buildUrl } from "react-instafeed";
 import "./main.css";
 
 import useAbortableFetch from './useAbortableFetch'
-import FAIcon from "../FAIcon";
-
 
 // import scrapeFeed from "./scrapeFeed.js";
 

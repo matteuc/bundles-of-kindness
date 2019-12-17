@@ -10,8 +10,10 @@ import Masthead from "../../components/Masthead";
 import CirclePicture from "../../components/CirclePicture";
 import InstaFeedGrid from "../../components/InstaFeedGrid";
 import FAIcon from "../../components/FAIcon";
+import Face from '@material-ui/icons/Face';
+import ChatBubbleOutline from '@material-ui/icons/ChatBubbleOutline';
 
-import { Box, Button, Grid, Paper, Typography } from "@material-ui/core";
+import { Box, Button, Grid, Input, InputLabel, InputAdornment, Typography, FormControl, TextField, Fab, Container } from "@material-ui/core";
 
 import { Link } from "react-router-dom";
 
@@ -102,7 +104,7 @@ function Landing() {
             <img width={isMobileSize ? "50%" : "70%"} style={{ maxWidth: "300px", margin: "auto" }} src="http://losangelesnewsgroup.com/assets/LADN-logo-horz-red.jpg" alt="" />
           </Grid>
         </Grid>
-        <Box mt={7} pt={5} p={3} style={{ backgroundColor: "#f4f4f4" }}>
+        <Box mt={7} pt={5} pb={5} p={3} style={{ backgroundColor: "#f4f4f4" }}>
 
           <Box>
 
@@ -145,13 +147,10 @@ function Landing() {
             </Grid>
           </Box>
 
+          {/* CALL TO ACTION */}
 
-          <Grid container spacing={3} justify="center">
+          <Grid data-aos="zoom-in" container spacing={3} justify="center">
 
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>Link to "Call to Action" Page</Paper>
-
-            </Grid>
 
             <Grid item style={{ padding: 1 }} xs={12} sm={10} md={8}>
               <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
@@ -166,17 +165,69 @@ function Landing() {
                 </a>
               </Typography>
               <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
               </Typography>
               <InstaFeedGrid token="10670215999.1677ed0.5afe6ea7f7f84bfba62f5e883714a7f3" limit={9} postHeight={"auto"} width="100%" height="auto" />
             </Grid>
-
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>Contact via Email</Paper>
-            </Grid>
-
           </Grid>
 
+
+        </Box>
+        <Box style={{ padding: "2em", backgroundColor: "rgb(248, 235, 255)" }}>
+
+          <Grid data-aos="flip-up" container spacing={3} justify="center">
+            <Grid item style={{ padding: "1em" }} xs={12} sm={10} md={8}>
+              <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
+                Want to contact us?
+                </Typography>
+            </Grid>
+          </Grid>
+          <Grid data-aos="flip-up" container spacing={1} justify="center" >
+            <Grid item style={{ padding: "1em" }} xs={10} sm={9} md={7} lg={5} >
+              <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "2em" }}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              </Typography>
+
+              <form action="https://formspree.io/matteu.chen@gmail.com" method="POST">
+                <FormControl fullWidth >
+                  <InputLabel htmlFor="input-with-icon-adornment">Your Email</InputLabel>
+                  <Input
+                    type="email"
+                    required
+                    id="input-with-icon-adornment"
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Face />
+                      </InputAdornment>
+                    }
+                  />
+                  <TextField
+                    name="message"
+                    required
+                    style={{ marginTop: "2em", marginBottom: "2em" }}
+                    label="Your Message"
+                    placeholder=""
+                    multiline
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <ChatBubbleOutline />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </FormControl>
+
+                <Box style={{ display: "flex" }}>
+
+                  <Fab style={{ margin: "auto" }} variant="extended" type="submit" aria-label="Send Email">
+                    <FAIcon size="lg" name="paper-plane" solid style={{ marginRight: "10px" }} />
+                    Send
+                </Fab>
+                </Box>
+              </form>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </>
