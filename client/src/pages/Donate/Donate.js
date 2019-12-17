@@ -119,7 +119,7 @@ function Donate() {
                   <Paper elevation={1} className={classes.gridPaper}> Donation Type #1 </Paper>
                 </Grid>
                 <Grid item xs={12} xl={2}>
-                  <Paper elevation={0} className={classes.gridPaper}> or </Paper>
+                  <Paper elevation={0} className={classes.gridPaper}> <Typography style={{ textDecoration: "underline"}}>or</Typography> </Paper>
                 </Grid>
                 <Grid item xs={12} xl={5}>
                   <Paper elevation={1} className={classes.gridPaper}> Donation Type #2 </Paper>

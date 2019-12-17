@@ -2,31 +2,33 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 // import { useAuth0 } from "./react-auth0-spa";
-import PrivateRoute from "./components/PrivateRoute";
+// import PrivateRoute from "./components/PrivateRoute";
 // import API from './utils/API';
 import "./App.css";
 
-import { Box, Grid, Paper } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import { Box } from "@material-ui/core";
+// import { Box, Grid, Paper } from "@material-ui/core";
+
+// import { makeStyles } from '@material-ui/core/styles';
 
 // import FAIcon from "./components/FAIcon";
 // import Loading from "./components/Loading";
 import Landing from "./pages/Landing/index";
 import Donate from "./pages/Donate/index";
 import Sponsors from "./pages/Sponsors/index";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 import NoMatch from "./components/NoMatch";
 import NavBarApp from "./components/NavBarApp";
 
 import Logo from "./assets/logo.PNG";
 
-const useStyles = makeStyles(theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'left',
-    color: theme.palette.text.secondary,
-  },
-}));
+// const useStyles = makeStyles(theme => ({
+//   paper: {
+//     padding: theme.spacing(2),
+//     textAlign: 'left',
+//     color: theme.palette.text.secondary,
+//   },
+// }));
 
 function App() {
   // const user = {
@@ -58,14 +60,14 @@ function App() {
   //   );
   // }
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
     <div className="App">
       <NavBarApp
         color="rgb(248, 235, 255)"
         accentColor="#5B27BC"
-        title={<img style={{ marginTop: "10px", width: "225px" }} src={Logo} />}
+        title={<img alt="Bundles of Kindness logo" style={{ marginTop: "10px", width: "225px" }} src={Logo} />}
         center
         routes={[
           {

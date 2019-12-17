@@ -23,6 +23,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 // import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import Overlay from "../Overlay";
+
 const drawerWidth = 240;
 const navHeight = 64;
 const mobNavHeight = 56;
@@ -152,9 +154,7 @@ function NavBarApp(props) {
         <>
           <AppBar
             position="fixed"
-            className={clsx(classes.appBar, {
-              [classes.appBarShift]: open,
-            })}
+            className={clsx(classes.appBar)}
             style={{
               backgroundColor: props.color
             }}
@@ -174,7 +174,7 @@ function NavBarApp(props) {
                 <MenuIcon />
               </IconButton>
               
-            <Typography variant="h6" className={classes.title, props.center && classes.centeredTitle}>
+            <Typography variant="h6" className={clsx(classes.title, props.center && classes.centeredTitle)}>
             <NavLink
               to="/"
               style={{ textDecoration: "none", color: "inherit" }}
@@ -261,11 +261,12 @@ function NavBarApp(props) {
         </Fab>
       </ScrollTop>
       <main
-        className={clsx(isMobileSize ? classes.mobileContentMarginTop : classes.contentMarginTop, classes.content, {
-          [classes.contentShift]: open,
-        })}
+        className={clsx(isMobileSize ? classes.mobileContentMarginTop : classes.contentMarginTop, classes.content)}
       >
         {props.children}
+        {open ? 
+        <Overlay />
+         : ""}
       </main>
     </>
 
