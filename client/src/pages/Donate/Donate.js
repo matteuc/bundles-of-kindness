@@ -221,9 +221,7 @@ function Donate() {
                 onExited={() => setShowOptions(true)}
               >
                 <>
-                  <iframe style={{height: "100%", width: "100%", padding: "1em"}} src={DONATION_FORM_EMBED_URL} frameBorder="0" marginHeight="0" marginWidth="0">
-                    
-                    Loading…</iframe>
+                  <iframe style={{height: "100%", width: "100%", padding: "1em"}} src={DONATION_FORM_EMBED_URL} frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
                 </>
               </CSSTransition>
                   
