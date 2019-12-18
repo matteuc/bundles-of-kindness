@@ -26,15 +26,15 @@ const COVER_IMAGE = "https://i.imgur.com/7X0xZfm.png";
 const COVER_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 const PRESS_LOGOS = [
   {
-    src:  "https://www.pngkey.com/png/full/535-5352395_team-jet-set-has-been-featured-in-abc7.png",
+    src: "https://www.pngkey.com/png/full/535-5352395_team-jet-set-has-been-featured-in-abc7.png",
     name: "ABC7 Eyewitness News"
   },
   {
-    src:  "https://chambermaster.blob.core.windows.net/images/customers/9034/blogposts/9279/SFVBJ_simple.jpg",
+    src: "https://chambermaster.blob.core.windows.net/images/customers/9034/blogposts/9279/SFVBJ_simple.jpg",
     name: "San Fernando Valley Business Journal"
   },
   {
-    src:  "http://losangelesnewsgroup.com/assets/LADN-logo-horz-red.jpg",
+    src: "http://losangelesnewsgroup.com/assets/LADN-logo-horz-red.jpg",
     name: "Los Angeles Daily News"
   }
 
@@ -58,6 +58,7 @@ const SOCIAL_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, se
 const IG_URL = "https://www.instagram.com/bundlesofkindness/";
 const FB_URL = "https://www.facebook.com/BundlesofkindnessLA/";
 
+const CONTACT_WARNING = "Submitting this contact form will open a new tab to verify you are not a robot!"
 const CONTACT_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 const CONTACT_API = "https://formspree.io/matteu.chen@gmail.com";
 
@@ -104,7 +105,7 @@ function Landing() {
 
   const whoText = (fadeDir) => lineText("Who are we?", WHO_TEXT, fadeDir);
 
-  
+
 
   return (
     <>
@@ -123,7 +124,7 @@ function Landing() {
           </Box>
           <Box mt={3}>
             {/* When clicked, should go to donation section */}
-            <Link to="/donate" style={{ textDecoration: "none", color: "inherit"}} className="hvr-grow-shadow">
+            <Link to="/donate" style={{ textDecoration: "none", color: "inherit" }} className="hvr-grow-shadow">
               <Button variant="contained" color="secondary">
                 Help out&nbsp;&nbsp;<i className="far fa-heart"></i>
               </Button>
@@ -145,12 +146,12 @@ function Landing() {
           </Grid>
           {PRESS_LOGOS.map(logo => (
             <Grid key={logo.src} item xs={12} sm={4} style={{ textAlign: "center", display: "flex" }}>
-            <img width={isMobileSize ? "50%" : "70%"} style={{ maxWidth: "300px", margin: "auto" }} src={logo.src} alt={logo.name} />
-          </Grid>
+              <img width={isMobileSize ? "50%" : "70%"} style={{ maxWidth: "300px", margin: "auto" }} src={logo.src} alt={logo.name} />
+            </Grid>
           )
 
           )}
-          
+
         </Grid>
 
 
@@ -193,43 +194,43 @@ function Landing() {
                 </Typography>
                 <Typography className={"flow-text"} variant="body1" align="center" gutterBottom>
                   {BUNDLE_TEXT}
-              </Typography>
+                </Typography>
               </Grid>
             </Grid>
           </Box>
 
           {/* CALL TO ACTION */}
 
-        <Box data-aos="zoom-in-up" >
-          <Grid container spacing={3} justify="center">
-            <Grid item style={{ padding: 1 }} xs={12} sm={8} md={6} lg={4}>
-              <div className="circle" style={{backgroundImage: `radial-gradient(circle, white, 20%, ${MAIN_COLOR} 60%`, boxShadow: `0 0 40px -20px ${ACCENT_COLOR}`}}>
-                <div className="circle__inner">
-                  <div className="circle__wrapper">
-                    <div className="circle__content">
+          <Box data-aos="zoom-in-up" >
+            <Grid container spacing={3} justify="center">
+              <Grid item style={{ padding: 1 }} xs={12} sm={8} md={6} lg={4}>
+                <div className="circle" style={{ backgroundImage: `radial-gradient(circle, white, 20%, ${MAIN_COLOR} 60%`, boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
+                  <div className="circle__inner">
+                    <div className="circle__wrapper">
+                      <div className="circle__content">
 
-                    <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
-                      Want to help?
-                    </Typography>
-                    <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
-                    {DONATION_TEXT}
-                  </Typography>
-                  <Link to="/donate" style={{ textDecoration: "none", color: "inherit" }} className="hvr-float-shadow">
-                    <Fab style={{ margin: "auto", backgroundColor: ACCENT_COLOR }} variant="extended" aria-label="Link to Donate Page" >
-                      <span style={{ color: "rgb(255, 255, 255)" }}>
-                      <FAIcon size="lg" name="hand-holding-heart" solid style={{ marginRight: "10px" }} />
-                      Donate Now!
+                        <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
+                          Want to help?
+                        </Typography>
+                        <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "0.5em" }}>
+                          {DONATION_TEXT}
+                        </Typography>
+                        <Link to="/donate" style={{ textDecoration: "none", color: "inherit" }} className="hvr-float-shadow">
+                          <Fab style={{ margin: "auto", backgroundColor: ACCENT_COLOR }} variant="extended" aria-label="Link to Donate Page" >
+                            <span style={{ color: "rgb(255, 255, 255)" }}>
+                              <FAIcon size="lg" name="hand-holding-heart" solid style={{ marginRight: "10px" }} />
+                              Help Now!
                       </span>
-                    </Fab>
-                  </Link>
+                          </Fab>
+                        </Link>
 
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
+          </Box>
 
           {/* SOCIAL MEDIA */}
           <Grid data-aos="zoom-in" container spacing={3} justify="center">
@@ -265,11 +266,14 @@ function Landing() {
               <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
                 Want to contact us?
                 </Typography>
+              <Typography className={"flow-text"} variant="subtitle2" align="center" gutterBottom style={{ color: ACCENT_COLOR, marginBottom: "0em" }}>
+                {CONTACT_WARNING}
+              </Typography>
             </Grid>
           </Grid>
           <Grid data-aos="flip-up" container spacing={1} justify="center" >
             <Grid item style={{ padding: "1em" }} xs={10} sm={9} md={7} lg={5} >
-              <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "2em" }}>
+              <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1.5em" }}>
                 {CONTACT_TEXT}
               </Typography>
 
@@ -303,15 +307,16 @@ function Landing() {
                   />
                 </FormControl>
 
+
                 <Box style={{ display: "flex", color: "rgb(255, 255, 255)" }} >
 
                   <Fab style={{ margin: "auto", backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Send Email" className="hvr-forward">
                     <span style={{ color: "rgb(255, 255, 255)" }} >
-                    <FAIcon size="lg" name="paper-plane" solid style={{ marginRight: "10px" }} />
-                    Send
+                      <FAIcon size="lg" name="paper-plane" solid style={{ marginRight: "10px" }} />
+                      Send
 
                     </span>
-                </Fab>
+                  </Fab>
                 </Box>
               </form>
             </Grid>

@@ -2,10 +2,19 @@
     height: 0;
     padding-bottom: 100%;
     width: 100%;
+    transition: opacity 500ms;
 }
 
 .post-tile:hover {
     opacity: 0.5;
+}
+
+.hvr-reveal:before {
+    border-color: rgb(91, 39, 188);
+}
+
+.hvr-reveal:hover:before {
+    border-width: 2px;
 }
 
 

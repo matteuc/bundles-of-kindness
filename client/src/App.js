@@ -74,8 +74,8 @@ function App() {
         center
         routes={[
           {
-            name: "Donate",
-            path: "/donate"
+            name: "Help Out",
+            path: "/help-out"
           },
           {
             name: "Sponsors",
@@ -90,7 +90,7 @@ function App() {
 
         <Switch >
           <Route exact path="/" component={Landing} />
-          <Route exact path="/donate" component={Donate} />
+          <Route exact path="/help-out" component={Donate} />
           <Route exact path="/sponsors" component={Sponsors} />
           {/* <PrivateRoute exact path="/private-page" component={PrivateRoute} user={userInfo} /> */}
           <Route component={NoMatch} />

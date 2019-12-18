@@ -42,7 +42,7 @@ const InstaFeedGrid = (props) => {
                         return (
 
                             <a target="_blank" rel="noopener noreferrer" key={index} href={link} >
-                                <GridListTile cols={1} className="post-tile" style={{ overflow: "hidden", backgroundImage: `url(${image.url})`, backgroundSize: "cover", backgroundPosition: "center center", backgroundRepeat: "no-repeat"}}>
+                                <GridListTile cols={1} className="post-tile hvr-reveal" style={{ overflow: "hidden", backgroundImage: `url(${image.url})`, backgroundSize: "cover", backgroundPosition: "center center", backgroundRepeat: "no-repeat"}}>
 
                                 </GridListTile>
                             </a>
