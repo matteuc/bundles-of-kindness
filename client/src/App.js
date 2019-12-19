@@ -14,7 +14,7 @@ import { Box } from "@material-ui/core";
 // import FAIcon from "./components/FAIcon";
 // import Loading from "./components/Loading";
 import Landing from "./pages/Landing/index";
-import Donate from "./pages/Donate/index";
+import HelpOut from "./pages/HelpOut/index";
 import Sponsors from "./pages/Sponsors/index";
 // import Footer from "./components/Footer";
 import NoMatch from "./components/NoMatch";
@@ -90,7 +90,7 @@ function App() {
 
         <Switch >
           <Route exact path="/" component={Landing} />
-          <Route exact path="/help-out" component={Donate} />
+          <Route exact path="/help-out" component={HelpOut} />
           <Route exact path="/sponsors" component={Sponsors} />
           {/* <PrivateRoute exact path="/private-page" component={PrivateRoute} user={userInfo} /> */}
           <Route component={NoMatch} />

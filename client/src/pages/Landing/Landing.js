@@ -124,7 +124,7 @@ function Landing() {
           </Box>
           <Box mt={3}>
             {/* When clicked, should go to donation section */}
-            <Link to="/donate" style={{ textDecoration: "none", color: "inherit" }} className="hvr-grow-shadow">
+            <Link to="/help-out" style={{ textDecoration: "none", color: "inherit" }} className="hvr-grow-shadow">
               <Button variant="contained" color="secondary">
                 Help out&nbsp;&nbsp;<i className="far fa-heart"></i>
               </Button>

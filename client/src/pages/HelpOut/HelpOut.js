@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -9,14 +9,17 @@ import { CSSTransition } from 'react-transition-group';
 
 import "../../utils/flowHeaders.min.css";
 import "./main.css";
-import { Box, Grid, AppBar, Tabs, Tab, Typography, Paper, Fab } from "@material-ui/core";
+import { Box, Grid, AppBar, Tabs, Tab, Typography, Paper, Fab, FormControl, InputLabel, Input, InputAdornment } from "@material-ui/core";
 import FAIcon from "../../components/FAIcon";
+import Face from '@material-ui/icons/Face';
 
+const PAGE_DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 const DONATION_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
 const VOLUNTEER_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
 const PAYPAL_DONATION_TEXT = "This is a short description for this donation option."
 const ITEM_DONATION_TEXT = "This is a short description for this donation option."
 const DONATION_FORM_EMBED_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd7qzoGY0rzhD9VMAGSgbYSzasJsiRw0hTYtU65NAZnM3c92g/viewform?embedded=true";
+const VOLUNTEER_FORM_EMBED_URL = "https://bundlesofkindness.us4.list-manage.com/subscribe/post?u=87d03efeb6acf516a81bad5de&amp;id=2fcfa253ed";
 
 const MAIN_COLOR = "rgb(248, 235, 255)";
 const ACCENT_COLOR = "rgb(91, 39, 188)";
@@ -66,6 +69,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: "rgb(91, 39, 188)",
+    fontFamily: "Lilita One, cursive"
   },
   gridPaper: {
     padding: theme.spacing(2),
@@ -83,6 +87,9 @@ const useStyles = makeStyles(theme => ({
   backIcon: {
     position: "absolute",
 
+  },
+  subscribeForm: {
+    marginTop: "2em"
   }
 
 }));
@@ -109,18 +116,18 @@ function Donate() {
         <Grid item xs={10} md={8} lg={6}>
           {/* PAGE TITLE */}
           <h3 className="flow-text" >
-            <Paper elevation={0} className={classes.paper}> be a supporter <img alt="Heart GIF" src="https://media3.giphy.com/media/xUOxf7gg8AztZMfyMM/source.gif" style={{ height: "1em" }} /> </Paper>
+            <Paper elevation={0} className={classes.paper}> Be a Supporter <img alt="Heart GIF" src="https://media3.giphy.com/media/xUOxf7gg8AztZMfyMM/source.gif" style={{ height: "1em", verticalAlign: "text-top" }} /> </Paper>
           </h3>
           {/* PAGE DESCRIPTION */}
           <Typography color="secondary" align="center" variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            {PAGE_DESCRIPTION}
           </Typography>
         </Grid>
       </Grid>
       <Grid style={{ marginTop: "2em" }} container justify="center">
 
         <Grid item xs={11} md={8} lg={6}>
-
+          {/* OPTION TABS */}
           <AppBar position="static" color="default">
             <Tabs
               value={tabIdx}
@@ -130,10 +137,11 @@ function Donate() {
               variant="fullWidth"
               aria-label="full width tabs example"
             >
-              <Tab onClick={() => {setShowDonationForm(false)}} label="Donate" icon={<FAIcon solid size={"lg"} name="parachute-box" />} {...a11yProps(0)} />
-              <Tab onClick={() => {setShowOptions(true); setShowDonationForm(false);}} label="Volunteer" icon={<FAIcon solid size={"lg"} name="people-carry" />} {...a11yProps(1)} />
+              <Tab onClick={() => { setShowDonationForm(false) }} label="Donate" icon={<FAIcon solid size={"lg"} name="parachute-box" />} {...a11yProps(0)} />
+              <Tab onClick={() => { setShowOptions(true); setShowDonationForm(false); }} label="Volunteer" icon={<FAIcon solid size={"lg"} name="people-carry" />} {...a11yProps(1)} />
             </Tabs>
           </AppBar>
+          {/* OPTION PANELS */}
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={tabIdx}
@@ -159,6 +167,7 @@ function Donate() {
 
                   {/* TYPES OF DONATIONS */}
                   <Grid style={{ marginTop: "1em" }} container spacing={1} justify="center">
+                    {/* PAYPAL OPTION */}
                     <Grid item xs={12} xl={5} className={classes.gridPaper}>
                       <Box className={clsx(classes.donationOption, "hvr-grow-shadow")}>
                         <Typography style={{ marginBottom: 0 }} className={clsx("flow-text", classes.heading)} variant="h5" align="center" gutterBottom>
@@ -182,9 +191,13 @@ function Donate() {
                       </Box>
 
                     </Grid>
+
+                    {/* OPTION SEPARATOR */}
                     <Grid style={{ display: "flex" }} item xs={12} xl={2}>
                       <Paper style={{ backgroundColor: "transparent", margin: "auto" }} elevation={0} className={classes.gridPaper}> <Typography className={classes.heading} variant={"h5"} style={{ textDecoration: "underline" }}>or</Typography> </Paper>
                     </Grid>
+
+                    {/* GOODS & SERVICES OPTION */}
                     <Grid item xs={12} xl={5} className={classes.gridPaper}>
                       <Box className={clsx(classes.donationOption, "hvr-grow-shadow")}>
                         <Typography style={{ marginBottom: 0 }} className={clsx("flow-text", classes.heading)} variant="h5" align="center" gutterBottom>
@@ -211,6 +224,7 @@ function Donate() {
                   </Grid>
                 </>
               )}
+              
               {/* Donation Form iframe */}
               <CSSTransition
                 in={showDonationForm}
@@ -221,10 +235,10 @@ function Donate() {
                 onExited={() => setShowOptions(true)}
               >
                 <>
-                  <iframe style={{height: "100%", width: "100%", padding: "1em"}} src={DONATION_FORM_EMBED_URL} frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
+                  <iframe style={{ height: "100%", width: "100%", padding: "1em" }} src={DONATION_FORM_EMBED_URL} frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
                 </>
               </CSSTransition>
-                  
+
             </TabPanel>
 
 
@@ -240,12 +254,41 @@ function Donate() {
                     {VOLUNTEER_TEXT}
                   </Typography>
 
+                  {/* Begin Mailchimp Signup Form */}
+                  <form action={VOLUNTEER_FORM_EMBED_URL} method="post" name="mc-embedded-subscribe-form" className={classes.subscribeForm} target="_blank" noValidate>
+
+                    <FormControl fullWidth >
+                      <InputLabel htmlFor="input-with-icon-adornment">Your Email</InputLabel>
+                      <Input
+                        type="email"
+                        name="EMAIL"
+                        required
+                        id="input-with-icon-adornment"
+                        startAdornment={
+                          <InputAdornment position="start">
+                            <Face />
+                          </InputAdornment>
+                        }
+                      />
+
+                    </FormControl>
+
+
+                    <Box style={{ marginTop: "2em", display: "flex", color: "rgb(255, 255, 255)" }} >
+
+                      <Fab style={{ margin: "auto" }} color="secondary" variant="extended" type="submit" name="subscribe" aria-label="Send Email" className="hvr-bob">
+                        <span style={{ color: "rgb(255, 255, 255)" }} >
+                          <FAIcon size="lg" name="user-plus" solid style={{ marginRight: "10px" }} />
+                          Subscribe
+
+                    </span>
+                      </Fab>
+                    </Box>
+                  </form>
+                  {/* End mc_embed_signup */}
 
                 </Grid>
-                <Grid item xs={11} lg={10}>
-                  <Paper elevation={1} className={classes.gridPaper}> Email Input </Paper>
-                  <Paper elevation={1} className={classes.gridPaper}> Email Submit Button </Paper>
-                </Grid>
+
               </Grid>
             </TabPanel>
 

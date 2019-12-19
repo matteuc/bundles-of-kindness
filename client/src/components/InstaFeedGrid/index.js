@@ -35,22 +35,22 @@ const InstaFeedGrid = (props) => {
 
     return (
         <>
-            {
-                <GridList cellHeight={props.postHeight} style={{ width: props.width, height: props.height, padding: 0 }} cols={3}>
-                    {data.map(({ images, link, type }, index) => {
-                        const image = images[options.resolution];                        
-                        return (
 
-                            <a target="_blank" rel="noopener noreferrer" key={index} href={link} >
-                                <GridListTile cols={1} className="post-tile hvr-reveal" style={{ overflow: "hidden", backgroundImage: `url(${image.url})`, backgroundSize: "cover", backgroundPosition: "center center", backgroundRepeat: "no-repeat"}}>
+            <GridList cellHeight={props.postHeight} style={{ width: props.width, height: props.height, padding: 0 }} cols={3}>
+                {data.map(({ images, link, type }, index) => {
+                    const image = images[options.resolution];
+                    return (
 
-                                </GridListTile>
-                            </a>
+                        <a target="_blank" rel="noopener noreferrer" key={index} href={link} >
+                            <GridListTile cols={1} className="post-tile hvr-reveal" style={{ overflow: "hidden", backgroundImage: `url(${image.url})`, backgroundSize: "cover", backgroundPosition: "center center", backgroundRepeat: "no-repeat" }}>
 
-                        )
-                    })}
-                </GridList>
-            }
+                            </GridListTile>
+                        </a>
+
+                    )
+                })}
+            </GridList>
+
         </>
     );
 }
