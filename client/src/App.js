@@ -1,37 +1,30 @@
 // import React, { useEffect, useState } from "react";
-import React from "react";
-import { Route, Switch } from "react-router-dom";
 // import { useAuth0 } from "./react-auth0-spa";
 // import PrivateRoute from "./components/PrivateRoute";
 // import API from './utils/API';
-import "./App.css";
 
-import { Box } from "@material-ui/core";
-// import { Box, Grid, Paper } from "@material-ui/core";
+// HOOKS, FUNCTIONS, ETC.
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 
-// import { makeStyles } from '@material-ui/core/styles';
-
-// import FAIcon from "./components/FAIcon";
-// import Loading from "./components/Loading";
+// PAGES 
 import Landing from "./pages/Landing/index";
 import HelpOut from "./pages/HelpOut/index";
 import Sponsors from "./pages/Sponsors/index";
-// import Footer from "./components/Footer";
+
+// COMPONENTS
 import NoMatch from "./components/NoMatch";
 import NavBarApp from "./components/NavBarApp";
+import { Box } from "@material-ui/core";
 
+// LOGO
 import Logo from "./assets/logo.PNG";
 
-// const useStyles = makeStyles(theme => ({
-//   paper: {
-//     padding: theme.spacing(2),
-//     textAlign: 'left',
-//     color: theme.palette.text.secondary,
-//   },
-// }));
+// STYLESHEETS
+import "./App.css";
 
-const MAIN_COLOR = "rgb(248, 235, 255)";
-const ACCENT_COLOR = "rgb(91, 39, 188)";
+// DATA
+import { MAIN_COLOR, ACCENT_COLOR } from "./utils/colors";
 
 function App() {
   // const user = {
