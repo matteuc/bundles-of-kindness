@@ -7,8 +7,8 @@ import "./main.css";
 import { Grid, GridList, GridListTile, Paper, Typography } from "@material-ui/core";
 import data from "./sponsorsData.js"
 
-const MAIN_COLOR = "rgb(248, 235, 255)";
-const ACCENT_COLOR = "rgb(91, 39, 188)";
+// const MAIN_COLOR = "rgb(248, 235, 255)";
+// const ACCENT_COLOR = "rgb(91, 39, 188)";
 
 const PAGE_DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
 
@@ -30,7 +30,7 @@ function Sponsors() {
   const isSmallSize = useMediaQuery({ query: '(max-width: 600px)' });
   const isMediumSize = useMediaQuery({ query: '(max-width: 960px)' });
   const isLargeSize = useMediaQuery({ query: '(max-width: 1280px)' });
-  const isExtraLargeSize = useMediaQuery({ query: '(max-width: 1920px)' });
+  // const isExtraLargeSize = useMediaQuery({ query: '(max-width: 1920px)' });
 
 
   return (
