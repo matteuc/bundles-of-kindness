@@ -5,12 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import "../../utils/flowHeaders.min.css";
 import "./main.css";
 import { Grid, GridList, GridListTile, Paper, Typography } from "@material-ui/core";
-import data from "./sponsorsData.js"
-
-// const MAIN_COLOR = "rgb(248, 235, 255)";
-// const ACCENT_COLOR = "rgb(91, 39, 188)";
-
-const PAGE_DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+import { companies, PAGE_DESCRIPTION } from "./sponsorsData.js"
 
 const useStyles = makeStyles(theme => ({
   gridPaper: {
@@ -31,7 +26,6 @@ function Sponsors() {
   const isMediumSize = useMediaQuery({ query: '(max-width: 960px)' });
   const isLargeSize = useMediaQuery({ query: '(max-width: 1280px)' });
   // const isExtraLargeSize = useMediaQuery({ query: '(max-width: 1920px)' });
-
 
   return (
     <>
@@ -54,7 +48,7 @@ function Sponsors() {
         <Grid item xs={12} lg={10} xl={8}>
 
           <GridList spacing={8} cellHeight="auto" style={{ width: "100%", height: "auto", padding: 0, marginTop: "2em" }} cols={isSmallSize ? 2 : isMediumSize ? 3 : isLargeSize ? 4 : 5}>
-            {data.companies.map(({ src, name }, index) => (
+            {companies.map(({ src, name }, index) => (
 
               <GridListTile style={{ display: "flex" }} key={index} cols={1} >
                 <span style={{ display: "flex", width: "100%", height: "100%" }}>

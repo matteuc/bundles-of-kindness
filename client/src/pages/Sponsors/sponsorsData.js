@@ -1,5 +1,4 @@
-const dataObj = {
-    companies: [
+export const companies = [
     {
       src: "https://cdn.shopify.com/s/files/1/0008/9260/0356/files/logo_350x.png?v=1527623873",
       name: "Bobo's Oat Bars"
@@ -144,7 +143,9 @@ const dataObj = {
         src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Whole_Foods_Market_201x_logo.svg/1200px-Whole_Foods_Market_201x_logo.svg.png",
         name: "Whole Foods Market"
     }
-  ],
+  ];
+
+  export const PAGE_DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 //   individuals: [
 //       {
 //           name: "MedCenta Pharmacy"
@@ -201,6 +202,5 @@ const dataObj = {
 //         name: "Test"
 //     }
 //   ]
-}
 
-export default dataObj;
+// export default dataObj;

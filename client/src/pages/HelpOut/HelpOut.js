@@ -3,27 +3,23 @@ import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
-// import { useMediaQuery } from "react-responsive";
 import { CSSTransition } from 'react-transition-group';
 
-
-import "../../utils/flowHeaders.min.css";
-import "./main.css";
-import { Box, Grid, AppBar, Tabs, Tab, Typography, Paper, Fab, FormControl, InputLabel, Input, InputAdornment } from "@material-ui/core";
+// COMPONENTS
 import FAIcon from "../../components/FAIcon";
+import { Box, Grid, AppBar, Tabs, Tab, Typography, Paper, Fab, FormControl, InputLabel, Input, InputAdornment } from "@material-ui/core";
+
+// ICONS
 import Face from '@material-ui/icons/Face';
 
-const PAGE_DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-const DONATION_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-const VOLUNTEER_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-const PAYPAL_DONATION_TEXT = "This is a short description for this donation option."
-const ITEM_DONATION_TEXT = "This is a short description for this donation option."
-const DONATION_FORM_EMBED_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd7qzoGY0rzhD9VMAGSgbYSzasJsiRw0hTYtU65NAZnM3c92g/viewform?embedded=true";
-const VOLUNTEER_FORM_EMBED_URL = "https://bundlesofkindness.us4.list-manage.com/subscribe/post?u=87d03efeb6acf516a81bad5de&amp;id=2fcfa253ed";
+// STYLESHEETS
+import "../../utils/flowHeaders.min.css";
+import "./main.css";
 
-const MAIN_COLOR = "rgb(248, 235, 255)";
-const ACCENT_COLOR = "rgb(91, 39, 188)";
-const VOLUNTEER_COLOR = "rgb(235, 238, 255)";
+// DATA
+import {PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, VOLUNTEER_FORM_EMBED_URL, VOLUNTEER_COLOR } from "./helpOutData.js";
+
+import {MAIN_COLOR, ACCENT_COLOR} from "../../utils/colors";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -82,10 +78,6 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "white",
     padding: theme.spacing(5),
     borderRadius: "5%"
-
-  },
-  backIcon: {
-    position: "absolute",
 
   },
   subscribeForm: {
@@ -174,7 +166,7 @@ function Donate() {
                           Cash
                     </Typography>
                         <Box style={{ display: "flex", color: "rgb(255, 255, 255)" }} >
-                          <img width={"50px"} src="https://i.ibb.co/cYj6tbN/Paypal-Logo-Transparent-PNG-Cropped.png" style={{ margin: "auto" }} />
+                          <img width={"50px"} src="https://i.ibb.co/cYj6tbN/Paypal-Logo-Transparent-PNG-Cropped.png" alt="PayPal logo" style={{ margin: "auto" }} />
                         </Box>
                         <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "0.5em" }}>
                           {PAYPAL_DONATION_TEXT}
@@ -204,7 +196,7 @@ function Donate() {
                           Goods & Services
                         </Typography>
                         <Box style={{ display: "flex", color: "rgb(255, 255, 255)" }} >
-                          <img width={"50px"} src="https://i.ibb.co/994PVm2/bof-logo.png" style={{ margin: "auto" }} />
+                          <img width={"50px"} alt="Bundles of Kindness logo" src="https://i.ibb.co/994PVm2/bof-logo.png" style={{ margin: "auto" }} />
                         </Box>
                         <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "0.5em" }}>
                           {ITEM_DONATION_TEXT}

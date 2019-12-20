@@ -1,71 +1,38 @@
+// HOOKS, FUNCTIONS, ETC.
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useMediaQuery } from "react-responsive";
+import { Link } from "react-router-dom";
+import AOS from 'aos';
 
-import "../../utils/flowHeaders.min.css";
-import "../../utils/hover.min.css";
-import "./main.css";
+// COMPONENTS
 import Masthead from "../../components/Masthead";
 import CirclePicture from "../../components/CirclePicture";
 import InstaFeedGrid from "../../components/InstaFeedGrid";
+import GoogleMap from "../../components/GoogleMap";
 import FAIcon from "../../components/FAIcon";
+import { Box, Button, Grid, Input, InputLabel, InputAdornment, Typography, FormControl, TextField, Fab } from "@material-ui/core";
+
+// ICONS
 import Face from '@material-ui/icons/Face';
 import ChatBubbleOutline from '@material-ui/icons/ChatBubbleOutline';
 
-import { Box, Button, Grid, Input, InputLabel, InputAdornment, Typography, FormControl, TextField, Fab } from "@material-ui/core";
-
-import { Link } from "react-router-dom";
-
-import AOS from 'aos';
+// STYLESHEETS
+import "../../utils/flowHeaders.min.css";
+import "../../utils/hover.min.css";
+import "./main.css";
 import 'aos/dist/aos.css';
-import GoogleMap from "../../components/GoogleMap";
+
+// DATA
+import { COVER_IMAGE, COVER_TEXT, PRESS_LOGOS, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, IG_TOKEN, SOCIAL_TEXT, IG_URL, FB_URL, CONTACT_WARNING, CONTACT_API, CONTACT_TEXT, mapOptions, mapType, mapMarkers, LOCATIONS_TEXT } from "./landingData.js";
+
+import {MAIN_COLOR, ACCENT_COLOR} from "../../utils/colors";
+
+// Initialize AOS
 AOS.init();
 
-// VARIABLES (store in mongoDB) 
-const COVER_IMAGE = "https://i.imgur.com/7X0xZfm.png";
-const COVER_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-const PRESS_LOGOS = [
-  {
-    src: "https://www.pngkey.com/png/full/535-5352395_team-jet-set-has-been-featured-in-abc7.png",
-    name: "ABC7 Eyewitness News"
-  },
-  {
-    src: "https://chambermaster.blob.core.windows.net/images/customers/9034/blogposts/9279/SFVBJ_simple.jpg",
-    name: "San Fernando Valley Business Journal"
-  },
-  {
-    src: "http://losangelesnewsgroup.com/assets/LADN-logo-horz-red.jpg",
-    name: "Los Angeles Daily News"
-  }
-
-]; //MAX: 3
-const WHO_IMG = "https://i.ibb.co/JH7M0TK/racahel.jpg";
-const WHO_IMG_ALT = "Picture of Rachael, founder of Bundles of Kindness";
-const WHO_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-
-const MISSION_IMG = "http://1.bp.blogspot.com/-weCqkxal16c/UPgu0BUJ7oI/AAAAAAAADO0/yMi5hmascfc/s1600/homeless.jpg";
-const MISSION_IMG_ALT = "Picture of homeless person who has received a bundle";
-const MISSION_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-
-const BUNDLE_IMG = "http://www.twincities.com/wp-content/uploads/2016/12/img_7427.jpg";
-const BUNDLE_IMG_ALT = "Picture of Bundle";
-const BUNDLE_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-
-const DONATION_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-
-const IG_TOKEN = "10670215999.1677ed0.5afe6ea7f7f84bfba62f5e883714a7f3";
-const SOCIAL_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-const IG_URL = "https://www.instagram.com/bundlesofkindness/";
-const FB_URL = "https://www.facebook.com/BundlesofkindnessLA/";
-
-const CONTACT_WARNING = "Submitting this contact form will open a new tab to verify you are not a robot!"
-const CONTACT_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-const CONTACT_API = "https://formspree.io/matteu.chen@gmail.com";
-
-const MAIN_COLOR = "rgb(248, 235, 255)";
-const ACCENT_COLOR = "rgb(91, 39, 188)";
-
+// CLASSES
 const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
@@ -74,107 +41,24 @@ const useStyles = makeStyles(theme => ({
   },
   heading: {
     fontFamily: "Lilita One, cursive"
+  },
+  link: {
+    textDecoration: "none",
+    color: "inherit"
+  },
+  contentSection: {
+    marginTop: "40px"
+  },
+  centerElementParent: {
+    display: "flex"
+  },
+  centerElement: {
+    margin: "auto"
+  },
+  extendedBtnIcon: {
+    marginRight: "10px"
   }
 }));
-
-const mapOptions = {
-  center: {
-    lat: 41.8916,
-    lng: -87.6079,
-  },
-  zoom: 14,
-  streetViewControl: false,
-  scrollwheel: true,
-  mapTypeControl: false
-};
-
-const mapType = 'map';
-const mapIcon = "https://i.ibb.co/sJZKBNs/mapIcon.gif";
-const mapMarkers = [
-  {
-    lat: 34.173441,
-    lng: -118.611547,
-    infoWindowContent: {
-      title: 'The West Valley Food Pantry',
-      text: '',
-      imgUrl: ''
-    },
-    icon: mapIcon
-  },
-  {
-    lat: 34.250131,
-    lng: -118.483202,
-    infoWindowContent: {
-      title: 'U.S. Veterans Affairs Department',
-      text: '',
-      imgUrl: ''
-    },
-    icon: mapIcon
-  },
-  {
-    lat: 34.090009,
-    lng: -118.361744,
-    infoWindowContent: {
-      title: 'West Hollywood',
-      text: '',
-      imgUrl: ''
-    },
-    icon: mapIcon
-  },
-  {
-    lat: 34.13956,
-    lng: -118.387099,
-    infoWindowContent: {
-      title: 'Studio City',
-      text: '',
-      imgUrl: ''
-    },
-    icon: mapIcon
-  },
-  {
-    lat: 34.204859,
-    lng: -118.573962,
-    infoWindowContent: {
-      title: 'Winnetka',
-      text: '',
-      imgUrl: ''
-    },
-    icon: mapIcon
-  },
-  {
-    lat: 34.165357,
-    lng: -118.608975,
-    infoWindowContent: {
-      title: 'Woodland Hills',
-      text: '',
-      imgUrl: ''
-    },
-    icon: mapIcon
-  },
-  {
-    lat: 34.149485,
-    lng: -118.550616,
-    infoWindowContent: {
-      title: 'Tarzana',
-      text: '',
-      imgUrl: ''
-    },
-    icon: mapIcon
-  },
-  {
-    lat: 34.151749,
-    lng: -118.521428,
-    infoWindowContent: {
-      title: 'Encino',
-      text: '',
-      imgUrl: ''
-    },
-    icon: mapIcon
-  }
-
-];
-
-const LOCATIONS_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
 function Landing() {
   const classes = useStyles();
@@ -205,8 +89,6 @@ function Landing() {
 
   const whoText = (fadeDir) => lineText("Who are we?", WHO_TEXT, fadeDir);
 
-
-
   return (
     <>
 
@@ -224,7 +106,7 @@ function Landing() {
           </Box>
           <Box mt={3}>
             {/* When clicked, should go to donation section */}
-            <Link to="/help-out" style={{ textDecoration: "none", color: "inherit" }} className="hvr-grow-shadow">
+            <Link to="/help-out" className={clsx("hvr-grow-shadow", classes.link)}>
               <Button variant="contained" color="secondary">
                 Help out&nbsp;&nbsp;<i className="far fa-heart"></i>
               </Button>
@@ -234,7 +116,7 @@ function Landing() {
         </span>
       </Masthead>
 
-
+      {/* MAIN CONTENT CONTAINER */}
       <Box pt={1}>
 
         {/* PRESS MENTIONS */}
@@ -245,8 +127,8 @@ function Landing() {
             </h5>
           </Grid>
           {PRESS_LOGOS.map(logo => (
-            <Grid key={logo.src} item xs={12} sm={4} style={{ textAlign: "center", display: "flex" }}>
-              <img width={isMobileSize ? "50%" : "70%"} style={{ maxWidth: "300px", margin: "auto" }} src={logo.src} alt={logo.name} />
+            <Grid key={logo.src} item xs={12} sm={4} style={{ textAlign: "center"}} className={classes.centerElementParent}>
+              <img width={isMobileSize ? "50%" : "70%"} className={classes.centerElement} style={{ maxWidth: "300px"}} src={logo.src} alt={logo.name} />
             </Grid>
           )
 
@@ -254,19 +136,20 @@ function Landing() {
 
         </Grid>
 
-
+        {/* ALL OTHER SECTIONS */}
         <Box mt={7} pt={5} pb={5} p={3} style={{ backgroundColor: "#f4f4f4" }}>
 
+          {/* WHO ARE WE */}
           <Box>
-            {/* WHO ARE WE */}
             <Grid container spacing={3} justify="center">
               {whoImg("fade-right")}
               {whoText("fade-left")}
 
             </Grid>
           </Box>
-          <Box mt={5}>
-            {/* MOTIVATIONS */}
+
+          {/* MOTIVATIONS */}
+          <Box className={classes.contentSection}>
             <Grid container spacing={3} justify="center">
               {isMobileSize ?
                 <>
@@ -283,7 +166,7 @@ function Landing() {
           </Box>
 
           {/* BUNDLE OVERVIEW */}
-          <Box mt={5}>
+          <Box className={classes.contentSection}>
             <Grid container spacing={3} justify="center">
               <Grid item xs={12} sm={8} data-aos={"fade-up"} style={{ textAlign: "center" }}>
                 <CirclePicture style={{ maxWidth: "500px" }} size={"100%"} src={BUNDLE_IMG} alt={BUNDLE_IMG_ALT} />
@@ -300,7 +183,7 @@ function Landing() {
           </Box>
 
           {/* CALL TO ACTION */}
-          <Box data-aos="zoom-in-up" >
+          <Box className={classes.contentSection} data-aos="zoom-in-up" >
             <Grid container spacing={3} justify="center">
               <Grid item style={{ padding: 1 }} xs={12} sm={8} md={6} lg={4}>
                 <div className="circle" style={{ backgroundImage: `radial-gradient(circle, white, 20%, ${MAIN_COLOR} 60%`, boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
@@ -314,10 +197,10 @@ function Landing() {
                         <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "0.5em" }}>
                           {DONATION_TEXT}
                         </Typography>
-                        <Link to="/help-out" style={{ textDecoration: "none", color: "inherit" }} className="hvr-float-shadow">
-                          <Fab style={{ margin: "auto", backgroundColor: ACCENT_COLOR }} variant="extended" aria-label="Link to Donate Page" >
+                        <Link to="/help-out" className={clsx("hvr-float-shadow", classes.link)}>
+                          <Fab className={classes.centerElement} style={{ backgroundColor: ACCENT_COLOR }} variant="extended" aria-label="Link to Donate Page" >
                             <span style={{ color: "rgb(255, 255, 255)" }}>
-                              <FAIcon size="lg" name="hand-holding-heart" solid style={{ marginRight: "10px" }} />
+                              <FAIcon size="lg" name="hand-holding-heart" solid className={classes.extendedBtnIcon} />
                               Help Now!
                       </span>
                           </Fab>
@@ -332,47 +215,50 @@ function Landing() {
           </Box>
 
           {/* BUNDLE DROPOFF LOCATIONS */}
-          <Grid style={{ marginBottom: "2em" }} data-aos="zoom-in" container spacing={3} justify="center">
+          <Box className={classes.contentSection}>
+            <Grid style={{ marginBottom: "2em" }} data-aos="zoom-in" container spacing={3} justify="center">
 
-            <Grid item style={{ padding: 1 }} xs={12} sm={10} md={8}>
+              <Grid item style={{ padding: 1 }} xs={12} sm={10} md={8}>
 
-              <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
-                Where have we been?
+                <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
+                  Where have we been?
               </Typography>
 
-              <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
-                {LOCATIONS_TEXT}
-              </Typography>
-              <Box height={"45vh"} minHeight={"350px"}>
-                <GoogleMap center options={mapOptions} locations={mapMarkers} type={mapType} />
+                <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
+                  {LOCATIONS_TEXT}
+                </Typography>
+                <Box height={"45vh"} minHeight={"350px"}>
+                  <GoogleMap center options={mapOptions} locations={mapMarkers} type={mapType} />
 
-              </Box>
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
 
           {/* SOCIAL MEDIA */}
-          <Grid data-aos="zoom-in" container spacing={3} justify="center">
+          <Box className={classes.contentSection}>
+            <Grid data-aos="zoom-in" container spacing={3} justify="center">
 
+              <Grid item style={{ padding: 1 }} xs={12} sm={10} md={8}>
 
-            <Grid item style={{ padding: 1 }} xs={12} sm={10} md={8}>
-
-              <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
-                What are we up to?
+                <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
+                  What are we up to?
                 </Typography>
-              <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
-                <a style={{ color: "inherit" }} target="_blank" rel="noopener noreferrer" href={IG_URL} >
-                  <FAIcon size={"2x"} name={"instagram"} brand style={{ marginRight: "1em" }} className="hvr-grow-rotate ig-icon" />
-                </a>
-                <a style={{ color: "inherit" }} target="_blank" rel="noopener noreferrer" href={FB_URL} >
-                  <FAIcon size={"2x"} className="hvr-grow-rotate fb-icon" name={"facebook"} brand />
-                </a>
-              </Typography>
-              <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
-                {SOCIAL_TEXT}
-              </Typography>
-              <InstaFeedGrid token={IG_TOKEN} limit={9} postHeight={"auto"} width="100%" height="auto" />
+                <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
+                  <a style={{ color: "inherit" }} target="_blank" rel="noopener noreferrer" href={IG_URL} >
+                    <FAIcon size={"2x"} name={"instagram"} brand style={{ marginRight: "1em" }} className="hvr-grow-rotate ig-icon" />
+                  </a>
+                  <a style={{ color: "inherit" }} target="_blank" rel="noopener noreferrer" href={FB_URL} >
+                    <FAIcon size={"2x"} className="hvr-grow-rotate fb-icon" name={"facebook"} brand />
+                  </a>
+                </Typography>
+                <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
+                  {SOCIAL_TEXT}
+                </Typography>
+                <InstaFeedGrid token={IG_TOKEN} limit={9} postHeight={"auto"} width="100%" height="auto" />
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
 
 
         </Box>
@@ -427,11 +313,11 @@ function Landing() {
                 </FormControl>
 
 
-                <Box style={{ display: "flex", color: "rgb(255, 255, 255)" }} >
+                <Box className={classes.centerElementParent} style={{ color: "white" }} >
 
-                  <Fab style={{ margin: "auto", backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Send Email" className="hvr-forward">
+                  <Fab style={{ backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Send Email" className={clsx("hvr-forward", classes.centerElement)}>
                     <span style={{ color: "rgb(255, 255, 255)" }} >
-                      <FAIcon size="lg" name="paper-plane" solid style={{ marginRight: "10px" }} />
+                      <FAIcon size="lg" name="paper-plane" solid className={classes.extendedBtnIcon} />
                       Send
 
                     </span>
