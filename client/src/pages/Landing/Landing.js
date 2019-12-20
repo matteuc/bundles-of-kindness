@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import GoogleMap from "../../components/GoogleMap";
 AOS.init();
 
 // VARIABLES (store in mongoDB) 
@@ -75,6 +76,105 @@ const useStyles = makeStyles(theme => ({
     fontFamily: "Lilita One, cursive"
   }
 }));
+
+const mapOptions = {
+  center: {
+    lat: 41.8916,
+    lng: -87.6079,
+  },
+  zoom: 14,
+  streetViewControl: false,
+  scrollwheel: true,
+  mapTypeControl: false
+};
+
+const mapType = 'map';
+const mapIcon = "https://i.ibb.co/sJZKBNs/mapIcon.gif";
+const mapMarkers = [
+  {
+    lat: 34.173441,
+    lng: -118.611547,
+    infoWindowContent: {
+      title: 'The West Valley Food Pantry',
+      text: '',
+      imgUrl: ''
+    },
+    icon: mapIcon
+  },
+  {
+    lat: 34.250131,
+    lng: -118.483202,
+    infoWindowContent: {
+      title: 'U.S. Veterans Affairs Department',
+      text: '',
+      imgUrl: ''
+    },
+    icon: mapIcon
+  },
+  {
+    lat: 34.090009,
+    lng: -118.361744,
+    infoWindowContent: {
+      title: 'West Hollywood',
+      text: '',
+      imgUrl: ''
+    },
+    icon: mapIcon
+  },
+  {
+    lat: 34.13956,
+    lng: -118.387099,
+    infoWindowContent: {
+      title: 'Studio City',
+      text: '',
+      imgUrl: ''
+    },
+    icon: mapIcon
+  },
+  {
+    lat: 34.204859,
+    lng: -118.573962,
+    infoWindowContent: {
+      title: 'Winnetka',
+      text: '',
+      imgUrl: ''
+    },
+    icon: mapIcon
+  },
+  {
+    lat: 34.165357,
+    lng: -118.608975,
+    infoWindowContent: {
+      title: 'Woodland Hills',
+      text: '',
+      imgUrl: ''
+    },
+    icon: mapIcon
+  },
+  {
+    lat: 34.149485,
+    lng: -118.550616,
+    infoWindowContent: {
+      title: 'Tarzana',
+      text: '',
+      imgUrl: ''
+    },
+    icon: mapIcon
+  },
+  {
+    lat: 34.151749,
+    lng: -118.521428,
+    infoWindowContent: {
+      title: 'Encino',
+      text: '',
+      imgUrl: ''
+    },
+    icon: mapIcon
+  }
+
+];
+
+const LOCATIONS_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
 function Landing() {
   const classes = useStyles();
@@ -200,7 +300,6 @@ function Landing() {
           </Box>
 
           {/* CALL TO ACTION */}
-
           <Box data-aos="zoom-in-up" >
             <Grid container spacing={3} justify="center">
               <Grid item style={{ padding: 1 }} xs={12} sm={8} md={6} lg={4}>
@@ -232,11 +331,31 @@ function Landing() {
             </Grid>
           </Box>
 
+          {/* BUNDLE DROPOFF LOCATIONS */}
+          <Grid style={{ marginBottom: "2em" }} data-aos="zoom-in" container spacing={3} justify="center">
+
+            <Grid item style={{ padding: 1 }} xs={12} sm={10} md={8}>
+
+              <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
+                Where have we been?
+              </Typography>
+
+              <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
+                {LOCATIONS_TEXT}
+              </Typography>
+              <Box height={"45vh"} minHeight={"350px"}>
+                <GoogleMap center options={mapOptions} locations={mapMarkers} type={mapType} />
+
+              </Box>
+            </Grid>
+          </Grid>
+
           {/* SOCIAL MEDIA */}
           <Grid data-aos="zoom-in" container spacing={3} justify="center">
 
 
             <Grid item style={{ padding: 1 }} xs={12} sm={10} md={8}>
+
               <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
                 What are we up to?
                 </Typography>

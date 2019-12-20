@@ -1,0 +1,25 @@
+.google-map {
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .info-window {
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: 70px;
+    padding-left: 85px;
+    width: 300px;
+    
+}
+
+.info-window h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+};
+
+.info-window p {
+    font-size: 14px;
+    line-height: 1.3;
+}
