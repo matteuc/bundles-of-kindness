@@ -1,3 +1,4 @@
+// HOOKS, FUNCTIONS, ETC.
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
@@ -17,10 +18,11 @@ import "../../utils/flowHeaders.min.css";
 import "./main.css";
 
 // DATA
-import {PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, VOLUNTEER_FORM_EMBED_URL, VOLUNTEER_COLOR } from "./helpOutData.js";
+import {PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, VOLUNTEER_FORM_EMBED_URL, VOLUNTEER_COLOR, BOF_LOGO } from "./helpOutData.js";
 
-import {MAIN_COLOR, ACCENT_COLOR} from "../../utils/colors";
+import { MAIN_COLOR, ACCENT_COLOR } from "../../utils/colors";
 
+// START: MUI TAB PANEL FUNCTIONS 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -50,6 +52,7 @@ function a11yProps(index) {
     'aria-controls': `full-width-tabpanel-${index}`,
   };
 }
+// END: MUI TAB PANEL FUNCTIONS 
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -94,6 +97,7 @@ function Donate() {
   const [showDonationForm, setShowDonationForm] = useState(false);
   // const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
 
+  // FUNCTIONS FOR MUI TAB PANEL
   const handleChange = (event, newValue) => {
     setTabIdx(newValue);
   };
@@ -104,6 +108,7 @@ function Donate() {
 
   return (
     <>
+      {/* PAGE HEADER */}
       <Grid container justify="center">
         <Grid item xs={10} md={8} lg={6}>
           {/* PAGE TITLE */}
@@ -116,10 +121,13 @@ function Donate() {
           </Typography>
         </Grid>
       </Grid>
+
+      {/* OPTIONS CONTAINER */}
       <Grid style={{ marginTop: "2em" }} container justify="center">
 
+        {/* OPTION TABS */}
         <Grid item xs={11} md={8} lg={6}>
-          {/* OPTION TABS */}
+          {/* TAB NAV */}
           <AppBar position="static" color="default">
             <Tabs
               value={tabIdx}
@@ -133,6 +141,7 @@ function Donate() {
               <Tab onClick={() => { setShowOptions(true); setShowDonationForm(false); }} label="Volunteer" icon={<FAIcon solid size={"lg"} name="people-carry" />} {...a11yProps(1)} />
             </Tabs>
           </AppBar>
+
           {/* OPTION PANELS */}
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -144,7 +153,7 @@ function Donate() {
             <TabPanel className={classes.tabPanel} value={tabIdx} index={0} dir={theme.direction} style={{ backgroundImage: `radial-gradient(circle, white, 20%, ${MAIN_COLOR} 60%` }}>
               {showOptions && (
                 <>
-                  {/* MESSAGE ABOUT DONATIONS */}
+                  {/* DONATIONS TAB HEADER */}
                   <Grid style={{ marginTop: "1em" }} container spacing={1} justify="center">
                     <Grid item xs={10} lg={8}>
                       <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
@@ -159,6 +168,7 @@ function Donate() {
 
                   {/* TYPES OF DONATIONS */}
                   <Grid style={{ marginTop: "1em" }} container spacing={1} justify="center">
+
                     {/* PAYPAL OPTION */}
                     <Grid item xs={12} xl={5} className={classes.gridPaper}>
                       <Box className={clsx(classes.donationOption, "hvr-grow-shadow")}>
@@ -181,7 +191,6 @@ function Donate() {
                           </Fab>
                         </Box>
                       </Box>
-
                     </Grid>
 
                     {/* OPTION SEPARATOR */}
@@ -196,7 +205,7 @@ function Donate() {
                           Goods & Services
                         </Typography>
                         <Box style={{ display: "flex", color: "rgb(255, 255, 255)" }} >
-                          <img width={"50px"} alt="Bundles of Kindness logo" src="https://i.ibb.co/994PVm2/bof-logo.png" style={{ margin: "auto" }} />
+                          <img width={"50px"} alt="Bundles of Kindness logo" src={BOF_LOGO} style={{ margin: "auto" }} />
                         </Box>
                         <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "0.5em" }}>
                           {ITEM_DONATION_TEXT}
@@ -227,13 +236,13 @@ function Donate() {
                 onExited={() => setShowOptions(true)}
               >
                 <>
-                  <iframe style={{ height: "100%", width: "100%", padding: "1em" }} src={DONATION_FORM_EMBED_URL} frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
+                  <iframe title="Donation Form iframe" style={{ height: "100%", width: "100%", padding: "1em" }} src={DONATION_FORM_EMBED_URL} frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
                 </>
               </CSSTransition>
 
             </TabPanel>
 
-
+            {/* VOLUNTEER TAB */}
             <TabPanel className={classes.tabPanel} value={tabIdx} index={1} dir={theme.direction} style={{ backgroundImage: `radial-gradient(circle, white, 20%, ${VOLUNTEER_COLOR} 60%` }}>
               {/* If there are no upcoming volunteer events */}
               <Grid style={{ marginTop: "2em" }} container spacing={1} justify="center">
@@ -267,7 +276,6 @@ function Donate() {
 
 
                     <Box style={{ marginTop: "2em", display: "flex", color: "rgb(255, 255, 255)" }} >
-
                       <Fab style={{ margin: "auto" }} color="secondary" variant="extended" type="submit" name="subscribe" aria-label="Send Email" className="hvr-bob">
                         <span style={{ color: "rgb(255, 255, 255)" }} >
                           <FAIcon size="lg" name="user-plus" solid style={{ marginRight: "10px" }} />
@@ -277,7 +285,7 @@ function Donate() {
                       </Fab>
                     </Box>
                   </form>
-                  {/* End mc_embed_signup */}
+                  {/* End Mailchimp Signup Form */}
 
                 </Grid>
 

@@ -29,6 +29,7 @@ function Sponsors() {
 
   return (
     <>
+      {/* PAGE HEADER */}
       <Grid container justify="center">
         <Grid item xs={10} md={8} lg={6}>
           {/* PAGE TITLE */}
@@ -44,9 +45,11 @@ function Sponsors() {
         </Grid>
 
       </Grid>
+
+      {/* COMPANY LOGO CONTAINER */}
       <Grid container justify="center">
         <Grid item xs={12} lg={10} xl={8}>
-
+          {/* COMPANY LOGO GRIDLIST */}
           <GridList spacing={8} cellHeight="auto" style={{ width: "100%", height: "auto", padding: 0, marginTop: "2em" }} cols={isSmallSize ? 2 : isMediumSize ? 3 : isLargeSize ? 4 : 5}>
             {companies.map(({ src, name }, index) => (
 
