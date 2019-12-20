@@ -24,19 +24,6 @@ const GoogleMap = (props) => {
         const { locations } = props;
         let markers = [];
 
-        // if (config.allowClusters) {
-        //     const markers = config.locations.map(location => {
-        //         const marker = new google.maps.Marker({ position: location });
-        //         _createInfoWindow(marker, location);
-        //         return marker;
-        //     });
-
-        //     // const markerCluster = new google.maps.MarkerClusterer(
-        //     //     map,
-        //     //     markers,
-        //     //     { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' }
-        //     // );
-        // } else {
         locations.forEach(location => {
             const marker = new google.maps.Marker({
                 position: new google.maps.LatLng(location.lat, location.lng),
@@ -47,7 +34,6 @@ const GoogleMap = (props) => {
             _createInfoWindow(marker, location);
             markers.push(marker);
         });
-        // }
 
         return markers;
     };

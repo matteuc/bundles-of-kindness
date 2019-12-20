@@ -314,7 +314,7 @@ function Landing() {
                         <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "0.5em" }}>
                           {DONATION_TEXT}
                         </Typography>
-                        <Link to="/donate" style={{ textDecoration: "none", color: "inherit" }} className="hvr-float-shadow">
+                        <Link to="/help-out" style={{ textDecoration: "none", color: "inherit" }} className="hvr-float-shadow">
                           <Fab style={{ margin: "auto", backgroundColor: ACCENT_COLOR }} variant="extended" aria-label="Link to Donate Page" >
                             <span style={{ color: "rgb(255, 255, 255)" }}>
                               <FAIcon size="lg" name="hand-holding-heart" solid style={{ marginRight: "10px" }} />
