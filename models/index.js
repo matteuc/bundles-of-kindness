@@ -1,3 +1,4 @@
 module.exports = {
-    Obj: require("./Obj")
+    Dropzone: require("./Dropzone"),
+    SponsorCompany: require("./SponsorCompany")
 };

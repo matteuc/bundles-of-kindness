@@ -1,6 +1,6 @@
 const mapIcon = "https://i.ibb.co/sJZKBNs/mapIcon.gif";
 
-export const markers = [
+export const mapMarkers = [
     {
         lat: 34.173441,
         lng: -118.611547,
@@ -139,7 +139,6 @@ export const mapOptions = {
 };
 
 export const mapType = 'map';
-export const mapMarkers = markers;
 
 export const LOCATIONS_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 

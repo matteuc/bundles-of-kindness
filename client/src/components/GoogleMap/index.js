@@ -28,7 +28,7 @@ const GoogleMap = (props) => {
             const marker = new google.maps.Marker({
                 position: new google.maps.LatLng(location.lat, location.lng),
                 map: map,
-                title: location.infoWindowContent.title || '',
+                title: location.iw_title || '',
                 icon: location.icon || ''
             });
             _createInfoWindow(marker, location);
@@ -39,12 +39,12 @@ const GoogleMap = (props) => {
     };
 
     const _createInfoWindow = (marker, location) => {
-        const { title, text, imgUrl } = location.infoWindowContent;
+        const { iw_title, iw_text, iw_imgUrl } = location;
 
         const infoWindowTemplate = `
-      <div class="info-window" style="background-image: url(${imgUrl})"}>
-        <h4>${ title}</h4>
-        <p>${ text}</p>
+      <div class="info-window" style="background-image: url(${iw_imgUrl})"}>
+        <h4>${ iw_title}</h4>
+        <p>${ iw_text}</p>
       </div>
     `;
 
@@ -70,12 +70,14 @@ const GoogleMap = (props) => {
     };
 
     useEffect(() => {
-        map = _createMap();
-        markers = _createMarkers();
-
-        if (props.center) {
-            _centerMap();
+        if(props.locations.length) {
+            map = _createMap();
+            markers = _createMarkers();
+            if (props.center) {
+                _centerMap();
+            }
         }
+
     });
 
     return (

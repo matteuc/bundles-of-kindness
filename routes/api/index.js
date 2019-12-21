@@ -1,7 +1,11 @@
 const router = require("express").Router();
-const objRoutes = require("./obj");
+const dropzoneRoutes = require("./dropzone");
+const sponsorCompanyRoutes = require("./sponsorCompany");
 
-// Object routes
-router.use("/obj", objRoutes);
+// Dropzone routes
+router.use("/dropzone", dropzoneRoutes);
+
+// SponsorCompany routes
+router.use("/sponsorCompany", sponsorCompanyRoutes);
 
 module.exports = router;

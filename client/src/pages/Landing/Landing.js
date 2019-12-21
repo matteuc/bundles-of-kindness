@@ -1,10 +1,11 @@
 // HOOKS, FUNCTIONS, ETC.
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import AOS from 'aos';
+import API from "../../utils/API";
 
 // COMPONENTS
 import Masthead from "../../components/Masthead";
@@ -25,7 +26,7 @@ import "./main.css";
 import 'aos/dist/aos.css';
 
 // DATA
-import { COVER_IMAGE, COVER_TEXT, PRESS_LOGOS, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, IG_TOKEN, SOCIAL_TEXT, IG_URL, FB_URL, CONTACT_WARNING, CONTACT_API, CONTACT_TEXT, mapOptions, mapType, mapMarkers, LOCATIONS_TEXT } from "./landingData.js";
+import { COVER_IMAGE, COVER_TEXT, PRESS_LOGOS, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, IG_TOKEN, SOCIAL_TEXT, IG_URL, FB_URL, CONTACT_WARNING, CONTACT_API, CONTACT_TEXT, mapOptions, mapType, LOCATIONS_TEXT } from "./landingData.js";
 
 import {MAIN_COLOR, ACCENT_COLOR} from "../../utils/colors";
 
@@ -88,6 +89,18 @@ function Landing() {
   const whoImg = (fadeDir) => lineImg(WHO_IMG, WHO_IMG_ALT, fadeDir);
 
   const whoText = (fadeDir) => lineText("Who are we?", WHO_TEXT, fadeDir);
+
+  const [ mapMarkers, setMapMarkers ] = useState([]);
+
+  useEffect(() => {
+    API.getDropzones()
+    .then((dObj) => {
+      if(dObj) {
+        setMapMarkers(dObj.data);
+      } 
+    });
+ 
+  }, [])
 
   return (
     <>

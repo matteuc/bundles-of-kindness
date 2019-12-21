@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { useMediaQuery } from "react-responsive";
+import API from "../../utils/API";
 
 import "../../utils/flowHeaders.min.css";
 import "./main.css";
 import { Grid, GridList, GridListTile, Paper, Typography } from "@material-ui/core";
-import { companies, PAGE_DESCRIPTION } from "./sponsorsData.js"
+import { PAGE_DESCRIPTION } from "./sponsorsData.js"
 
 const useStyles = makeStyles(theme => ({
   gridPaper: {
@@ -26,6 +27,17 @@ function Sponsors() {
   const isMediumSize = useMediaQuery({ query: '(max-width: 960px)' });
   const isLargeSize = useMediaQuery({ query: '(max-width: 1280px)' });
   // const isExtraLargeSize = useMediaQuery({ query: '(max-width: 1920px)' });
+  const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    API.getSponsorCompanies()
+    .then((scObj) => {
+      if(scObj) {
+        setCompanies(scObj.data);
+      } 
+    });
+ 
+  }, [])
 
   return (
     <>
