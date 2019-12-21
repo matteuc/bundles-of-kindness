@@ -208,7 +208,8 @@ function NavBarApp(props) {
                   key={idx}
                   to={route.path}
                   style={{ textDecoration: "none", color: "inherit" }}
-                  activeStyle={props.activeStyle}>
+                  activeStyle={props.activeStyle}
+                  onClick={handleDrawerClose}>
                   <ListItem button style={{ justifyContent: "center", textAlign: "center" }}>
                     <ListItemText primary={route.name} />
                   </ListItem>
