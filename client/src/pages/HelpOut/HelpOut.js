@@ -61,7 +61,7 @@ const useStyles = makeStyles(theme => ({
   },
   tabPanel: {
     minHeight: "60vh",
-    padding: "2em"
+    padding: "0.5em"
 
   },
   paper: {
@@ -155,7 +155,7 @@ function Donate() {
                 <>
                   {/* DONATIONS TAB HEADER */}
                   <Grid style={{ marginTop: "1em" }} container spacing={1} justify="center">
-                    <Grid item xs={10} lg={8}>
+                    <Grid item xs={12} md={8} >
                       <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
                         Donate today!
                       </Typography>

@@ -59,7 +59,7 @@ function Sponsors() {
       </Grid>
 
       {/* COMPANY LOGO CONTAINER */}
-      <Grid container justify="center">
+      <Grid styles={{marginBottom: "2em"}} container justify="center">
         <Grid item xs={12} lg={10} xl={8}>
           {/* COMPANY LOGO GRIDLIST */}
           <GridList spacing={8} cellHeight="auto" style={{ width: "100%", height: "auto", padding: 0, marginTop: "2em" }} cols={isSmallSize ? 2 : isMediumSize ? 3 : isLargeSize ? 4 : 5}>
