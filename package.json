@@ -32,11 +32,6 @@
     "location-autocomplete": "^1.2.4",
     "moment": "^2.24.0",
     "mongoose": "^5.7.11",
-    "nightmare": "^3.0.2",
-    "pusher": "^3.0.0",
-    "pusher-js": "^5.0.2",
-    "react-autosize-textarea": "^7.0.0",
-    "react-horizontal-scrolling-menu": "^0.7.3",
     "react-moment": "^0.9.6",
     "react-router-dom": "^5.1.2"
   }
