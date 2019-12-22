@@ -142,12 +142,12 @@ function NavBarApp(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  const toggleDrawer = (isOpen) => event => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+    setOpen(isOpen);
   };
 
   return (
@@ -169,55 +169,64 @@ function NavBarApp(props) {
               <IconButton
                 color={"inherit"}
                 aria-label="open drawer"
-                onClick={handleDrawerOpen}
+                onClick={toggleDrawer(true)}
                 edge="start"
                 className={clsx(classes.menuButton, open && classes.hide, props.center && classes.centerTitleBtn)}
               >
                 <MenuIcon />
               </IconButton>
-              
-            <Typography variant="h6" className={clsx(classes.title, props.center && classes.centeredTitle)}>
-            <NavLink
-              to="/"
-              style={{ textDecoration: "none", color: "inherit" }}
-              >
-              {props.title}
-            </NavLink>
-            </Typography>
-              
+
+              <Typography variant="h6" className={clsx(classes.title, props.center && classes.centeredTitle)}>
+                <NavLink
+                  to="/"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  {props.title}
+                </NavLink>
+              </Typography>
+
             </Toolbar>
           </AppBar>
           <Drawer
             className={classes.drawer}
-            variant="persistent"
+            // variant="persistent"
             anchor="left"
             open={open}
             classes={{
               paper: classes.drawerPaper,
             }}
+            onClose={toggleDrawer(false)}
           >
-            <div className={classes.drawerHeader}>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-              </IconButton>
+            <div
+              className={classes.fullList}
+              role="presentation"
+              onClick={toggleDrawer(false)}
+              onKeyDown={toggleDrawer(false)}
+            >
+
+              <div className={classes.drawerHeader}>
+                <IconButton onClick={toggleDrawer(false)}>
+                  {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                </IconButton>
+              </div>
+              <Divider />
+              <List>
+
+                {props.routes.map((route, idx) => (
+                  <NavLink
+                    key={idx}
+                    to={route.path}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                    activeStyle={props.activeStyle}
+                    onClick={toggleDrawer(false)}>
+                    <ListItem button style={{ justifyContent: "center", textAlign: "center" }}>
+                      <ListItemText primary={route.name} />
+                    </ListItem>
+                  </NavLink>
+
+                ))}
+              </List>
             </div>
-            <Divider />
-            <List>
-              {props.routes.map((route, idx) => (
-                <NavLink
-                  key={idx}
-                  to={route.path}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  activeStyle={props.activeStyle}
-                  onClick={handleDrawerClose}>
-                  <ListItem button style={{ justifyContent: "center", textAlign: "center" }}>
-                    <ListItemText primary={route.name} />
-                  </ListItem>
-                </NavLink>
-
-              ))}
-            </List>
-
           </Drawer>
         </>
 
@@ -233,12 +242,12 @@ function NavBarApp(props) {
           <Toolbar>
 
             <Typography variant="h6" className={classes.title}>
-            <NavLink
-              to="/"
-              style={{ textDecoration: "none", color: "inherit" }}
+              <NavLink
+                to="/"
+                style={{ textDecoration: "none", color: "inherit" }}
               >
-              {props.title}
-            </NavLink>
+                {props.title}
+              </NavLink>
             </Typography>
 
             {
@@ -268,9 +277,9 @@ function NavBarApp(props) {
         className={clsx(isMobileSize ? classes.mobileContentMarginTop : classes.contentMarginTop, classes.content)}
       >
         {props.children}
-        {open ? 
-        <Overlay />
-         : ""}
+        {open ?
+          <Overlay />
+          : ""}
       </main>
     </>
 
