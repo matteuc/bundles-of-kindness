@@ -93,7 +93,7 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-function Donate() {
+function HelpOut() {
   const classes = useStyles();
   const theme = useTheme();
   const [tabIdx, setTabIdx] = React.useState(0);
@@ -315,4 +315,4 @@ function Donate() {
   );
 }
 
-export default Donate;
+export default HelpOut;

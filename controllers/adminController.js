@@ -1,4 +1,4 @@
-const dropzoneDb = require("../models/Dropzone");
+const adminDb = require("../models/Admin");
 
 const { isVerified } = require("./apiAuth.js");
 
@@ -9,7 +9,7 @@ const forbiddenErr = {
 module.exports = {
     create: function(req, res) {
         if( isVerified(req.body.key) ) {
-            dropzoneDb
+            adminDb
                 .create(req.body)
                 .then(dbModel => res.json(dbModel))
                 .catch(err => res.status(422).json(err));
@@ -19,7 +19,7 @@ module.exports = {
         }
     },
     findAll: function(req, res) {
-        dropzoneDb
+        adminDb
             .find({})
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
@@ -28,7 +28,7 @@ module.exports = {
     ,
     update: function(req, res) {
         if( isVerified(req.body.key) ) {
-            dropzoneDb
+            adminDb
             .findOneAndUpdate({ _id: req.params.id }, req.body)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
@@ -39,7 +39,7 @@ module.exports = {
     }, 
     delete: function(req, res) {
         if( isVerified(req.body.key) ) {
-            dropzoneDb
+            adminDb
             .findOne({ _id: req.params.id  })
             .then(dbModel => dbModel.remove())
             .then(dbModel => res.json(dbModel))

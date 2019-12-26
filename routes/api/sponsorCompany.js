@@ -1,11 +1,13 @@
 const router = require("express").Router();
 const sponsorCompanyController = require("../../controllers/sponsorCompanyController");
 
-// Matches with "/api/"
+// Matches with "/api/sponsorCompany"
 router.route("/")
-  .get(sponsorCompanyController.find)
+  .get(sponsorCompanyController.findAll)
   .post(sponsorCompanyController.create)
-  // .delete(sponsorCompanyController.delete)
-  // .put(sponsorCompanyController.update)
+
+router.route("/:id")
+  .delete(sponsorCompanyController.delete)
+  .put(sponsorCompanyController.update)
 
 module.exports = router;
