@@ -11,6 +11,7 @@ import API from '../../utils/API';
 // COMPONENTS
 import Spinner from "../../components/Spinner";
 import FAIcon from "../../components/FAIcon";
+import DocForm from "../../components/DocForm";
 import { Box, Grid, AppBar, Tabs, Tab, Typography, Paper, Fab } from "@material-ui/core";
 
 // ICONS
@@ -233,7 +234,14 @@ function AdminDash(props) {
                   >
                     {/* DONATIONS TAB */}
                     <TabPanel className={classes.tabPanel} value={tabIdx} index={0} dir={theme.direction} >
+                        <DocForm 
+                        fields={[
+                          {type: "single", value: "test", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"},
+                          {type: "multi", value: "test", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"}
+                          ,{type: "date", value: new Date('2014-08-18T21:11:54'), placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"}
 
+                        ]}
+                        />
                     </TabPanel>
 
                     {/* VOLUNTEERING TAB */}
