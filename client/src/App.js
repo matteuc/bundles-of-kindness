@@ -87,7 +87,7 @@ function App() {
           borderBottom: `2px solid ${ACCENT_COLOR}`
         }}
       >
-        <Box >
+        <Box>
 
         <Switch >
           <Route exact path="/" component={Landing} />

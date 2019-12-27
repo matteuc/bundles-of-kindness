@@ -94,7 +94,9 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: 0,
-    marginTop: navHeight
+    marginTop: navHeight,
+    width: "100%",
+    position: "absolute"
   },
   contentMarginTop: {
     marginTop: navHeight
@@ -275,6 +277,7 @@ function NavBarApp(props) {
       </ScrollTop>
       <main
         className={clsx(isMobileSize ? classes.mobileContentMarginTop : classes.contentMarginTop, classes.content)}
+        style={{height: isMobileSize ? `calc(100% - ${mobNavHeight}px)`: `calc(100% - ${navHeight}px)`}}
       >
         {props.children}
         {open ?
