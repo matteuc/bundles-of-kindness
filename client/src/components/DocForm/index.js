@@ -102,7 +102,6 @@ const handleLocationChange = (e) => {
                                 onChange={handleDateChange}
                                 value={forms[`form-${idx}`]}
                                 label={form.label}
-                                style={{ margin: 8 }}
                                 placeholder={form.placeholder}
                                 helperText={form.helper}
                                 fullWidth
@@ -219,7 +218,7 @@ const handleLocationChange = (e) => {
                                     className={"mdc-text-field__input"}
                                     id={`form-${idx}`}
                                     value={forms[`form-${idx}`] === undefined ? form.value : forms[`form-${idx}`]}
-                                    style={{padding: "20px 16px 6px"}}
+                                    style={{padding: "20px 0px 6px"}}
                                     googleAPIKey={process.env.REACT_APP_GOOGLE_API_KEY}
                                     onChange={handleFormChange}
                                     onDropdownSelect={handleLocationChange}
@@ -227,7 +226,7 @@ const handleLocationChange = (e) => {
                                     {/* <input className="mdc-text-field__input" id={`form-${idx}`} /> */}
 
                                     <div className="mdc-line-ripple"></div>
-                                    <label htmlFor={`form-${idx}`} className="mdc-floating-label">
+                                    <label style={{left: "0px"}} htmlFor={`form-${idx}`} className="mdc-floating-label">
                                         {form.label}
                                     </label>
 
