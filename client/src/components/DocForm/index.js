@@ -39,7 +39,17 @@ import "./main.css";
 //      
 // }
 
-const useStyles = makeStyles(theme => ({}));
+const useStyles = makeStyles(theme => ({
+    centerElementParent: {
+        display: "flex"
+      },
+      centerElement: {
+        margin: "auto"
+      },
+      extendedBtnIcon: {
+        marginRight: "0.5em"
+      }
+}));
 
 function DocForm(props) {
   const classes = useStyles();
@@ -90,6 +100,7 @@ const handleLocationChange = (e) => {
   // LOADING  
   return (
     <>
+        <form>
         {
             DOC_FIELDS.map((form, idx) => {
                 switch(form.type) {
@@ -161,7 +172,6 @@ const handleLocationChange = (e) => {
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
                                 <KeyboardDatePicker
-                                    margin="normal"
                                     id={`form-${idx}`}
                                     helperText={form.helper}
                                     label={form.label}
@@ -180,7 +190,6 @@ const handleLocationChange = (e) => {
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
                                 <KeyboardTimePicker
-                                    margin="normal"
                                     id={`form-${idx}`}
                                     helperText={form.helper}
                                     label={form.label}
@@ -197,7 +206,6 @@ const handleLocationChange = (e) => {
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
                                 <KeyboardDateTimePicker
-                                    margin="normal"
                                     id={`form-${idx}`}
                                     helperText={form.helper}
                                     label={form.label}
@@ -231,7 +239,7 @@ const handleLocationChange = (e) => {
                                     </label>
 
                                 </div>
-                                <div className="mdc-text-field-helper-line">
+                                <div style={{paddingLeft: "0px"}} className="mdc-text-field-helper-line">
                                     <div className="mdc-text-field-helper-text">
                                         {form.helper}
                                     </div>
@@ -256,6 +264,18 @@ const handleLocationChange = (e) => {
             })
 
         }
+
+        <Box className={classes.centerElementParent} style={{ color: "white", margin: "1em" }} >
+
+            <Fab style={{ backgroundColor: props.submitBtn.color || "" }} variant="extended" type="submit" aria-label="Login" className={clsx("hvr-bob", classes.centerElement, classes.btnIcon)}>
+            <span style={{ color: "rgb(255, 255, 255)" }} onClick={() => {props.submit()}} >
+                <FAIcon size="lg" name={props.submitBtn.icon} solid className={classes.extendedBtnIcon} />
+                {props.submitBtn.text}
+            </span>
+            </Fab>
+        </Box>
+
+        </form>
         
     
     

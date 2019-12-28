@@ -52,7 +52,12 @@ function DocEditor(props) {
     <>
     <button type="button" onClick={handleOpen}>
         react-transition-group
-      </button>
+    </button>
+      
+      
+      
+      
+      
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -74,6 +79,14 @@ function DocEditor(props) {
                 ,{type: "date", value: new Date('2014-08-18T21:11:54'), placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"}
 
             ]}
+            submitBtn={
+              {
+              color: "eggshell",
+              text: "Update",
+              icon: "edit"
+              }
+            }
+            submit={() => {console.log("submitting")}}
           />
           </div>
         </Fade>
