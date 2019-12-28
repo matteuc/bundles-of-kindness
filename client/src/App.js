@@ -17,6 +17,7 @@ import AdminDash from "./pages/AdminDash/index";
 import NoMatch from "./components/NoMatch";
 import NavBarApp from "./components/NavBarApp";
 import Footer from "./components/Footer";
+import DocForm from "./components/DocForm";
 import { Box, Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
@@ -87,6 +88,7 @@ function App() {
           borderBottom: `2px solid ${ACCENT_COLOR}`
         }}
       >
+        
         <Box>
 
         <Switch >

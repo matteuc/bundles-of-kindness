@@ -14,7 +14,9 @@ import {
   KeyboardDatePicker,
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
+// import {MDCTextField} from '@material/textfield';
 import { Box, Grid, Typography, Fab, TextField } from "@material-ui/core";
+import LocationAutocomplete from 'location-autocomplete';
 
 // STYLESHEETS
 import "../../utils/flowHeaders.min.css";
@@ -55,14 +57,13 @@ function DocForm(props) {
   const [forms, setForms] = useState({});
   const [selectedDate, setSelectedDate] = React.useState();
 
-
   const handleFormChange = (e) => {
-    const currForm = e.target;
-    const currFormId = currForm.id;
-    const currFormVal = currForm.value;
+    const { id, value } = e.target;
+    // const currFormId = currForm.id;
+    // const currFormVal = currForm.value;
 
     let tmp = forms;
-    tmp[currFormId] = currFormVal;
+    tmp[id] = value;
     setForms({...tmp});
   };
 
@@ -72,9 +73,18 @@ const handleDateChange = (date, id) => {
     setForms({...tmp});
 
   };
+
+const handleLocationChange = (e) => {
+    const { value, id } =  e.input;
+
+    let tmp = forms;
+    tmp[id] = value;
+    setForms({...tmp});
+}
   
 
   useEffect(() => {
+    window.mdc.autoInit();
   }, [])
 
   // LOADING  
@@ -203,16 +213,44 @@ const handleDateChange = (date, id) => {
 
                     case "location":
                         return (
-                            <div>Location</div>
+                            <div key={`form-${idx}`}>
+                            <div data-mdc-auto-init="MDCTextField" className="mdc-text-field mdc-text-field--fullwidth">
+                                <LocationAutocomplete
+                                    className={"mdc-text-field__input"}
+                                    id={`form-${idx}`}
+                                    value={forms[`form-${idx}`] === undefined ? form.value : forms[`form-${idx}`]}
+                                    style={{padding: "20px 16px 6px"}}
+                                    googleAPIKey={process.env.REACT_APP_GOOGLE_API_KEY}
+                                    onChange={handleFormChange}
+                                    onDropdownSelect={handleLocationChange}
+                                />
+                                    {/* <input className="mdc-text-field__input" id={`form-${idx}`} /> */}
+
+                                    <div className="mdc-line-ripple"></div>
+                                    <label htmlFor={`form-${idx}`} className="mdc-floating-label">
+                                        {form.label}
+                                    </label>
+
+                                </div>
+                                <div className="mdc-text-field-helper-line">
+                                    <div className="mdc-text-field-helper-text">
+                                        {form.helper}
+                                    </div>
+                                </div>
+                            </div>
                         )
-                    case "toggle":
-                        return (
-                            <div>Location</div>
-                        )
-                    case "dropdown":
-                            return (
-                                <div>Location</div>
-                            )
+                    // case "toggle":
+                    //     return (
+                    //         <div>Location</div>
+                    //     )
+                    // case "dropdown":
+                    //         return (
+                    //             <div>Location</div>
+                    //         )
+                    // case "checkbox":
+                    //     return (
+                    //         <div>Location</div>
+                    //     )
 
                 }
                 

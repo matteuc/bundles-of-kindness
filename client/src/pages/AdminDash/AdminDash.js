@@ -237,7 +237,7 @@ function AdminDash(props) {
                         <DocForm 
                         fields={[
                           {type: "single", value: "test", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"},
-                          {type: "multi", value: "test", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"}
+                          {type: "location", value: "test", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"}
                           ,{type: "date", value: new Date('2014-08-18T21:11:54'), placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"}
 
                         ]}
