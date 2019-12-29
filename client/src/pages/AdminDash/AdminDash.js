@@ -141,7 +141,7 @@ function AdminDash(props) {
                       Admin <FAIcon name="user-tie" solid />
                     </Typography>
                     
-                    <img style={{width:"80%", marginTop: "1em"}} src="https://i.ibb.co/C6220FL/ezgif-com-crop.gif" />
+                    <img style={{width:"80%", marginTop: "1em"}} src="https://i.ibb.co/C6220FL/ezgif-com-crop.gif" alt="Cat Admin GIF"/>
 
                     <Box className={classes.centerElementParent} style={{ color: "white", margin: "1em" }} >
 
@@ -170,7 +170,7 @@ function AdminDash(props) {
                         Access Denied <FAIcon name="ban" solid />
                       </Typography>
                       
-                      <img style={{width:"80%", marginTop: "1em"}} src="https://i.ibb.co/C6220FL/ezgif-com-crop.gif" />
+                      <img style={{width:"80%", marginTop: "1em"}} src="https://i.ibb.co/C6220FL/ezgif-com-crop.gif" alt="Cat Admin GIF" />
 
                       <Box className={classes.centerElementParent} style={{ color: "white", margin: "1em" }} >
 

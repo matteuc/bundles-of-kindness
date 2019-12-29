@@ -15,7 +15,7 @@ import {
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
 // import {MDCTextField} from '@material/textfield';
-import { Box, Grid, Typography, Fab, TextField } from "@material-ui/core";
+import { Box, Fab, TextField } from "@material-ui/core";
 import LocationAutocomplete from 'location-autocomplete';
 
 // STYLESHEETS
@@ -34,8 +34,16 @@ import "./main.css";
 //              type: "single" || "multi" || "toggle" || "date" || "location" (*)
 //              required: boolean to indicate field is required (*),
 //              validation: function that will validate the input upon submission
+//              name: field name in submission object
+//              helper: helper text
+//              error: error text
 //          }
-//      ]
+//      ],
+//      submitBtn: {
+//          color: button color
+//          text: button text
+//          icon: button icon
+//      }
 //      
 // }
 
@@ -53,45 +61,80 @@ const useStyles = makeStyles(theme => ({
 
 function DocForm(props) {
   const classes = useStyles();
-  const theme = useTheme();
-  const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
+//   const theme = useTheme();
+//   const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
 
   // VARIABLES
   const DOC_ID = props.id;
   const DOC_SUB = props.submit;
   const DOC_FIELDS = props.fields; 
+  const ERROR_COLOR = "#f44336";
 
   // HOOKS
   //  https://itnext.io/how-to-build-a-dynamic-controlled-form-with-react-hooks-2019-b39840f75c4f
   
-  const [forms, setForms] = useState({});
-  const [selectedDate, setSelectedDate] = React.useState();
+  const [fields, setFields] = useState({});
+  const [errors, setErrors] = useState({});
 
   const handleFormChange = (e) => {
     const { id, value } = e.target;
-    // const currFormId = currForm.id;
-    // const currFormVal = currForm.value;
 
-    let tmp = forms;
+    let tmp = fields;
     tmp[id] = value;
-    setForms({...tmp});
+    setFields({...tmp});
+
+    unmarkError(id);
+
   };
 
 const handleDateChange = (date, id) => {
-    let tmp = forms;
+    let tmp = fields;
     tmp[id] = date;
-    setForms({...tmp});
+    setFields({...tmp});
+
+    unmarkError(id);
 
   };
 
 const handleLocationChange = (e) => {
     const { value, id } =  e.input;
 
-    let tmp = forms;
+    let tmp = fields;
     tmp[id] = value;
-    setForms({...tmp});
+    setFields({...tmp});
+
+    unmarkError(id);
+
 }
   
+const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    let tmpErrors = {};
+    // Do error validation
+    for(const field of props.fields) {
+        const fieldVal = fields[field.name];
+
+        if(field.validate && fieldVal) {
+            tmpErrors[field.name] = !field.validate(fieldVal);
+        } 
+        else {
+            tmpErrors[field.name] = false;
+        }
+
+    }
+
+    setErrors({...tmpErrors});
+    DOC_SUB(fields, DOC_ID);
+}
+
+const unmarkError = (id) => {
+    let tmpErrors = errors;
+
+    tmpErrors[id] = false;
+
+    setErrors({...tmpErrors});
+}
 
   useEffect(() => {
     window.mdc.autoInit();
@@ -102,25 +145,26 @@ const handleLocationChange = (e) => {
     <>
         <form>
         {
-            DOC_FIELDS.map((form, idx) => {
-                switch(form.type) {
+            DOC_FIELDS.map((field, idx) => {
+                switch(field.type) {
                     case "single":
                         return (
                             <TextField
-                                defaultValue={form.value}
+                                // defaultValue={field.value}
                                 key={`form-${idx}`}
-                                id={`form-${idx}`}
-                                onChange={handleDateChange}
-                                value={forms[`form-${idx}`]}
-                                label={form.label}
-                                placeholder={form.placeholder}
-                                helperText={form.helper}
+                                id={field.name}
+                                onChange={handleFormChange}
+                                value={fields[field.name] || field.value}
+                                label={field.label}
+                                placeholder={field.placeholder}
+                                error={errors[field.name] ? true: false}
+                                helperText={errors[field.name] ? field.error : field.helper}
                                 fullWidth
-                                margin="normal"
+                                style={{margin: "0.5em"}}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
-                                required={form.required}
+                                required={field.required}
                             />
                         )
 
@@ -128,21 +172,22 @@ const handleLocationChange = (e) => {
                         return (
                             <TextField
                                 multiline
-                                defaultValue={form.value}
+                                defaultValue={field.value}
                                 key={`form-${idx}`}
-                                id={`form-${idx}`}
+                                id={field.name}
                                 onChange={handleFormChange}
-                                value={forms[`form-${idx}`]}
-                                label={form.label}
-                                style={{ margin: 8 }}
-                                placeholder={form.placeholder}
-                                helperText={form.helper}
+                                value={fields[field.name]}
+                                label={field.label}
+                                placeholder={field.placeholder}
+                                error={errors[field.name] ? true: false}
+                                helperText={errors[field.name] ? field.error : field.helper}
                                 fullWidth
-                                margin="normal"
+                                // margin="normal"
+                                style={{margin: "0.5em"}}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
-                                required={form.required}
+                                required={field.required}
                             />
                         )
                     
@@ -150,21 +195,22 @@ const handleLocationChange = (e) => {
                             return (
                             <TextField
                                 type="number"
-                                defaultValue={form.value}
+                                defaultValue={field.value}
                                 key={`form-${idx}`}
-                                id={`form-${idx}`}
+                                id={field.name}
                                 onChange={handleFormChange}
-                                value={forms[`form-${idx}`]}
-                                label={form.label}
-                                style={{ margin: 8 }}
-                                placeholder={form.placeholder}
-                                helperText={form.helper}
+                                value={fields[field.name]}
+                                label={field.label}
+                                placeholder={field.placeholder}
+                                error={errors[field.name] ? true: false}
+                                helperText={errors[field.name] ? field.error : field.helper}
                                 fullWidth
-                                margin="normal"
+                                // margin="normal"
+                                style={{margin: "0.5em"}}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
-                                required={form.required}
+                                required={field.required}
                             />
                             )
 
@@ -172,13 +218,15 @@ const handleLocationChange = (e) => {
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
                                 <KeyboardDatePicker
-                                    id={`form-${idx}`}
-                                    helperText={form.helper}
-                                    label={form.label}
+                                    style={{margin: "0.5em"}}
+                                    id={field.name}
+                                    error={errors[field.name] ? true: false}
+                                    helperText={errors[field.name] ? field.error : field.helper}
+                                    label={field.label}
                                     fullWidth
                                     format="MM/dd/yyyy"
-                                    value={forms[`form-${idx}`] || form.value}
-                                    onChange={(date) => handleDateChange(date, `form-${idx}`)}
+                                    value={fields[field.name] || field.value}
+                                    onChange={(date) => handleDateChange(date, field.name)}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
@@ -190,14 +238,16 @@ const handleLocationChange = (e) => {
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
                                 <KeyboardTimePicker
-                                    id={`form-${idx}`}
-                                    helperText={form.helper}
-                                    label={form.label}
+                                    style={{margin: "0.5em"}}                                
+                                    id={field.name}
+                                    error={errors[field.name] ? true: false}
+                                    helperText={errors[field.name] ? field.error : field.helper}
+                                    label={field.label}
                                     fullWidth
                                     mask="__:__ _M"
-                                    value={forms[`form-${idx}`] || form.value}
-                                    onChange={(date) => handleDateChange(date, `form-${idx}`)}
-                                    placeholder={form.placeholder}
+                                    value={fields[field.name] || field.value}
+                                    onChange={(date) => handleDateChange(date, field.name)}
+                                    placeholder={field.placeholder}
                                 />
                             </MuiPickersUtilsProvider>
                         )
@@ -206,42 +256,43 @@ const handleLocationChange = (e) => {
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
                                 <KeyboardDateTimePicker
-                                    id={`form-${idx}`}
-                                    helperText={form.helper}
-                                    label={form.label}
+                                    style={{margin: "0.5em"}}
+                                    id={field.name}
+                                    error={errors[field.name] ? true: false}
+                                    helperText={errors[field.name] ? field.error : field.helper}
+                                    label={field.label}
                                     fullWidth
                                     mask="__:__ _M"
-                                    value={forms[`form-${idx}`] || form.value}
-                                    onChange={(date) => handleDateChange(date, `form-${idx}`)}
-                                    placeholder={form.placeholder}
+                                    value={fields[field.name] || field.value}
+                                    onChange={(date) => handleDateChange(date, field.name)}
+                                    placeholder={field.placeholder}
                                 />
                             </MuiPickersUtilsProvider>
                         )
 
                     case "location":
                         return (
-                            <div key={`form-${idx}`}>
+                            <div key={`form-${idx}`} style={{margin: "0.5em"}}>
                             <div data-mdc-auto-init="MDCTextField" className="mdc-text-field mdc-text-field--fullwidth">
                                 <LocationAutocomplete
-                                    className={"mdc-text-field__input"}
-                                    id={`form-${idx}`}
-                                    value={forms[`form-${idx}`] === undefined ? form.value : forms[`form-${idx}`]}
-                                    style={{padding: "20px 0px 6px"}}
+                                    className={`mdc-text-field__input`}
+                                    id={field.name}
+                                    value={fields[field.name] === undefined ? field.value : fields[field.name]}
+                                    style={{padding: "20px 0px 6px", borderBottomColor: errors[field.name] ? ERROR_COLOR : ""}}
                                     googleAPIKey={process.env.REACT_APP_GOOGLE_API_KEY}
                                     onChange={handleFormChange}
                                     onDropdownSelect={handleLocationChange}
                                 />
-                                    {/* <input className="mdc-text-field__input" id={`form-${idx}`} /> */}
 
                                     <div className="mdc-line-ripple"></div>
-                                    <label style={{left: "0px"}} htmlFor={`form-${idx}`} className="mdc-floating-label">
-                                        {form.label}
+                                    <label style={{left: "0px", color: errors[field.name] ? ERROR_COLOR : ""}} htmlFor={field.name} className={`mdc-floating-label`}>
+                                        {field.label}
                                     </label>
 
                                 </div>
                                 <div style={{paddingLeft: "0px"}} className="mdc-text-field-helper-line">
-                                    <div className="mdc-text-field-helper-text">
-                                        {form.helper}
+                                    <div style={{color: errors[field.name] ? ERROR_COLOR : ""}} className={`mdc-text-field-helper-text`}>
+                                        {errors[field.name] ? field.error : field.helper}
                                     </div>
                                 </div>
                             </div>
@@ -265,10 +316,10 @@ const handleLocationChange = (e) => {
 
         }
 
-        <Box className={classes.centerElementParent} style={{ color: "white", margin: "1em" }} >
+        <Box className={classes.centerElementParent} style={{ color: "white", margin: "0.5em" }} >
 
             <Fab style={{ backgroundColor: props.submitBtn.color || "" }} variant="extended" type="submit" aria-label="Login" className={clsx("hvr-bob", classes.centerElement, classes.btnIcon)}>
-            <span style={{ color: "rgb(255, 255, 255)" }} onClick={() => {props.submit()}} >
+            <span style={{ color: "rgb(255, 255, 255)" }} onClick={handleSubmit} >
                 <FAIcon size="lg" name={props.submitBtn.icon} solid className={classes.extendedBtnIcon} />
                 {props.submitBtn.text}
             </span>

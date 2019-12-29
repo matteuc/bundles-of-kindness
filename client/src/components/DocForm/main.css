@@ -1,0 +1,11 @@
+.mdc-error.mdc-text-field-helper-text {
+    color: #f44336;
+}
+
+.mdc-error.mdc-floating-label {
+    color: #f44336;
+}
+
+.mdc-error.mdc-text-field__input {
+    border-bottom-color: #f44336;
+}

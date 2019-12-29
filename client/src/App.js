@@ -17,9 +17,8 @@ import AdminDash from "./pages/AdminDash/index";
 import NoMatch from "./components/NoMatch";
 import NavBarApp from "./components/NavBarApp";
 import Footer from "./components/Footer";
-import DocForm from "./components/DocForm";
-import { Box, Grid, Paper } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
+import { Box } from "@material-ui/core";
+// import { makeStyles } from "@material-ui/styles";
 
 
 // LOGO
