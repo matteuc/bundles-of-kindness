@@ -1,15 +1,13 @@
 // HOOKS, FUNCTIONS, ETC.
 import React, { useState, useEffect } from "react";
 // import { useMediaQuery } from "react-responsive";
-import { makeStyles
-  // , useTheme 
-} from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 // import clsx from 'clsx';
 
 // COMPONENTS
-// import FAIcon from "../../components/FAIcon";
+import FAIcon from "../../components/FAIcon";
 import DocForm from "../../components/DocForm"
-import { Box, Grid, Typography, Fab, Modal, Backdrop, Fade } from "@material-ui/core";
+import { List, ListItem, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, IconButton, Modal, Backdrop, Fade } from "@material-ui/core";
 
 // STYLESHEETS
 import "../../utils/flowHeaders.min.css";
@@ -27,9 +25,22 @@ const useStyles = makeStyles(theme => ({
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
     },
+    list: {
+      width: '100%',
+      maxWidth: 500,
+      backgroundColor: theme.palette.background.paper,
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
   }));
 
-
+  const testDocuments = [
+    {
+      name: "Name",
+      description: "This is a description"
+      
+    }
+  ]
 // PROPS ( * indicates required fields )
 // {
 //      get: function to retrieve documents from the database,
@@ -47,14 +58,19 @@ const useStyles = makeStyles(theme => ({
 //              validation: function that will validate the input upon submission
 //              name: field name in submission object
 //          }
-//      ]
+//      ],
+//      icon: {
+//          name: Font Awesome Icon to describe the document type
+//          solid: icon is solid style or not (bool)
+//          color: icon color
+//      }
 //      
 // }
 
 
 function DocEditor(props) {
   const classes = useStyles();
-  // const theme = useTheme();
+  const theme = useTheme();
   // const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
 
   // HOOKS
@@ -72,21 +88,36 @@ function DocEditor(props) {
 
   useEffect(() => {
     // Pull content from API
-    props.get()
-    .then((results) => {
-      setDocuments(results.data);
-    })
+    // props.get()
+    // .then((results) => {
+    //   setDocuments(results.data);
+    // })
 
   }, [])
 
   // LOADING  
   return (
-    <>
-
-
-    <button type="button" onClick={handleOpen}>
-        react-transition-group
-    </button>
+    <div style={{display: "flex"}}>
+      <List className={classes.list}>
+        {
+          // documents.map((document) => (
+          testDocuments.map((document, idx) => (
+            <ListItem key={`document-${idx}`} button onClick={handleOpen}>
+              <ListItemAvatar>
+                <Avatar>
+                  <FAIcon name={props.icon.name} solid={props.icon.solid} style={{color: props.icon.color}}/>
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={document[props.primary]} secondary={document[props.secondary]} />
+              <ListItemSecondaryAction onClick={() => {console.log("Deleting document")}}>
+                <IconButton edge="end" aria-label="delete">
+                  <FAIcon size={"sm"} name={"trash"} solid />
+                </IconButton>
+              </ListItemSecondaryAction>
+          </ListItem>
+          ))
+        }
+      </List>
       
       <Modal
         aria-labelledby="transition-modal-title"
@@ -103,27 +134,18 @@ function DocEditor(props) {
         <Fade in={open}>
           <div className={classes.paper}>
           <DocForm 
-            fields={[
-                {type: "single", value: "test", name: "name", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"},
-                {type: "location", value: "test", name: "description", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"}
-                ,{type: "date", value: new Date('2014-08-18T21:11:54'), name: "startDate", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"}
-
-            ]}
+            fields={props.fields}
             submitBtn={
-              {
-              color: "blue",
-              text: "Update",
-              icon: "edit"
-              }
+              props.submitBtn
             }
-            submit={() => {console.log("submitting")}}
+            submit={props.submit}
           />
           </div>
         </Fade>
       </Modal>
     
     
-    </>
+    </div>
   )
 
 }

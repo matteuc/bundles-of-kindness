@@ -65,7 +65,8 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: "rgb(91, 39, 188)",
-    fontFamily: "Lilita One, cursive"
+    fontFamily: "Lilita One, cursive",
+    backgroundColor: "transparent"
   },
   link: {
     textDecoration: "none",
@@ -193,7 +194,7 @@ function AdminDash(props) {
                 <Grid item xs={10} md={8} lg={6}>
                   {/* PAGE TITLE */}
                   <h3 className="flow-text" >
-                    <Paper elevation={0} className={classes.paper}> </Paper>
+                    <Paper elevation={0} className={classes.paper}> Website Management </Paper>
                   </h3>
                   {/* PAGE DESCRIPTION */}
                   <Typography color="secondary" align="center" variant="body1">
@@ -202,7 +203,7 @@ function AdminDash(props) {
               </Grid>
 
               {/* OPTIONS CONTAINER */}
-              <Grid style={{ marginTop: "2em" }} container justify="center">
+              <Grid style={{ marginTop: "0.5em" }} container justify="center">
 
                 {/* OPTION TABS */}
                 <Grid item xs={11} md={8} lg={6}>
@@ -235,7 +236,28 @@ function AdminDash(props) {
                     {/* DONATIONS TAB */}
                     <TabPanel className={classes.tabPanel} value={tabIdx} index={0} dir={theme.direction} >
                         
-                        <DocEditor />
+                        <DocEditor 
+                          fields={[
+                            {type: "single", value: "test", name: "name", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"},
+                            {type: "location", value: "test", name: "description", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"},
+                            {type: "date", value: new Date('2014-08-18T21:11:54'), name: "startDate", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"}
+                          ]}
+                          submitBtn={
+                            {
+                            color: "blue",
+                            text: "Update",
+                            icon: "edit"
+                            }
+                          }
+                          submit={() => {console.log("submitting")}}
+                          icon={{
+                            name: "ad",
+                            color: "black",
+                            solid: true
+                          }}
+                          primary={"name"}
+                          secondary={"description"}
+                        />
                     </TabPanel>
 
                     {/* VOLUNTEERING TAB */}
