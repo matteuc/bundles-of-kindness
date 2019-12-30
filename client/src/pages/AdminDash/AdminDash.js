@@ -134,7 +134,7 @@ function AdminDash(props) {
           :
           !isAuthenticated ?
             <div style={{ minHeight: "100%", width: "100%", position: "absolute", display: "flex" }}>
-              <div style={{ padding: "1em", borderRadius: "10%", width:"70vw", maxWidth: "500px", minHeight: "60vh", margin: "auto", backgroundColor: MAIN_COLOR, display: "flex", boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
+              <div style={{ padding: "1em", borderRadius: "10%", width:"85vw", maxWidth: "500px", minHeight: "60vh", margin: "auto", backgroundColor: MAIN_COLOR, display: "flex", boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
                 <Grid container justify="center" style={{margin:"auto"}}>
                   <Grid item xs={10} md={8} lg={6} style={{textAlign: "center"}}>
                     <Typography className={clsx("flow-text", classes.heading)} variant="h3" align="center" gutterBottom>
