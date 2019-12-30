@@ -125,19 +125,19 @@ function DocEditor(props) {
     })
   }
 
-  const submitDocument = (newDoc, submit) => {
+  const submitDocument = async (newDoc, submit) => {
     
     // PASS IN DOCUMENT & ID TO BE SUBMITTED
-      console.log(submit(newDoc, openDocument));
-      // .then(() => {
-      //   // Refresh documents after submission
-      //   getDocuments();
-      //   // Close modal
-      //   handleClose();
-      // })
-      // .catch((err) => {
-      //   // TODO: ERROR CATCHING
-      // });
+      await submit(newDoc, openDocument)
+      .then(() => {
+        // Refresh documents after submission
+        getDocuments();
+        // Close modal
+        handleClose();
+      })
+      .catch((err) => {
+        // TODO: ERROR CATCHING
+      });
 
   }
 

@@ -108,16 +108,19 @@ function AdminDash(props) {
 
   const addDropzone = (newDropzone) => {
     // Acquire lat. and lng. coordinates 
-    // API.geocodeLocation(newDropzone.address)
-    // .then((geoData) => {
-    //   const { lat, lng } = geoData.data.results[0].geometry.location;
-      
-    //   let modDropzone = newDropzone;
-    //   modDropzone.lat = lat;
-    //   modDropzone.lng = lng;
-      
-    // })
-    return API.addDropzone(newDropzone);
+    return new Promise(resolve => {
+      API.geocodeLocation(newDropzone.address)
+      .then((geoData) => {
+        const { lat, lng } = geoData.data.results[0].geometry.location;
+        
+        let modDropzone = newDropzone;
+        modDropzone.lat = lat;
+        modDropzone.lng = lng;
+        
+        resolve(API.addDropzone(modDropzone)) 
+      })
+
+    })
   }
 
   useEffect(() => {
