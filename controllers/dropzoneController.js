@@ -10,20 +10,20 @@ module.exports = {
     create: function(req, res) {
         if( isVerified(req.query.key) ) {
             dropzoneDb
-                .create(req.body)
-                .then(dbModel => res.json(dbModel))
-                .catch(err => res.status(422).json(err));
-
+            .create(req.body.data)
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+            
         } else {
             res.status(403).json(forbiddenErr)
         }
     },
     findAll: function(req, res) {
         dropzoneDb
-            .find({})
-            .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));
-            
+        .find({})
+        .then(dbModel => res.json(dbModel))
+        .catch(err => res.status(422).json(err));
+        
     }
     ,
     update: function(req, res) {
@@ -32,7 +32,7 @@ module.exports = {
             .findOneAndUpdate({ _id: req.params.id }, req.body.data)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
-
+            
         } else {
             res.status(403).json(forbiddenErr)
         }
@@ -44,7 +44,7 @@ module.exports = {
             .then(dbModel => dbModel.remove())
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
-
+            
         } else {
             res.status(403).json(forbiddenErr)
         }

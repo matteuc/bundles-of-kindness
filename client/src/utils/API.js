@@ -2,6 +2,9 @@ import axios from "axios";
 require("dotenv").config();
 
 export default {
+  geocodeLocation: function(address) {
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`);
+  },
   getSponsorCompanies: function () {
     return axios.get(`/api/sponsorCompany`);
   },
@@ -17,8 +20,8 @@ export default {
   addSponsorCompany: function (newSponsor) {
     return axios.post(`/api/sponsorCompany?key=${process.env.REACT_APP_API_SECRET}`, { data: newSponsor });
   },
-  addDropzone: function (newDropzone) {
-    return axios.post(`/api/dropzone?key=${process.env.REACT_APP_API_SECRET}`,  { data: newDropzone });
+  addDropzone: function (newDropzone) {      
+      return axios.post(`/api/dropzone?key=${process.env.REACT_APP_API_SECRET}`,  { data: newDropzone });
   },
   addAdmin: function (newAdmin) {
     return axios.post(`/api/admin?key=${process.env.REACT_APP_API_SECRET}`,  { data: newAdmin });

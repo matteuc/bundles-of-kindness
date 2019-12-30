@@ -161,7 +161,8 @@ const unmarkError = (id) => {
                                 key={`form-${idx}`}
                                 id={field.name}
                                 onChange={handleFormChange}
-                                value={fields[field.name] || DOC_VALUES[field.name]}
+                                // defaultValue={DOC_VALUES[field.name]}
+                                value={fields[field.name]  || DOC_VALUES[field.name] || ''}
                                 label={field.label}
                                 placeholder={field.placeholder}
                                 error={errors[field.name] ? true: false}
@@ -179,11 +180,11 @@ const unmarkError = (id) => {
                         return (
                             <TextField
                                 multiline
-                                defaultValue={DOC_VALUES[field.name]}
+                                // defaultValue={DOC_VALUES[field.name]}
                                 key={`form-${idx}`}
                                 id={field.name}
                                 onChange={handleFormChange}
-                                value={fields[field.name]}
+                                value={fields[field.name]  || DOC_VALUES[field.name] || ''}
                                 label={field.label}
                                 placeholder={field.placeholder}
                                 error={errors[field.name] ? true: false}
@@ -201,11 +202,11 @@ const unmarkError = (id) => {
                             return (
                             <TextField
                                 type="number"
-                                defaultValue={DOC_VALUES[field.name]}
+                                // defaultValue={DOC_VALUES[field.name]}
                                 key={`form-${idx}`}
                                 id={field.name}
                                 onChange={handleFormChange}
-                                value={fields[field.name]}
+                                value={fields[field.name]  || DOC_VALUES[field.name] || ''}
                                 label={field.label}
                                 placeholder={field.placeholder}
                                 error={errors[field.name] ? true: false}
@@ -231,7 +232,7 @@ const unmarkError = (id) => {
                                     label={field.label}
                                     fullWidth
                                     format="MM/dd/yyyy"
-                                    value={fields[field.name] || DOC_VALUES[field.name]}
+                                    value={fields[field.name]  || DOC_VALUES[field.name] || new Date()}
                                     onChange={(date) => handleDateChange(date, field.name)}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -252,7 +253,7 @@ const unmarkError = (id) => {
                                     label={field.label}
                                     fullWidth
                                     mask="__:__ _M"
-                                    value={fields[field.name] || DOC_VALUES[field.name]}
+                                    value={fields[field.name]  || DOC_VALUES[field.name] || new Date()}
                                     onChange={(date) => handleDateChange(date, field.name)}
                                     placeholder={field.placeholder}
                                 />
@@ -271,7 +272,7 @@ const unmarkError = (id) => {
                                     label={field.label}
                                     fullWidth
                                     mask="__:__ _M"
-                                    value={fields[field.name] || DOC_VALUES[field.name]}
+                                    value={fields[field.name]  || DOC_VALUES[field.name] || new Date()}
                                     onChange={(date) => handleDateChange(date, field.name)}
                                     placeholder={field.placeholder}
                                 />
@@ -286,8 +287,8 @@ const unmarkError = (id) => {
                                     required={field.required}
                                     className={`mdc-text-field__input`}
                                     id={field.name}
-                                    defaultValue={DOC_VALUES[field.name]}
-                                    value={fields[field.name]}
+                                    // defaultValue={DOC_VALUES[field.name]}
+                                    value={fields[field.name]  || DOC_VALUES[field.name] || ''}
                                     style={{padding: "20px 0px 6px", borderBottomColor: errors[field.name] ? ERROR_COLOR : ""}}
                                     googleAPIKey={process.env.REACT_APP_GOOGLE_API_KEY}
                                     onChange={handleFormChange}

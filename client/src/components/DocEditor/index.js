@@ -1,6 +1,6 @@
 // HOOKS, FUNCTIONS, ETC.
 import React, { useState, useEffect } from "react";
-// import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "react-responsive";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
@@ -80,7 +80,7 @@ const useStyles = makeStyles(theme => ({
 function DocEditor(props) {
   const classes = useStyles();
   const theme = useTheme();
-  // const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
+  const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
 
   // HOOKS
   const [open, setOpen] = React.useState(false);
@@ -125,22 +125,24 @@ function DocEditor(props) {
     })
   }
 
-  const submitDocument = (newDoc, submit) => {
+  const submitDocument = async (newDoc, submit) => {
+    
     // PASS IN DOCUMENT & ID TO BE SUBMITTED
-    submit(newDoc, openDocument)
-    .then(() => {
-      // Refresh documents after submission
-      getDocuments();
-      // Close modal
-      handleClose();
-    })
-    .catch((err) => {
-      // TODO: ERROR CATCHING
-    });
+      await submit(newDoc, openDocument)
+      .then(() => {
+        // Refresh documents after submission
+        getDocuments();
+        // Close modal
+        handleClose();
+      })
+      .catch((err) => {
+        // TODO: ERROR CATCHING
+      });
+
   }
 
   const deleteDocument = () => {
-    // TODO: PASS IN DOCUMENT & ID TO BE DELETED
+    // PASS IN DOCUMENT & ID TO BE DELETED
     props.delete(openDocument)
     .then(() => {
       // Refresh documents after submission
@@ -267,16 +269,16 @@ function DocEditor(props) {
                   Are you sure you want to delete {props.name} '{values[props.primary]}'?
                 </Typography>
                 <Box className={classes.centerElementParent} style={{ color: "white", margin: "1.5em 0em" }} >
-                  <Fab style={{ backgroundColor: "#f05" }} variant="extended" onClick={handleAlertClose} aria-label="Login" className={clsx("hvr-bob", classes.centerElement)}>
+                  <Fab style={{ backgroundColor: "#f05" }} variant={"extended"} onClick={handleAlertClose} aria-label="Login" className={clsx("hvr-bob", classes.centerElement)}>
                     <span style={{ color: "rgb(255, 255, 255)" }}  >
-                        <FAIcon size="lg" name="times" solid className={classes.extendedBtnIcon} />
-                        Cancel
+                        <FAIcon size="lg" name="times" solid className={!isMobileSize ? classes.extendedBtnIcon : ""} />
+                        {isMobileSize ? "" : "Cancel"}
                     </span>
                   </Fab>
-                  <Fab style={{ backgroundColor: "#7b1" }} variant="extended" onClick={() => { deleteDocument()}} aria-label="Login" className={clsx("hvr-bob", classes.centerElement)}>
+                  <Fab style={{ backgroundColor: "#7b1" }} variant={"extended"} onClick={() => { deleteDocument()}} aria-label="Login" className={clsx("hvr-bob", classes.centerElement)}>
                     <span style={{ color: "rgb(255, 255, 255)" }} >
-                        <FAIcon size="lg" name="check" solid className={classes.extendedBtnIcon} />
-                        Confirm
+                        <FAIcon size="lg" name="check" solid className={!isMobileSize ? classes.extendedBtnIcon : ""} />
+                        {isMobileSize ? "" : "Confirm"}
                     </span>
                   </Fab>
                 </Box>
