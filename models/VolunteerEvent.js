@@ -3,13 +3,27 @@ const Schema = mongoose.Schema;
 
 const volunteerEventSchema = new Schema({
 
-    name: {
+    title: {
         type: String,
         required: true
     },
-    email: {
+    description: {
+        type: String
+    },
+    location: {
         type: String,
         required: true
+    },
+    form: {
+        type: String,
+        required: true
+    },
+    startTime: {
+        type: String,
+        required: true
+    },
+    endTime: {
+        type: String
     }
 
 });

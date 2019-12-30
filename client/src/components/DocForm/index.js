@@ -64,7 +64,6 @@ function DocForm(props) {
 //   const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
 
   // VARIABLES
-  const DOC_ID = props.id;
   const DOC_SUB = props.submit;
   const DOC_FIELDS = props.fields; 
   const DOC_VALUES = props.values;
@@ -132,7 +131,7 @@ const handleSubmit = (e) => {
     setErrors({...tmpErrors});
 
     if(errors == 0) {
-        DOC_SUB(fields, DOC_ID);
+        DOC_SUB(fields);
     }
     
 }

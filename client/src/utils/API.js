@@ -26,6 +26,18 @@ export default {
   addVolunteerEvent: function (newVolunteerEvent) {
     return axios.post(`/api/volunteerEvent?key=${process.env.REACT_APP_API_SECRET}`,  { data: newVolunteerEvent });
   },
+  updateSponsorCompany: function (newSponsor, sponsorCompanyId) {
+    return axios.put(`/api/sponsorCompany/${sponsorCompanyId}?key=${process.env.REACT_APP_API_SECRET}`, { data: newSponsor });
+  },
+  updateDropzone: function (newDropzone, dropzoneId) {
+    return axios.put(`/api/dropzone/${dropzoneId}?key=${process.env.REACT_APP_API_SECRET}`,  { data: newDropzone });
+  },
+  updateAdmin: function (newAdmin, adminId) {
+    return axios.put(`/api/admin/${adminId}?key=${process.env.REACT_APP_API_SECRET}`,  { data: newAdmin });
+  },
+  updateVolunteerEvent: function (newVolunteerEvent, volunteerEventId) {
+    return axios.put(`/api/volunteerEvent/${volunteerEventId}?key=${process.env.REACT_APP_API_SECRET}`,  { data: newVolunteerEvent });
+  },
   deleteSponsorCompany: function (sponsorCompanyId) {
     return axios.delete(`/api/sponsorCompany/${sponsorCompanyId}?key=${process.env.REACT_APP_API_SECRET}`);
   },

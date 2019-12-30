@@ -128,9 +128,9 @@ function DocEditor(props) {
     })
   }
 
-  const submitDocument = (submit) => {
-    // TODO: PASS IN DOCUMENT & ID TO BE SUBMITTED
-    submit()
+  const submitDocument = (newDoc, submit) => {
+    // PASS IN DOCUMENT & ID TO BE SUBMITTED
+    submit(newDoc, openDocument)
     .then(() => {
       // Refresh documents after submission
       getDocuments();
@@ -208,13 +208,12 @@ function DocEditor(props) {
         <Fade in={open}>
           <div className={clsx(classes.paper, classes.formModal)}>
             <DocForm
-              id={openDocument}
               fields={props.fields}
               values={values}
               submitBtn={
                 isUpdate ? props.updateBtn : props.createBtn
               }
-              submit={() => { isUpdate ? submitDocument(props.update) : submitDocument(props.create) }}
+              submit={(newDoc) => { isUpdate ? submitDocument(newDoc, props.update) : submitDocument(newDoc, props.create) }}
             />
           </div>
         </Fade>

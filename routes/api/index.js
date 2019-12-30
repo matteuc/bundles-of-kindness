@@ -12,7 +12,7 @@ router.use("/dropzone", dropzoneRoutes);
 router.use("/sponsorCompany", sponsorCompanyRoutes);
 
 // VolunteeringEvent routes
-router.use("/volunteeringEvent", volunteerEventRoutes);
+router.use("/volunteerEvent", volunteerEventRoutes);
 
 // Admin routes
 router.use("/admin", adminRoutes);
