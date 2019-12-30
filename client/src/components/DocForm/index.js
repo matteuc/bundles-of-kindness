@@ -1,7 +1,10 @@
 // HOOKS, FUNCTIONS, ETC.
 import React, { useState, useEffect } from "react";
-import { useMediaQuery } from "react-responsive";
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+// import { useMediaQuery } from "react-responsive";
+import { 
+    makeStyles,
+    // useTheme 
+} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import 'date-fns';
 
@@ -72,8 +75,9 @@ function DocForm(props) {
   // HOOKS
   //  https://itnext.io/how-to-build-a-dynamic-controlled-form-with-react-hooks-2019-b39840f75c4f
   
-  const [fields, setFields] = useState({});
+  const [fields, setFields] = useState(DOC_VALUES);
   const [errors, setErrors] = useState({});
+  const [isEnabled, setIsEnabled] = useState(true);
 
   const handleFormChange = (e) => {
     const { id, value } = e.target;
@@ -130,8 +134,13 @@ const handleSubmit = (e) => {
 
     setErrors({...tmpErrors});
 
-    if(errors == 0) {
+    if(errors === 0) {
+        setIsEnabled(false);
         DOC_SUB(fields);
+        
+        // .then(res => {
+        //     setIsEnabled(true);
+        // });
     }
     
 }
@@ -308,6 +317,8 @@ const unmarkError = (id) => {
                                 </div>
                             </div>
                         )
+                    default: 
+                        return "";
                     // case "toggle":
                     //     return (
                     //         <div>Location</div>
@@ -329,7 +340,7 @@ const unmarkError = (id) => {
 
         <Box className={classes.centerElementParent} style={{ color: "white", margin: "0.5em" }} >
 
-            <Fab style={{ backgroundColor: props.submitBtn.color || "" }} variant="extended" type="submit" aria-label="Login" className={clsx("hvr-bob", classes.centerElement, classes.btnIcon)}>
+            <Fab disabled={!isEnabled} style={{ backgroundColor: props.submitBtn.color || "" }} variant="extended" type="submit" aria-label="Login" className={clsx("hvr-bob", classes.centerElement, classes.btnIcon)}>
             <span style={{ color: "rgb(255, 255, 255)" }}>
                 <FAIcon size="lg" name={props.submitBtn.icon} solid className={classes.extendedBtnIcon} />
                 {props.submitBtn.text}
