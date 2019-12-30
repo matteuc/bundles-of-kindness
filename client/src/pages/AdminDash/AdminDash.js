@@ -57,8 +57,7 @@ function a11yProps(index) {
 
 const useStyles = makeStyles(theme => ({
   tabPanel: {
-    minHeight: "60vh",
-    padding: "0.5em"
+    minHeight: "60vh"
 
   },
   paper: {
@@ -206,7 +205,7 @@ function AdminDash(props) {
               <Grid style={{ marginTop: "0.5em" }} container justify="center">
 
                 {/* OPTION TABS */}
-                <Grid item xs={11} md={8} lg={6}>
+                <Grid item xs={12} sm={10} md={8} lg={6}>
                   {/* TAB NAV */}
                   <AppBar position="static" color="default">
                     <Tabs

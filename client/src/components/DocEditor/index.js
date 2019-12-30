@@ -37,10 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
   list: {
     width: '100%',
-    maxWidth: 500,
     backgroundColor: theme.palette.background.paper,
-    marginLeft: "auto",
-    marginRight: "auto"
   },
   centerElementParent: {
     display: "flex"
@@ -165,32 +162,56 @@ function DocEditor(props) {
   // LOADING  
   return (
     <div>
-      <div style={{ display: "flex" }}>
-        <List className={classes.list}>
-          {
-            documents.map((document, idx) => (
-              <ListItem key={`document-${idx}`} button onClick={() => handleFormOpen(document, true, document._id) }>
-                <ListItemAvatar>
-                  <Avatar>
-                    <FAIcon name={props.icon.name} solid={props.icon.solid} style={{ color: props.icon.color }} />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText style={{wordBreak: "break-all"}} primary={document[props.primary]} secondary={document[props.secondary]} />
-                <ListItemSecondaryAction onClick={() =>  handleAlertOpen(document) }>
-                  <IconButton edge="end" aria-label="delete">
-                    <FAIcon size={"sm"} name={"trash"} solid />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-            ))
-          }
-        </List>
-      </div>
-      <Box className={classes.centerElementParent} style={{ color: "white", marginTop: "1.5em" }} >
-          <span style={{ color: "rgb(255, 255, 255)" }} onClick={() => handleFormOpen({}, false, "")} className={clsx("hvr-grow", classes.centerElement)} >
-            <FAIcon size="2x" name={props.addIcon.name} solid={props.addIcon.solid} className={classes.extendedBtnIcon} style={{color: props.addIcon.color}} />
-          </span>
-      </Box>
+      { documents.length !== 0 ?
+      <>
+        <div style={{ display: "flex" }}>
+          <List className={classes.list}>
+            {
+              documents.map((document, idx) => (
+                <ListItem key={`document-${idx}`} button onClick={() => handleFormOpen(document, true, document._id) }>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <FAIcon name={props.icon.name} solid={props.icon.solid} style={{ color: props.icon.color }} />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText style={{wordBreak: "break-all"}} primary={document[props.primary]} secondary={document[props.secondary]} />
+                  <ListItemSecondaryAction onClick={() =>  handleAlertOpen(document) }>
+                    <IconButton edge="end" aria-label="delete">
+                      <FAIcon size={"sm"} name={"trash"} solid />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))
+            }
+          </List>
+        </div>
+        <Box className={classes.centerElementParent} style={{ color: "white", marginTop: "1.5em" }} >
+            <span style={{ color: "rgb(255, 255, 255)" }} onClick={() => handleFormOpen({}, false, "")} className={clsx("hvr-grow", classes.centerElement)} >
+              <FAIcon size="2x" name={props.addIcon.name} solid={props.addIcon.solid} className={classes.extendedBtnIcon} style={{color: props.addIcon.color}} />
+            </span>
+        </Box>
+      </>
+      :
+       <div style={{marginTop: "2em"}}>
+         <Grid container justify="center" >
+              <Grid item xs={10} md={8} style={{textAlign: "center"}}>
+                <Typography style={{fontWeight: "bold", color: "grey"}} className={clsx("flow-text", classes.heading)} variant="h5" align="center" gutterBottom>
+                  No '{props.name}' documents exist yet.
+                </Typography>
+              </Grid>
+              <Grid item xs={10} style={{textAlign: "center"}}>
+
+                <Typography style={{color: "grey"}} align="center" variant="body1">
+                  Click the icon below to create a '{props.name}'!
+                </Typography>
+                <Box className={classes.centerElementParent} style={{ color: "grey", margin: "1.5em 0em" }} >
+                  <FAIcon size={"10x"} name={props.icon.name} solid={props.icon.solid} className={clsx("hvr-bob", classes.centerElement)} onClick={() => handleFormOpen({}, false, "")}/>
+                  
+                </Box>
+              </Grid>
+            </Grid>
+       </div>
+      }
 
       {/* FORM MODAL */}
       <Modal
