@@ -1,0 +1,10 @@
+/* Prevents text overflow on list items */
+.MuiListItemText-secondary {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+div[role="tabpanel"] > div.MuiBox-root {
+    padding: 0px;
+}
