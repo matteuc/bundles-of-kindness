@@ -175,7 +175,7 @@ function DocEditor(props) {
                     <FAIcon name={props.icon.name} solid={props.icon.solid} style={{ color: props.icon.color }} />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={document[props.primary]} secondary={document[props.secondary]} />
+                <ListItemText style={{wordBreak: "break-all"}} primary={document[props.primary]} secondary={document[props.secondary]} />
                 <ListItemSecondaryAction onClick={() =>  handleAlertOpen(document) }>
                   <IconButton edge="end" aria-label="delete">
                     <FAIcon size={"sm"} name={"trash"} solid />

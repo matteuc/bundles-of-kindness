@@ -97,7 +97,7 @@ function App() {
           <Route exact path="/admin" component={AdminDash} />
           <Route component={NoMatch} />
         </Switch>
-        <Footer color={"rgb(246, 246, 246)"}>
+        {/* <Footer color={"rgb(246, 246, 246)"}> */}
             {/* <Grid container spacing={3}>
               <Grid item xs={12} sm={3}>
                 <Paper className={classes.paper}>Sitemap section #1</Paper>
@@ -107,7 +107,7 @@ function App() {
               </Grid>
             </Grid> */}
 
-        </Footer>
+        {/* </Footer> */}
         </Box>
       </NavBarApp>
 
