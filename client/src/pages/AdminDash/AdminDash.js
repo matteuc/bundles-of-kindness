@@ -123,6 +123,27 @@ function AdminDash(props) {
     })
   }
 
+  const updateDropzone = (newDropzone, id) => {
+    // Acquire lat. and lng. coordinates IF changed
+    if(newDropzone.address) {
+      return new Promise(resolve => {
+        API.geocodeLocation(newDropzone.address)
+        .then((geoData) => {
+          const { lat, lng } = geoData.data.results[0].geometry.location;
+          
+          let modDropzone = newDropzone;
+          modDropzone.lat = lat;
+          modDropzone.lng = lng;
+          
+          resolve(API.updateDropzone(modDropzone, id)) 
+        })
+      })
+    } 
+
+    return API.updateDropzone(newDropzone, id);
+
+  }
+
   useEffect(() => {
     setIsVerifying(true);
 
@@ -276,7 +297,7 @@ function AdminDash(props) {
                         }
                         get={API.getDropzones}
                         create={addDropzone}
-                        update={API.updateDropzone}
+                        update={updateDropzone}
                         delete={API.deleteDropzone}
                         icon={{
                           name: "map-marker-alt",
@@ -325,7 +346,7 @@ function AdminDash(props) {
                         delete={API.deleteVolunteerEvent}
                         icon={{
                           name: "hands-helping",
-                          color: "lavender",
+                          color: "rgb(234, 196, 255)",
                           solid: true
                         }}
                         addIcon={{

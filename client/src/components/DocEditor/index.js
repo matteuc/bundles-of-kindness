@@ -1,7 +1,10 @@
 // HOOKS, FUNCTIONS, ETC.
 import React, { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { 
+   makeStyles,
+  //  useTheme 
+} from '@material-ui/core/styles';
 import clsx from 'clsx';
 
 // COMPONENTS
@@ -79,17 +82,17 @@ const useStyles = makeStyles(theme => ({
 
 function DocEditor(props) {
   const classes = useStyles();
-  const theme = useTheme();
+  // const theme = useTheme();
   const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
 
   // HOOKS
-  const [open, setOpen] = React.useState(false);
-  const [alertOpen, setAlertOpen] = React.useState(false);
-  // const [modalContent, setModalContent] = React.useState();
-  const [documents, setDocuments] = React.useState([]);
-  const [values, setValues] = React.useState({});
-  const [isUpdate, setIsUpdate] = React.useState();
-  const [openDocument, setOpenDocument] = React.useState(); 
+  const [open, setOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+  // const [modalContent, setModalContent] = useState();
+  const [documents, setDocuments] = useState([]);
+  const [values, setValues] = useState({});
+  const [isUpdate, setIsUpdate] = useState();
+  const [openDocument, setOpenDocument] = useState(); 
 
   const handleOpen = () => {
     setOpen(true);
@@ -126,7 +129,6 @@ function DocEditor(props) {
   }
 
   const submitDocument = async (newDoc, submit) => {
-    
     // PASS IN DOCUMENT & ID TO BE SUBMITTED
       await submit(newDoc, openDocument)
       .then(() => {
@@ -158,7 +160,6 @@ function DocEditor(props) {
   useEffect(() => {
     // Pull content from API
     getDocuments();
-
   }, [])
 
   // LOADING  
