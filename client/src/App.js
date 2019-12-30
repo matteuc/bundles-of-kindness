@@ -1,6 +1,6 @@
 // import React, { useEffect, useState } from "react";
-// import { useAuth0 } from "./react-auth0-spa";
 // import PrivateRoute from "./components/PrivateRoute";
+// import { useAuth0 } from "./react-auth0-spa";
 // import API from './utils/API';
 
 // HOOKS, FUNCTIONS, ETC.
@@ -11,11 +11,15 @@ import { Route, Switch } from "react-router-dom";
 import Landing from "./pages/Landing/index";
 import HelpOut from "./pages/HelpOut/index";
 import Sponsors from "./pages/Sponsors/index";
+import AdminDash from "./pages/AdminDash/index";
 
 // COMPONENTS
 import NoMatch from "./components/NoMatch";
 import NavBarApp from "./components/NavBarApp";
+import Footer from "./components/Footer";
 import { Box } from "@material-ui/core";
+// import { makeStyles } from "@material-ui/styles";
+
 
 // LOGO
 import Logo from "./assets/logo.PNG";
@@ -25,6 +29,10 @@ import "./App.css";
 
 // DATA
 import { MAIN_COLOR, ACCENT_COLOR } from "./utils/colors";
+
+// const useStyles = makeStyles(theme => ({
+ 
+// }));
 
 function App() {
   // const user = {
@@ -46,11 +54,11 @@ function App() {
   //   }
   // };
 
-  // if (loading) {
+  // if (!loading && isAuthenticated && user) {
   //   return (
   //     <div className="App text-center">
   //       <div className="mt-5">
-  //         <Loading />
+  //         {user.email}
   //       </div>
   //     </div>
   //   );
@@ -79,26 +87,27 @@ function App() {
           borderBottom: `2px solid ${ACCENT_COLOR}`
         }}
       >
-        <Box >
+        
+        <Box>
 
         <Switch >
           <Route exact path="/" component={Landing} />
           <Route exact path="/help-out" component={HelpOut} />
           <Route exact path="/sponsors" component={Sponsors} />
-          {/* <PrivateRoute exact path="/private-page" component={PrivateRoute} user={userInfo} /> */}
+          <Route exact path="/admin" component={AdminDash} />
           <Route component={NoMatch} />
         </Switch>
-        {/* <Footer color={"rgb(246, 246, 246)"}>
-            <Grid container spacing={3}>
+        <Footer color={"rgb(246, 246, 246)"}>
+            {/* <Grid container spacing={3}>
               <Grid item xs={12} sm={3}>
                 <Paper className={classes.paper}>Sitemap section #1</Paper>
               </Grid>
               <Grid item xs={12} sm={3}>
                 <Paper className={classes.paper}>Sitemap section #2</Paper>
               </Grid>
-            </Grid>
+            </Grid> */}
 
-        </Footer> */}
+        </Footer>
         </Box>
       </NavBarApp>
 

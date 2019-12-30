@@ -1,4 +1,4 @@
-const sponsorCompanyDb = require("../models/SponsorCompany");
+const volunteerEventDb = require("../models/VolunteerEvent");
 
 const { isVerified } = require("./apiAuth.js");
 
@@ -9,7 +9,7 @@ const forbiddenErr = {
 module.exports = {
     create: function(req, res) {
         if( isVerified(req.query.key) ) {
-            sponsorCompanyDb
+            volunteerEventDb
                 .create(req.body)
                 .then(dbModel => res.json(dbModel))
                 .catch(err => res.status(422).json(err));
@@ -19,16 +19,15 @@ module.exports = {
         }
     },
     findAll: function(req, res) {
-        sponsorCompanyDb
+        volunteerEventDb
             .find({})
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
             
-    }
-    ,
+    },
     update: function(req, res) {
         if( isVerified(req.query.key) ) {
-            sponsorCompanyDb
+            volunteerEventDb
             .findOneAndUpdate({ _id: req.params.id }, req.body.data)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
@@ -39,7 +38,7 @@ module.exports = {
     }, 
     delete: function(req, res) {
         if( isVerified(req.query.key) ) {
-            sponsorCompanyDb
+            volunteerEventDb
             .findOne({ _id: req.params.id  })
             .then(dbModel => dbModel.remove())
             .then(dbModel => res.json(dbModel))

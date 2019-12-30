@@ -1,4 +1,4 @@
-const sponsorCompanyDb = require("../models/SponsorCompany");
+const adminDb = require("../models/Admin");
 
 const { isVerified } = require("./apiAuth.js");
 
@@ -9,8 +9,8 @@ const forbiddenErr = {
 module.exports = {
     create: function(req, res) {
         if( isVerified(req.query.key) ) {
-            sponsorCompanyDb
-                .create(req.body)
+            adminDb
+                .create(req.body.data)
                 .then(dbModel => res.json(dbModel))
                 .catch(err => res.status(422).json(err));
 
@@ -19,16 +19,19 @@ module.exports = {
         }
     },
     findAll: function(req, res) {
-        sponsorCompanyDb
-            .find({})
-            .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));
-            
+        if( isVerified(req.query.key) ) {
+            adminDb
+                .find({})
+                .then(dbModel => res.json(dbModel))
+                .catch(err => res.status(422).json(err));
+        } else {
+            res.status(403).json(forbiddenErr)
+        }    
     }
     ,
     update: function(req, res) {
         if( isVerified(req.query.key) ) {
-            sponsorCompanyDb
+            adminDb
             .findOneAndUpdate({ _id: req.params.id }, req.body.data)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
@@ -39,7 +42,7 @@ module.exports = {
     }, 
     delete: function(req, res) {
         if( isVerified(req.query.key) ) {
-            sponsorCompanyDb
+            adminDb
             .findOne({ _id: req.params.id  })
             .then(dbModel => dbModel.remove())
             .then(dbModel => res.json(dbModel))
