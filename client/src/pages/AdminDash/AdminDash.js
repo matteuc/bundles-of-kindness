@@ -106,6 +106,20 @@ function AdminDash(props) {
     setTabIdx(index);
   };
 
+  const addDropzone = (newDropzone) => {
+    // Acquire lat. and lng. coordinates 
+    // API.geocodeLocation(newDropzone.address)
+    // .then((geoData) => {
+    //   const { lat, lng } = geoData.data.results[0].geometry.location;
+      
+    //   let modDropzone = newDropzone;
+    //   modDropzone.lat = lat;
+    //   modDropzone.lng = lng;
+      
+    // })
+    return API.addDropzone(newDropzone);
+  }
+
   useEffect(() => {
     setIsVerifying(true);
 
@@ -258,7 +272,7 @@ function AdminDash(props) {
                           }
                         }
                         get={API.getDropzones}
-                        create={API.addDropzone}
+                        create={addDropzone}
                         update={API.updateDropzone}
                         delete={API.deleteDropzone}
                         icon={{
@@ -272,7 +286,7 @@ function AdminDash(props) {
                           solid: true
                         }}
                         primary={"iw_title"}
-                        secondary={"iw_text"}
+                        secondary={"address"}
                         name="Dropzone"
                       />
                     </TabPanel>

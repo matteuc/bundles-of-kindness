@@ -24,6 +24,10 @@ const dropzoneSchema = new Schema({
         type: String,
         default: "",
     },
+    address: {
+        type: String,
+        default: "",
+    },
     icon: {
         type: String,
         default: ""

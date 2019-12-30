@@ -10,7 +10,7 @@ module.exports = {
     create: function(req, res) {
         if( isVerified(req.query.key) ) {
             sponsorCompanyDb
-                .create(req.body)
+                .create(req.body.data)
                 .then(dbModel => res.json(dbModel))
                 .catch(err => res.status(422).json(err));
 
