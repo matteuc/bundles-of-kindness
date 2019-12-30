@@ -9,3 +9,7 @@
 .mdc-error.mdc-text-field__input {
     border-bottom-color: #f44336;
 }
+
+.mdc-floating-label:not(.mdc-floating-label--float-above) {
+    top: 38px;
+}

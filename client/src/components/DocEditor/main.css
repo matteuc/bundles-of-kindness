@@ -1,3 +1,7 @@
 .pac-container {
     z-index: 1300;
 }
+
+.MuiAvatar-colorDefault {
+    background-color: #bdbdbd4f!important;
+}

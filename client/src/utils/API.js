@@ -1,4 +1,5 @@
 import axios from "axios";
+require("dotenv").config();
 
 export default {
   getSponsorCompanies: function () {
@@ -7,34 +8,34 @@ export default {
   getDropzones: function () {
     return axios.get(`/api/dropzone`);
   },
-  getAdmin: function (API_SECRET) {
-    return axios.get(`/api/admin`, { data: {key: API_SECRET} });
+  getAdmin: function () {
+    return axios.get(`/api/admin?key=${process.env.REACT_APP_API_SECRET}`);
   },
   getVolunteerEvents: function () {
     return axios.get(`/api/volunteerEvent`);
   },
-  addSponsorCompany: function (newSponsor, API_SECRET) {
-    return axios.post(`/api/sponsorCompany`, { data: newSponsor, key: API_SECRET });
+  addSponsorCompany: function (newSponsor) {
+    return axios.post(`/api/sponsorCompany?key=${process.env.REACT_APP_API_SECRET}`, { data: newSponsor });
   },
-  addDropzone: function (newDropzone, API_SECRET) {
-    return axios.post(`/api/dropzone`,  { data: newDropzone, key: API_SECRET });
+  addDropzone: function (newDropzone) {
+    return axios.post(`/api/dropzone?key=${process.env.REACT_APP_API_SECRET}`,  { data: newDropzone });
   },
-  addAdmin: function (newAdmin, API_SECRET) {
-    return axios.post(`/api/admin`,  { data: newAdmin, key: API_SECRET });
+  addAdmin: function (newAdmin) {
+    return axios.post(`/api/admin?key=${process.env.REACT_APP_API_SECRET}`,  { data: newAdmin });
   },
-  addVolunteerEvent: function (newVolunteerEvent, API_SECRET) {
-    return axios.post(`/api/volunteerEvent`,  { data: newVolunteerEvent, key: API_SECRET });
+  addVolunteerEvent: function (newVolunteerEvent) {
+    return axios.post(`/api/volunteerEvent?key=${process.env.REACT_APP_API_SECRET}`,  { data: newVolunteerEvent });
   },
-  deleteSponsorCompany: function (sponsorCompanyId, API_SECRET) {
-    return axios.delete(`/api/sponsorCompany/${sponsorCompanyId}`, { data: { key: API_SECRET }  });
+  deleteSponsorCompany: function (sponsorCompanyId) {
+    return axios.delete(`/api/sponsorCompany/${sponsorCompanyId}?key=${process.env.REACT_APP_API_SECRET}`);
   },
-  deleteDropzone: function (dropzoneId, API_SECRET) {
-    return axios.delete(`/api/dropzone/${dropzoneId}`, { data: { key: API_SECRET }  });
+  deleteDropzone: function (dropzoneId) {
+    return axios.delete(`/api/dropzone/${dropzoneId}?key=${process.env.REACT_APP_API_SECRET}`);
   },
-  deleteAdmin: function (adminId, API_SECRET) {
-    return axios.delete(`/api/admin/${adminId}`, { data: { key: API_SECRET }  });
+  deleteAdmin: function (adminId) {
+    return axios.delete(`/api/admin/${adminId}?key=${process.env.REACT_APP_API_SECRET}`);
   },
-  deleteVolunteerEvent: function (volunteerEventId, API_SECRET) {
-    return axios.delete(`/api/volunteerEvent/${volunteerEventId}`, { data: { key: API_SECRET }  });
+  deleteVolunteerEvent: function (volunteerEventId) {
+    return axios.delete(`/api/volunteerEvent/${volunteerEventId}?key=${process.env.REACT_APP_API_SECRET}`);
   },
 };

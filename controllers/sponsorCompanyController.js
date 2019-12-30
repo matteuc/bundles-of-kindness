@@ -8,7 +8,7 @@ const forbiddenErr = {
 
 module.exports = {
     create: function(req, res) {
-        if( isVerified(req.body.key) ) {
+        if( isVerified(req.query.key) ) {
             sponsorCompanyDb
                 .create(req.body)
                 .then(dbModel => res.json(dbModel))
@@ -27,7 +27,7 @@ module.exports = {
     }
     ,
     update: function(req, res) {
-        if( isVerified(req.body.key) ) {
+        if( isVerified(req.query.key) ) {
             sponsorCompanyDb
             .findOneAndUpdate({ _id: req.params.id }, req.body)
             .then(dbModel => res.json(dbModel))
@@ -38,7 +38,7 @@ module.exports = {
         }
     }, 
     delete: function(req, res) {
-        if( isVerified(req.body.key) ) {
+        if( isVerified(req.query.key) ) {
             sponsorCompanyDb
             .findOne({ _id: req.params.id  })
             .then(dbModel => dbModel.remove())

@@ -14,7 +14,6 @@ import {
   KeyboardDatePicker,
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
-// import {MDCTextField} from '@material/textfield';
 import { Box, Fab, TextField } from "@material-ui/core";
 import LocationAutocomplete from 'location-autocomplete';
 
@@ -68,6 +67,7 @@ function DocForm(props) {
   const DOC_ID = props.id;
   const DOC_SUB = props.submit;
   const DOC_FIELDS = props.fields; 
+  const DOC_VALUES = props.values;
   const ERROR_COLOR = "#f44336";
 
   // HOOKS
@@ -111,12 +111,17 @@ const handleSubmit = (e) => {
     e.preventDefault();
     
     let tmpErrors = {};
+    let errors = 0;
     // Do error validation
     for(const field of props.fields) {
         const fieldVal = fields[field.name];
 
         if(field.validate && fieldVal) {
             tmpErrors[field.name] = !field.validate(fieldVal);
+
+            if(tmpErrors[field.name]) {
+                errors++;
+            }
         } 
         else {
             tmpErrors[field.name] = false;
@@ -125,7 +130,11 @@ const handleSubmit = (e) => {
     }
 
     setErrors({...tmpErrors});
-    DOC_SUB(fields, DOC_ID);
+
+    if(errors == 0) {
+        DOC_SUB(fields, DOC_ID);
+    }
+    
 }
 
 const unmarkError = (id) => {
@@ -143,18 +152,17 @@ const unmarkError = (id) => {
   // LOADING  
   return (
     <>
-        <form>
+        <form onSubmit={handleSubmit}>
         {
             DOC_FIELDS.map((field, idx) => {
                 switch(field.type) {
                     case "single":
                         return (
                             <TextField
-                                // defaultValue={field.value}
                                 key={`form-${idx}`}
                                 id={field.name}
                                 onChange={handleFormChange}
-                                value={fields[field.name] || field.value}
+                                value={fields[field.name] || DOC_VALUES[field.name]}
                                 label={field.label}
                                 placeholder={field.placeholder}
                                 error={errors[field.name] ? true: false}
@@ -172,7 +180,7 @@ const unmarkError = (id) => {
                         return (
                             <TextField
                                 multiline
-                                defaultValue={field.value}
+                                defaultValue={DOC_VALUES[field.name]}
                                 key={`form-${idx}`}
                                 id={field.name}
                                 onChange={handleFormChange}
@@ -182,7 +190,6 @@ const unmarkError = (id) => {
                                 error={errors[field.name] ? true: false}
                                 helperText={errors[field.name] ? field.error : field.helper}
                                 fullWidth
-                                // margin="normal"
                                 style={{margin: "0.5em"}}
                                 InputLabelProps={{
                                     shrink: true,
@@ -195,7 +202,7 @@ const unmarkError = (id) => {
                             return (
                             <TextField
                                 type="number"
-                                defaultValue={field.value}
+                                defaultValue={DOC_VALUES[field.name]}
                                 key={`form-${idx}`}
                                 id={field.name}
                                 onChange={handleFormChange}
@@ -205,7 +212,6 @@ const unmarkError = (id) => {
                                 error={errors[field.name] ? true: false}
                                 helperText={errors[field.name] ? field.error : field.helper}
                                 fullWidth
-                                // margin="normal"
                                 style={{margin: "0.5em"}}
                                 InputLabelProps={{
                                     shrink: true,
@@ -218,6 +224,7 @@ const unmarkError = (id) => {
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
                                 <KeyboardDatePicker
+                                    required={field.required}
                                     style={{margin: "0.5em"}}
                                     id={field.name}
                                     error={errors[field.name] ? true: false}
@@ -225,7 +232,7 @@ const unmarkError = (id) => {
                                     label={field.label}
                                     fullWidth
                                     format="MM/dd/yyyy"
-                                    value={fields[field.name] || field.value}
+                                    value={fields[field.name] || DOC_VALUES[field.name]}
                                     onChange={(date) => handleDateChange(date, field.name)}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -238,6 +245,7 @@ const unmarkError = (id) => {
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
                                 <KeyboardTimePicker
+                                    required={field.required}
                                     style={{margin: "0.5em"}}                                
                                     id={field.name}
                                     error={errors[field.name] ? true: false}
@@ -245,7 +253,7 @@ const unmarkError = (id) => {
                                     label={field.label}
                                     fullWidth
                                     mask="__:__ _M"
-                                    value={fields[field.name] || field.value}
+                                    value={fields[field.name] || DOC_VALUES[field.name]}
                                     onChange={(date) => handleDateChange(date, field.name)}
                                     placeholder={field.placeholder}
                                 />
@@ -256,6 +264,7 @@ const unmarkError = (id) => {
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
                                 <KeyboardDateTimePicker
+                                    required={field.required}
                                     style={{margin: "0.5em"}}
                                     id={field.name}
                                     error={errors[field.name] ? true: false}
@@ -263,7 +272,7 @@ const unmarkError = (id) => {
                                     label={field.label}
                                     fullWidth
                                     mask="__:__ _M"
-                                    value={fields[field.name] || field.value}
+                                    value={fields[field.name] || DOC_VALUES[field.name]}
                                     onChange={(date) => handleDateChange(date, field.name)}
                                     placeholder={field.placeholder}
                                 />
@@ -273,11 +282,13 @@ const unmarkError = (id) => {
                     case "location":
                         return (
                             <div key={`form-${idx}`} style={{margin: "0.5em"}}>
-                            <div data-mdc-auto-init="MDCTextField" className="mdc-text-field mdc-text-field--fullwidth">
+                                <div data-mdc-auto-init="MDCTextField" className="mdc-text-field mdc-text-field--fullwidth">
                                 <LocationAutocomplete
+                                    required={field.required}
                                     className={`mdc-text-field__input`}
                                     id={field.name}
-                                    value={fields[field.name] === undefined ? field.value : fields[field.name]}
+                                    defaultValue={DOC_VALUES[field.name]}
+                                    value={fields[field.name]}
                                     style={{padding: "20px 0px 6px", borderBottomColor: errors[field.name] ? ERROR_COLOR : ""}}
                                     googleAPIKey={process.env.REACT_APP_GOOGLE_API_KEY}
                                     onChange={handleFormChange}
@@ -319,7 +330,7 @@ const unmarkError = (id) => {
         <Box className={classes.centerElementParent} style={{ color: "white", margin: "0.5em" }} >
 
             <Fab style={{ backgroundColor: props.submitBtn.color || "" }} variant="extended" type="submit" aria-label="Login" className={clsx("hvr-bob", classes.centerElement, classes.btnIcon)}>
-            <span style={{ color: "rgb(255, 255, 255)" }} onClick={handleSubmit} >
+            <span style={{ color: "rgb(255, 255, 255)" }}>
                 <FAIcon size="lg" name={props.submitBtn.icon} solid className={classes.extendedBtnIcon} />
                 {props.submitBtn.text}
             </span>

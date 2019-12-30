@@ -127,165 +127,216 @@ function AdminDash(props) {
   }, [isAuthenticated])
 
   // LOADING  
-  return (
-    <div style={{ minHeight: "calc(100% - 48px)", width: "100%", position: "absolute", backgroundColor: "snow" }}>
-      {
-        loading ?
-          <Spinner value="Loading..." color={ACCENT_COLOR} />
-          :
-          !isAuthenticated ?
-            <div style={{ minHeight: "100%", width: "100%", position: "absolute", display: "flex" }}>
-              <div style={{ padding: "1em", borderRadius: "10%", width:"70vw", maxWidth: "500px", minHeight: "60vh", margin: "auto", backgroundColor: MAIN_COLOR, display: "flex", boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
-                <Grid container justify="center" style={{margin:"auto"}}>
-                  <Grid item xs={10} md={8} lg={6} style={{textAlign: "center"}}>
-                    <Typography className={clsx("flow-text", classes.heading)} variant="h3" align="center" gutterBottom>
-                      Admin <FAIcon name="user-tie" solid />
-                    </Typography>
+  // return (
+  //   <div style={{ minHeight: "calc(100% - 48px)", width: "100%", position: "absolute", backgroundColor: "snow" }}>
+  //     {
+  //       loading ?
+  //         <Spinner value="Loading..." color={ACCENT_COLOR} />
+  //         :
+  //         !isAuthenticated ?
+  //           <div style={{ minHeight: "100%", width: "100%", position: "absolute", display: "flex" }}>
+  //             <div style={{ padding: "1em", borderRadius: "10%", width:"70vw", maxWidth: "500px", minHeight: "60vh", margin: "auto", backgroundColor: MAIN_COLOR, display: "flex", boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
+  //               <Grid container justify="center" style={{margin:"auto"}}>
+  //                 <Grid item xs={10} md={8} lg={6} style={{textAlign: "center"}}>
+  //                   <Typography className={clsx("flow-text", classes.heading)} variant="h3" align="center" gutterBottom>
+  //                     Admin <FAIcon name="user-tie" solid />
+  //                   </Typography>
                     
-                    <img style={{width:"80%", marginTop: "1em"}} src="https://i.ibb.co/C6220FL/ezgif-com-crop.gif" alt="Cat Admin GIF"/>
+  //                   <img style={{width:"80%", marginTop: "1em"}} src="https://i.ibb.co/C6220FL/ezgif-com-crop.gif" alt="Cat Admin GIF"/>
 
-                    <Box className={classes.centerElementParent} style={{ color: "white", margin: "1em" }} >
+  //                   <Box className={classes.centerElementParent} style={{ color: "white", margin: "1em" }} >
 
-                      <Fab style={{ backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Login" className={clsx("hvr-bob", classes.centerElement, classes.btnIcon)}>
-                        <span style={{ color: "rgb(255, 255, 255)" }} onClick={() => loginWithPopup({
-                        })} >
-                          <FAIcon size="lg" name="id-card-alt" solid className={classes.extendedBtnIcon} />
-                          Login
-                        </span>
-                      </Fab>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </div>
-            </div>
-            :
-            (isAuthenticated && isVerifying) ?
-              <Spinner value="Verifying..." color={ACCENT_COLOR} />
-            :
-              (isAuthenticated && user && !isVerifying && !isAdmin) ?
-              <div style={{ minHeight: "100%", width: "100%", position: "absolute", display: "flex" }}>
-                <div style={{ padding: "1em", borderRadius: "10%", width:"70vw", maxWidth: "500px", height: "60vh", margin: "auto", backgroundColor: MAIN_COLOR, display: "flex", boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
-                  <Grid container justify="center" style={{margin:"auto"}}>
-                    <Grid item xs={10} md={8} lg={6} style={{textAlign: "center"}}>
-                      <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
-                        Access Denied <FAIcon name="ban" solid />
-                      </Typography>
+  //                     <Fab style={{ backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Login" className={clsx("hvr-bob", classes.centerElement, classes.btnIcon)}>
+  //                       <span style={{ color: "rgb(255, 255, 255)" }} onClick={() => loginWithPopup({
+  //                       })} >
+  //                         <FAIcon size="lg" name="id-card-alt" solid className={classes.extendedBtnIcon} />
+  //                         Login
+  //                       </span>
+  //                     </Fab>
+  //                   </Box>
+  //                 </Grid>
+  //               </Grid>
+  //             </div>
+  //           </div>
+  //           :
+  //           (isAuthenticated && isVerifying) ?
+  //             <Spinner value="Verifying..." color={ACCENT_COLOR} />
+  //           :
+  //             (isAuthenticated && user && !isVerifying && !isAdmin) ?
+  //             <div style={{ minHeight: "100%", width: "100%", position: "absolute", display: "flex" }}>
+  //               <div style={{ padding: "1em", borderRadius: "10%", width:"70vw", maxWidth: "500px", height: "60vh", margin: "auto", backgroundColor: MAIN_COLOR, display: "flex", boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
+  //                 <Grid container justify="center" style={{margin:"auto"}}>
+  //                   <Grid item xs={10} md={8} lg={6} style={{textAlign: "center"}}>
+  //                     <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
+  //                       Access Denied <FAIcon name="ban" solid />
+  //                     </Typography>
                       
-                      <img style={{width:"80%", marginTop: "1em"}} src="https://i.ibb.co/C6220FL/ezgif-com-crop.gif" alt="Cat Admin GIF" />
+  //                     <img style={{width:"80%", marginTop: "1em"}} src="https://i.ibb.co/C6220FL/ezgif-com-crop.gif" alt="Cat Admin GIF" />
 
-                      <Box className={classes.centerElementParent} style={{ color: "white", margin: "1em" }} >
+  //                     <Box className={classes.centerElementParent} style={{ color: "white", margin: "1em" }} >
 
-                        <Fab style={{ backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Login" className={clsx("hvr-bob", classes.centerElement, classes.btnIcon)}>
-                          <span style={{ color: "rgb(255, 255, 255)" }} onClick={() => logout({
-                          })} >
-                            <FAIcon size="lg" name="sign-out-alt" solid className={classes.extendedBtnIcon} />
-                            Logout
-                          </span>
-                        </Fab>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </div>
-              </div>
-            :
-            <>
-              {/* PAGE HEADER */}
-              <Grid container justify="center">
-                <Grid item xs={10} md={8} lg={6}>
-                  {/* PAGE TITLE */}
-                  <h3 className="flow-text" >
-                    <Paper elevation={0} className={classes.paper}> Website Management </Paper>
-                  </h3>
-                  {/* PAGE DESCRIPTION */}
-                  <Typography color="secondary" align="center" variant="body1">
-                  </Typography>
-                </Grid>
-              </Grid>
+  //                       <Fab style={{ backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Login" className={clsx("hvr-bob", classes.centerElement, classes.btnIcon)}>
+  //                         <span style={{ color: "rgb(255, 255, 255)" }} onClick={() => logout({
+  //                         })} >
+  //                           <FAIcon size="lg" name="sign-out-alt" solid className={classes.extendedBtnIcon} />
+  //                           Logout
+  //                         </span>
+  //                       </Fab>
+  //                     </Box>
+  //                   </Grid>
+  //                 </Grid>
+  //               </div>
+  //             </div>
+  //           :
+  //           <>
+  //             {/* PAGE HEADER */}
+  //             <Grid container justify="center">
+  //               <Grid item xs={10} md={8} lg={6}>
+  //                 {/* PAGE TITLE */}
+  //                 <h3 className="flow-text" >
+  //                   <Paper elevation={0} className={classes.paper}> Website Management </Paper>
+  //                 </h3>
+  //                 {/* PAGE DESCRIPTION */}
+  //                 <Typography color="secondary" align="center" variant="body1">
+  //                 </Typography>
+  //               </Grid>
+  //             </Grid>
 
-              {/* OPTIONS CONTAINER */}
-              <Grid style={{ marginTop: "0.5em" }} container justify="center">
+  //             {/* OPTIONS CONTAINER */}
+  //             <Grid style={{ marginTop: "0.5em" }} container justify="center">
 
-                {/* OPTION TABS */}
-                <Grid item xs={11} md={8} lg={6}>
-                  {/* TAB NAV */}
-                  <AppBar position="static" color="default">
-                    <Tabs
-                      value={tabIdx}
-                      onChange={handleChange}
-                      indicatorColor="secondary"
-                      textColor="primary"
-                      variant="fullWidth"
-                      aria-label="full width tabs example"
-                    >
-                      <Tab label={isMobileSize ? "" : "Dropzones"} icon={<FAIcon solid size={"lg"} name="parachute-box" />} {...a11yProps(0)} />
-                      <Tab label={isMobileSize ? "" : "Volunteering"} icon={<FAIcon solid size={"lg"} name="people-carry" />} {...a11yProps(1)} />
-                      <Tab label={isMobileSize ? "" : "Sponsors"} icon={<FAIcon solid size={"lg"} name="donate" />} {...a11yProps(2)} />
-                      <Tab label={isMobileSize ? "" : "Admin"} icon={<FAIcon solid size={"lg"} name="user-tie" />} {...a11yProps(3)} />
+  //               {/* OPTION TABS */}
+  //               <Grid item xs={11} md={8} lg={6}>
+  //                 {/* TAB NAV */}
+  //                 <AppBar position="static" color="default">
+  //                   <Tabs
+  //                     value={tabIdx}
+  //                     onChange={handleChange}
+  //                     indicatorColor="secondary"
+  //                     textColor="primary"
+  //                     variant="fullWidth"
+  //                     aria-label="full width tabs example"
+  //                   >
+  //                     <Tab label={isMobileSize ? "" : "Dropzones"} icon={<FAIcon solid size={"lg"} name="parachute-box" />} {...a11yProps(0)} />
+  //                     <Tab label={isMobileSize ? "" : "Volunteering"} icon={<FAIcon solid size={"lg"} name="people-carry" />} {...a11yProps(1)} />
+  //                     <Tab label={isMobileSize ? "" : "Sponsors"} icon={<FAIcon solid size={"lg"} name="donate" />} {...a11yProps(2)} />
+  //                     <Tab label={isMobileSize ? "" : "Admin"} icon={<FAIcon solid size={"lg"} name="user-tie" />} {...a11yProps(3)} />
 
 
-                    </Tabs>
-                  </AppBar>
+  //                   </Tabs>
+  //                 </AppBar>
 
-                  {/* OPTION PANELS */}
-                  <SwipeableViews
-                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                    index={tabIdx}
-                    onChangeIndex={handleChangeIndex}
-                    style={{ marginBottom: "2em" }}
-                  >
-                    {/* DONATIONS TAB */}
-                    <TabPanel className={classes.tabPanel} value={tabIdx} index={0} dir={theme.direction} >
+  //                 {/* OPTION PANELS */}
+  //                 <SwipeableViews
+  //                   axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+  //                   index={tabIdx}
+  //                   onChangeIndex={handleChangeIndex}
+  //                   style={{ marginBottom: "2em" }}
+  //                 >
+  //                   {/* DROPZONES TAB */}
+  //                   <TabPanel className={classes.tabPanel} value={tabIdx} index={0} dir={theme.direction} >
                         
-                        <DocEditor 
-                          fields={[
-                            {type: "single", value: "test", name: "name", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"},
-                            {type: "location", value: "test", name: "description", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"},
-                            {type: "date", value: new Date('2014-08-18T21:11:54'), name: "startDate", placeholder: "placeholder", required: true, label: "Label", helper: "This is a helper!"}
-                          ]}
-                          submitBtn={
-                            {
-                            color: "blue",
-                            text: "Update",
-                            icon: "edit"
-                            }
-                          }
-                          submit={() => {console.log("submitting")}}
-                          icon={{
-                            name: "ad",
-                            color: "black",
-                            solid: true
-                          }}
-                          primary={"name"}
-                          secondary={"description"}
-                        />
-                    </TabPanel>
+  //                       <DocEditor 
+  //                         fields={[
+  //                           {type: "single",  name: "iw_title", placeholder: "", required: true, label: "Marker Popup Title", helper: "This is the name of the dropzone location!"},
+  //                           {type: "multi",  name: "iw_text", placeholder: "", required: true, label: "Marker Popup Description", helper: "This is a description of the dropzone location!"},
+  //                           {type: "single",  name: "iw_imgUrl", placeholder: "", required: true, label: "Marker Popup Image", helper: "This is an URL to the image at the dropzone location!"},
+  //                           {type: "location",  name: "address", placeholder: "", required: true, label: "Marker Location", helper: "This is the address of the dropzone location!"},
+  //                           {type: "single",  name: "icon", placeholder: "", required: true, label: "Marker Icon", helper: "This is an URL to the marker icon!"}
+  //                         ]}
+  //                         submitBtn={
+  //                           {
+  //                           color: "blue",
+  //                           text: "Update",
+  //                           icon: "edit"
+  //                           }
+  //                         }
+  //                         submit={API.addDropzone}
+  //                         icon={{
+  //                           name: "map-marker-alt",
+  //                           color: "red",
+  //                           solid: true
+  //                         }}
+  //                         addIcon={{
+  //                           name: "plus-circle",
+  //                           color: "grey",
+  //                           solid: true
+  //                         }}
+  //                         primary={"iw_title"}
+  //                         secondary={"iw_text"}
+  //                         get={API.getDropzones}
+  //                       />
+  //                   </TabPanel>
 
-                    {/* VOLUNTEERING TAB */}
-                    <TabPanel className={classes.tabPanel} value={tabIdx} index={1} dir={theme.direction} >
+  //                   {/* VOLUNTEERING TAB */}
+  //                   <TabPanel className={classes.tabPanel} value={tabIdx} index={1} dir={theme.direction} >
 
-                    </TabPanel>
+  //                   </TabPanel>
 
-                    {/* SPONSORS TAB */}
-                    <TabPanel className={classes.tabPanel} value={tabIdx} index={2} dir={theme.direction} >
+  //                   {/* SPONSORS TAB */}
+  //                   <TabPanel className={classes.tabPanel} value={tabIdx} index={2} dir={theme.direction} >
 
-                    </TabPanel>
+  //                   </TabPanel>
 
-                    {/* ADMIN TAB */}
-                    <TabPanel className={classes.tabPanel} value={tabIdx} index={3} dir={theme.direction} >
+  //                   {/* ADMIN TAB */}
+  //                   <TabPanel className={classes.tabPanel} value={tabIdx} index={3} dir={theme.direction} >
 
-                    </TabPanel>
+  //                   </TabPanel>
 
-                  </SwipeableViews>
-                </Grid>
-              </Grid>
-
-
-
-            </>
+  //                 </SwipeableViews>
+  //               </Grid>
+  //             </Grid>
 
 
+
+  //           </>
+
+
+  //     }
+  //   </div>
+  // )
+
+  return (
+    <DocEditor 
+      fields={[
+        {type: "single", name: "iw_title", placeholder: "", required: true, label: "Marker Popup Title", helper: "This is the name of the dropzone location!"},
+        {type: "multi", name: "iw_text", placeholder: "", required: true, label: "Marker Popup Description", helper: "This is a description of the dropzone location!"},
+        {type: "single", name: "iw_imgUrl", placeholder: "", required: true, label: "Marker Popup Image", helper: "This is an URL to the image at the dropzone location!"},
+        {type: "location", name: "address", placeholder: "", required: true, label: "Marker Location", helper: "This is the address of the dropzone location!"},
+        {type: "single", name: "icon", placeholder: "", required: true, label: "Marker Icon", helper: "This is an URL to the marker icon!"}
+      ]}
+      createBtn={
+        {
+          color: "blue",
+          text: "Create",
+          icon: "map-marker-alt"
+        }
       }
-    </div>
+      updateBtn={
+        {
+          color: "orange",
+          text: "Update",
+          icon: "edit"
+        }
+      }
+      get={API.getDropzones}
+      create={API.addDropzone}
+      update={API.updateDropzone}
+      delete={API.deleteDropzone}
+      icon={{
+        name: "map-marker-alt",
+        color: "red",
+        solid: true
+      }}
+      addIcon={{
+        name: "plus-circle",
+        color: "grey",
+        solid: true
+      }}
+      primary={"iw_title"}
+      secondary={"iw_text"}
+      name="Dropzone"
+    />
   )
 
 }
