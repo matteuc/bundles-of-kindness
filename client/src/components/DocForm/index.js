@@ -13,9 +13,9 @@ import FAIcon from "../../components/FAIcon";
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-  KeyboardDateTimePicker
+  TimePicker,
+  DatePicker,
+  DateTimePicker
 } from '@material-ui/pickers';
 import { Box, Fab, TextField } from "@material-ui/core";
 import LocationAutocomplete from 'location-autocomplete';
@@ -119,12 +119,17 @@ const handleSubmit = (e) => {
     for(const field of props.fields) {
         const fieldVal = fields[field.name];
 
-        if(field.validate && fieldVal) {
-            tmpErrors[field.name] = !field.validate(fieldVal);
-
-            if(tmpErrors[field.name]) {
+        if(field.validate || field.required) {
+            if (field.validate) {
+                tmpErrors[field.name] = !field.validate(fieldVal);
                 errors++;
             }
+
+            if(field.required && !fieldVal) {
+                tmpErrors[field.name] = true;
+                errors++
+            }
+
         } 
         else {
             tmpErrors[field.name] = false;
@@ -160,7 +165,7 @@ const unmarkError = (id) => {
   // LOADING  
   return (
     <>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
         {
             DOC_FIELDS.map((field, idx) => {
                 switch(field.type) {
@@ -232,7 +237,7 @@ const unmarkError = (id) => {
                     case "date":
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
-                                <KeyboardDatePicker
+                                <DatePicker
                                     required={field.required}
                                     style={{margin: "0.5em"}}
                                     id={field.name}
@@ -241,7 +246,7 @@ const unmarkError = (id) => {
                                     label={field.label}
                                     fullWidth
                                     format="MM/dd/yyyy"
-                                    value={fields[field.name]  || DOC_VALUES[field.name] || new Date()}
+                                    inputValue={fields[field.name]  || DOC_VALUES[field.name]}
                                     onChange={(date) => handleDateChange(date, field.name)}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -253,7 +258,7 @@ const unmarkError = (id) => {
                     case "time": 
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
-                                <KeyboardTimePicker
+                                <TimePicker
                                     required={field.required}
                                     style={{margin: "0.5em"}}                                
                                     id={field.name}
@@ -262,7 +267,7 @@ const unmarkError = (id) => {
                                     label={field.label}
                                     fullWidth
                                     mask="__:__ _M"
-                                    value={fields[field.name]  || DOC_VALUES[field.name] || new Date()}
+                                    inputValue={fields[field.name]  || DOC_VALUES[field.name]}
                                     onChange={(date) => handleDateChange(date, field.name)}
                                     placeholder={field.placeholder}
                                 />
@@ -272,7 +277,8 @@ const unmarkError = (id) => {
                         case "date-time": 
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
-                                <KeyboardDateTimePicker
+                                <DateTimePicker
+                                    clearable
                                     required={field.required}
                                     style={{margin: "0.5em"}}
                                     id={field.name}
@@ -281,7 +287,8 @@ const unmarkError = (id) => {
                                     label={field.label}
                                     fullWidth
                                     mask="__:__ _M"
-                                    value={fields[field.name]  || DOC_VALUES[field.name] || new Date()}
+                                    // inputValue={fields[field.name]  || DOC_VALUES[field.name]}
+                                    value={fields[field.name] || DOC_VALUES[field.name] || null }
                                     onChange={(date) => handleDateChange(date, field.name)}
                                     placeholder={field.placeholder}
                                 />
