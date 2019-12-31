@@ -88,7 +88,7 @@ function App() {
         }}
       >
         
-        <Box>
+        <Box style={{overflow: "hidden"}}>
 
         <Switch >
           <Route exact path="/" component={Landing} />

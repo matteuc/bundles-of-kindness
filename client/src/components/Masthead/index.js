@@ -12,7 +12,7 @@ const mastheadStyle = {
 function Masthead(props) {
     return (
         <>
-            <div style={{ "backgroundImage": `url(${props.src})`, ...mastheadStyle }}>
+            <div style={{ "backgroundImage": `url(${props.src})`, ...mastheadStyle, ...props.style }}>
                 {props.children}
                 <div style={{ "width": "100%", "height": "100%", "backgroundImage": `linear-gradient( transparent 30%, ${props.fade ? props.fadeColor : "transparent"})`, "position": "absolute", "top": "0" }}>
 

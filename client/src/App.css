@@ -1,5 +1,12 @@
 .App{
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     min-height: 100vh;
+    /* position: relative; */
+}
+
+body {
     position: relative;
+    overflow-x: hidden;
+    padding: 0px;
+    margin: 0px;
 }
