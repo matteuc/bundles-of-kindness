@@ -48,7 +48,8 @@ const useStyles = makeStyles(theme => ({
     color: "inherit"
   },
   contentSection: {
-    marginTop: "40px"
+    marginTop: "40px",
+    overflow: "hidden"
   },
   centerElementParent: {
     display: "flex"
@@ -179,9 +180,9 @@ function Landing() {
           </Box>
 
           {/* BUNDLE OVERVIEW */}
-          <Box className={classes.contentSection}>
+          <Box className={classes.contentSection} data-aos={"zoom-in"}>
             <Grid container spacing={3} justify="center">
-              <Grid item xs={12} sm={8} data-aos={"fade-up"} style={{ textAlign: "center" }}>
+              <Grid item xs={12} sm={8} style={{ textAlign: "center" }}>
                 <CirclePicture style={{ maxWidth: "500px" }} size={"100%"} src={BUNDLE_IMG} alt={BUNDLE_IMG_ALT} />
               </Grid>
               <Grid item xs={12} sm={10} md={8}>
