@@ -31,6 +31,7 @@ import { COVER_IMAGE, COVER_TEXT, PRESS_LOGOS, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, M
 import {MAIN_COLOR, ACCENT_COLOR} from "../../utils/colors";
 
 // Initialize AOS
+// Parent container of AOS Elements must have style {overflow: hidden}
 AOS.init();
 
 // CLASSES

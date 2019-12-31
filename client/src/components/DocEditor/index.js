@@ -32,7 +32,8 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2, 4, 3),
   },
   formModal: {
-    maxWidth: "500px"
+    maxWidth: "500px",
+    margin: "0.5em"
   },
   alertModal: {
     maxWidth: "500px",
@@ -259,12 +260,12 @@ function DocEditor(props) {
         <Fade in={alertOpen}>
           <div className={clsx(classes.paper, classes.alertModal)}>
             <Grid container justify="center" >
-              <Grid item xs={10} md={8} style={{textAlign: "center"}}>
+              <Grid item xs={12} sm={10} md={8} style={{textAlign: "center"}}>
                 <Typography style={{fontWeight: "bold", color: "#018786"}} className={clsx("flow-text", classes.heading)} variant="h5" align="center" gutterBottom>
                   Confirm Deletion <FAIcon size={"sm"} name="trash" solid />
                 </Typography>
               </Grid>
-              <Grid item xs={10} style={{textAlign: "center"}}>
+              <Grid item xs={12} sm={10} style={{textAlign: "center"}}>
 
                 <Typography style={{color: "grey"}} align="center" variant="body1">
                   Are you sure you want to delete {props.name} '{values[props.primary]}'?
@@ -272,14 +273,14 @@ function DocEditor(props) {
                 <Box className={classes.centerElementParent} style={{ color: "white", margin: "1.5em 0em" }} >
                   <Fab style={{ backgroundColor: "#f05" }} variant={"extended"} onClick={handleAlertClose} aria-label="Login" className={clsx("hvr-bob", classes.centerElement)}>
                     <span style={{ color: "rgb(255, 255, 255)" }}  >
-                        <FAIcon size="lg" name="times" solid className={!isMobileSize ? classes.extendedBtnIcon : ""} />
-                        {isMobileSize ? "" : "Cancel"}
+                        {!isMobileSize && <FAIcon size="lg" name="times" solid className={classes.extendedBtnIcon} />}
+                        Cancel
                     </span>
                   </Fab>
                   <Fab style={{ backgroundColor: "#7b1" }} variant={"extended"} onClick={() => { deleteDocument()}} aria-label="Login" className={clsx("hvr-bob", classes.centerElement)}>
                     <span style={{ color: "rgb(255, 255, 255)" }} >
-                        <FAIcon size="lg" name="check" solid className={!isMobileSize ? classes.extendedBtnIcon : ""} />
-                        {isMobileSize ? "" : "Confirm"}
+                        {!isMobileSize && <FAIcon size="lg" name="check" solid className={classes.extendedBtnIcon} /> }
+                        Confirm
                     </span>
                   </Fab>
                 </Box>

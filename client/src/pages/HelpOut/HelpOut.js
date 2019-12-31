@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import { useMediaQuery } from "react-responsive";
 import { CSSTransition } from 'react-transition-group';
 
 // COMPONENTS
@@ -61,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   },
   tabPanel: {
     minHeight: "60vh",
-    padding: "0.5em"
+    padding: "1.5em"
 
   },
   paper: {
@@ -99,7 +100,7 @@ function HelpOut() {
   const [tabIdx, setTabIdx] = React.useState(0);
   const [showOptions, setShowOptions] = useState(true);
   const [showDonationForm, setShowDonationForm] = useState(false);
-  // const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
+  const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
 
   // FUNCTIONS FOR MUI TAB PANEL
   const handleChange = (event, newValue) => {
@@ -114,7 +115,7 @@ function HelpOut() {
     <>
       {/* PAGE HEADER */}
       <Grid container justify="center">
-        <Grid item xs={10} md={8} lg={6}>
+        <Grid item xs={11} sm={10} md={8} lg={6}>
           {/* PAGE TITLE */}
           <h3 className="flow-text" >
             <Paper elevation={0} className={classes.paper}> Be a Supporter <img alt="Heart GIF" src="https://media3.giphy.com/media/xUOxf7gg8AztZMfyMM/source.gif" style={{ height: "1em", verticalAlign: "text-top" }} /> </Paper>
@@ -130,7 +131,7 @@ function HelpOut() {
       <Grid style={{ marginTop: "2em" }} container justify="center">
 
         {/* OPTION TABS */}
-        <Grid item xs={11} md={8} lg={6}>
+        <Grid item xs={12} sm={10} md={8} lg={6}>
           {/* TAB NAV */}
           <AppBar position="static" color="default">
             <Tabs
@@ -189,7 +190,7 @@ function HelpOut() {
 
                           <Fab style={{ margin: "auto", backgroundColor: ACCENT_COLOR }} variant="extended" aria-label="Donate via Paypal" className="hvr-bob">
                             <span style={{ color: "rgb(255, 255, 255)" }} >
-                              <FAIcon size="lg" name="donate" solid style={{ marginRight: "10px" }} />
+                              { !isMobileSize && <FAIcon size="lg" name="donate" solid style={{ marginRight: "10px" }} />}
                               Donate
                             </span>
                           </Fab>
@@ -218,14 +219,14 @@ function HelpOut() {
 
                           <Fab onClick={() => setShowDonationForm(true)} style={{ margin: "auto" }} color="secondary" variant="extended" aria-label="Donate via Bundles of Kindness" className="hvr-bob">
                             <span style={{ color: "rgb(255, 255, 255)" }} >
-                              <FAIcon size="lg" name="id-card" solid style={{ marginRight: "10px" }} />
+                            { !isMobileSize && <FAIcon size="lg" name="id-card" solid style={{ marginRight: "10px" }} />}
                               Sign Up
                             </span>
                           </Fab>
                           <a className={classes.link} target="_blank" rel="noopener noreferrer" href={AMAZON_WISH_URL} style={{ margin: "auto"}}>
                             <Fab style={{ backgroundColor: "white" }} variant="extended" aria-label="Donate via our Amazon Wishlist" className="hvr-bob">
                               <span style={{ color: AMAZON_COLOR }} >
-                                <FAIcon size="lg" name="amazon" brand style={{ marginRight: "10px" }} />
+                            { !isMobileSize && <FAIcon size="lg" name="amazon" brand style={{ marginRight: "10px" }} /> }
                                 View List
                               </span>
                             </Fab>
