@@ -250,7 +250,7 @@ function Landing() {
           {/* CALL TO ACTION */}
           <Box className={classes.contentSection} data-aos="zoom-in-up" >
             <Grid container spacing={3} justify="center">
-              <Grid item style={{ padding: 1 }} xs={12} sm={8} md={6} lg={4}>
+              <Grid item xs={12} sm={8} md={6} lg={4}>
                 <div className="circle" style={{ backgroundImage: `radial-gradient(circle, white, 20%, ${MAIN_COLOR} 60%`, boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
                   <div className="circle__inner">
                     <div className="circle__wrapper">
@@ -283,7 +283,7 @@ function Landing() {
           <Box className={classes.contentSection}>
             <Grid style={{ marginBottom: "2em" }} data-aos="zoom-in" container spacing={3} justify="center">
 
-              <Grid item style={{ padding: 1 }} xs={12} sm={10} md={8}>
+              <Grid item  xs={12} sm={10} md={8}>
 
                 <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
                   Where have we been?
@@ -304,7 +304,7 @@ function Landing() {
           <Box className={classes.contentSection}>
             <Grid data-aos="zoom-in" container spacing={3} justify="center">
 
-              <Grid item style={{ padding: 1 }} xs={12} sm={10} md={8}>
+              <Grid item xs={12} sm={10} md={8}>
 
                 <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
                   What are we up to?
@@ -320,7 +320,7 @@ function Landing() {
                 <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
                   {SOCIAL_TEXT}
                 </Typography>
-                <InstaFeedGrid token={IG_TOKEN} limit={9} postHeight={"auto"} width="100%" height="auto" />
+                <InstaFeedGrid token={IG_TOKEN} initial={9} step={3} postHeight={"auto"} width="100%" height="auto" />
               </Grid>
             </Grid>
           </Box>
