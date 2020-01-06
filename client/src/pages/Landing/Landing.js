@@ -13,10 +13,11 @@ import CirclePicture from "../../components/CirclePicture";
 import InstaFeedGrid from "../../components/InstaFeedGrid";
 import GoogleMap from "../../components/GoogleMap";
 import FAIcon from "../../components/FAIcon";
-import { Box, Button, Grid, Input, InputLabel, InputAdornment, Typography, FormControl, TextField, Fab } from "@material-ui/core";
+import { Box, Button, Grid, InputAdornment, Typography, FormControl, TextField, Fab, Fade } from "@material-ui/core";
 
 // ICONS
 import Face from '@material-ui/icons/Face';
+import Email from '@material-ui/icons/Email';
 import ChatBubbleOutline from '@material-ui/icons/ChatBubbleOutline';
 
 // STYLESHEETS
@@ -67,6 +68,7 @@ function Landing() {
   const classes = useStyles();
   const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
 
+  // COMPONENTS
   const lineText = (heading, text, fadeDir) => (
     <Grid item xs={12} sm={6} md={5} lg={4} data-aos={fadeDir}>
       <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="left" gutterBottom>
@@ -92,14 +94,57 @@ function Landing() {
 
   const whoText = (fadeDir) => lineText("Who are we?", WHO_TEXT, fadeDir);
 
+  // HOOKS 
   const [ mapMarkers, setMapMarkers ] = useState([]);
+  const [messageForm, setMessageForm] = useState({});
+  const [mailMessage, setMailMessage] = useState("");
+  const [mailError, setMailError] = useState(false);
+  const [mailMessageVisible, setMailMessageVisible] = useState(false);
+  const [sendDisabled, setSendDisabled] = useState(false);
+
+  // FUNCTIONS
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+
+    let tmp = messageForm;
+    tmp[name] = value;
+    setMessageForm({...tmp});
+
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSendDisabled(true);
+    
+    API.sendMail(messageForm.name, messageForm.sender, messageForm.content)
+    .then(result => {
+      // Mail successfully sent!
+      if(result.status === 200) {
+        setMailError(false);
+        setMailMessage("Your message has been sent! 🥳");
+        setMailMessageVisible(true);
+
+        // Clear form and mailMessage after a brief amount of time
+        setTimeout(function() {
+          setMailMessageVisible(false);
+          setMessageForm({});
+        }, 3000)
+      } 
+      // Mail not sent!
+      else {
+        setMailError(true);
+        setMailMessage("Your message was not sent. Please try again later 🥺");
+        setMailMessageVisible(true);
+
+      }
+
+      // Enable Send Button
+      setSendDisabled(false);
+
+    })
+  }
 
   useEffect(() => {
-    // let cat, dog, mouse;
-    // let obj = {cat: 'meow', dog: 'woof', mouse: 'squeak'};
-    // ({cat, dog, mouse} = obj);     // Note the `()` around
-    // console.log(cat, dog, mouse);
-
     API.getDropzones()
     .then((dObj) => {
       if(dObj) {
@@ -291,9 +336,6 @@ function Landing() {
               <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
                 Want to contact us?
                 </Typography>
-              <Typography className={"flow-text"} variant="subtitle2" align="center" gutterBottom style={{ color: ACCENT_COLOR, marginBottom: "0em" }}>
-                {CONTACT_WARNING}
-              </Typography>
             </Grid>
           </Grid>
           <Grid data-aos="flip-up" container spacing={1} justify="center" >
@@ -302,24 +344,48 @@ function Landing() {
                 {CONTACT_TEXT}
               </Typography>
 
-              <form action={CONTACT_API} method="POST">
+              {/* <form action={CONTACT_API} method="POST"> */}
+              <form onSubmit={handleSubmit} autoComplete="off">
                 <FormControl fullWidth >
-                  <InputLabel htmlFor="input-with-icon-adornment">Your Email</InputLabel>
-                  <Input
-                    type="email"
+                  <TextField
+                    onChange={handleFormChange}
+                    name="name"
                     required
-                    id="input-with-icon-adornment"
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <Face />
-                      </InputAdornment>
-                    }
+                    style={{ marginTop: "1em", marginBottom: "1em" }}
+                    label="Your Name"
+                    value={messageForm.name || ''}
+                    placeholder=""
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Face />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                   <TextField
-                    name="message"
+                    onChange={handleFormChange}
+                    name="sender"
                     required
-                    style={{ marginTop: "2em", marginBottom: "2em" }}
+                    style={{ marginTop: "1em", marginBottom: "1em" }}
+                    label="Your Email"
+                    value={messageForm.sender || ''}
+                    placeholder=""
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Email />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <TextField
+                    onChange={handleFormChange}
+                    name="content"
+                    required
+                    style={{ marginTop: "1em", marginBottom: "1em" }}
                     label="Your Message"
+                    value={messageForm.content || ''}
                     placeholder=""
                     multiline
                     InputProps={{
@@ -335,7 +401,7 @@ function Landing() {
 
                 <Box className={classes.centerElementParent} style={{ color: "white" }} >
 
-                  <Fab style={{ backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Send Email" className={clsx("hvr-forward", classes.centerElement)}>
+                  <Fab disabled={sendDisabled ? true : false} style={{ backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Send Email" className={clsx(sendDisabled ? "" : "hvr-forward", classes.centerElement)}>
                     <span style={{ color: "rgb(255, 255, 255)" }} >
                       <FAIcon size="lg" name="paper-plane" solid className={classes.extendedBtnIcon} />
                       Send
@@ -343,6 +409,18 @@ function Landing() {
                     </span>
                   </Fab>
                 </Box>
+
+                <Fade 
+                  in={mailMessageVisible}
+                  timeout={{
+                    enter: 500,
+                    exit: 500
+                  }}  
+                >
+                  <Typography className={"flow-text"} variant="subtitle2" align="center" gutterBottom style={{ color: mailError ? "red" : "green", marginTop: "1em" }}>
+                    {mailMessage}
+                  </Typography>
+                </Fade>
               </form>
             </Grid>
           </Grid>

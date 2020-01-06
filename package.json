@@ -34,6 +34,7 @@
     "location-autocomplete": "^1.2.4",
     "moment": "^2.24.0",
     "mongoose": "^5.7.11",
+    "nodemailer": "^6.4.2",
     "react-moment": "^0.9.6",
     "react-router-dom": "^5.1.2"
   }

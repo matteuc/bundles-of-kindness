@@ -17,11 +17,14 @@ export default {
   getVolunteerEvents: function () {
     return axios.get(`/api/volunteerEvent`);
   },
+  sendMail: function(name, sender, message) {
+    return axios.post(`/api/email`, { data: { name, sender, message } })
+  },
   addSponsorCompany: function (newSponsor) {
     return axios.post(`/api/sponsorCompany?key=${process.env.REACT_APP_API_SECRET}`, { data: newSponsor });
   },
   addDropzone: function (newDropzone) {      
-      return axios.post(`/api/dropzone?key=${process.env.REACT_APP_API_SECRET}`,  { data: newDropzone });
+    return axios.post(`/api/dropzone?key=${process.env.REACT_APP_API_SECRET}`,  { data: newDropzone });
   },
   addAdmin: function (newAdmin) {
     return axios.post(`/api/admin?key=${process.env.REACT_APP_API_SECRET}`,  { data: newAdmin });
