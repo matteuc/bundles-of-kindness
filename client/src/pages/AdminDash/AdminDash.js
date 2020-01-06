@@ -277,9 +277,9 @@ function AdminDash(props) {
                         fields={[
                           {type: "single", name: "iw_title", placeholder: "", required: true, label: "Marker Popup Title", helper: "This is the name of the dropzone location!"},
                           {type: "multi", name: "iw_text", placeholder: "", required: true, label: "Marker Popup Description", helper: "This is a description of the dropzone location!"},
-                          {type: "single", name: "iw_imgUrl", placeholder: "", required: true, label: "Marker Popup Image", helper: "This is an URL to the image at the dropzone location!"},
+                          {type: "image", name: "iw_imgUrl", placeholder: "", required: true, label: "Marker Popup Image", helper: "This is an URL to the image at the dropzone location!"},
                           {type: "location", name: "address", placeholder: "", required: true, label: "Marker Location", helper: "This is the address of the dropzone location!"},
-                          {type: "single", name: "icon", placeholder: "", required: true, label: "Marker Icon", helper: "This is an URL to the marker icon!"}
+                          {type: "image", name: "icon", placeholder: "", required: true, label: "Marker Icon", helper: "This is an URL to the marker icon!"}
                         ]}
                         createBtn={
                           {

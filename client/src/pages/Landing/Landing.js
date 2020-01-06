@@ -95,6 +95,11 @@ function Landing() {
   const [ mapMarkers, setMapMarkers ] = useState([]);
 
   useEffect(() => {
+    // let cat, dog, mouse;
+    // let obj = {cat: 'meow', dog: 'woof', mouse: 'squeak'};
+    // ({cat, dog, mouse} = obj);     // Note the `()` around
+    // console.log(cat, dog, mouse);
+
     API.getDropzones()
     .then((dObj) => {
       if(dObj) {

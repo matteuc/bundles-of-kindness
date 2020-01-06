@@ -33,7 +33,10 @@ const useStyles = makeStyles(theme => ({
   },
   formModal: {
     maxWidth: "500px",
-    margin: "0.5em"
+    width: "80vw",
+    height: "90vh",
+    margin: "0.5em",
+    overflow: "hidden"
   },
   alertModal: {
     maxWidth: "500px",
@@ -232,6 +235,8 @@ function DocEditor(props) {
       >
         <Fade in={open}>
           <div className={clsx(classes.paper, classes.formModal)}>
+            {/* <div style={{height: "100%", overflowY: "scroll", marginRight: "-50px", paddingRight: "50px"}}> */}
+
             <DocForm
               fields={props.fields}
               values={values}
@@ -239,7 +244,8 @@ function DocEditor(props) {
                 isUpdate ? props.updateBtn : props.createBtn
               }
               submit={(newDoc) => { isUpdate ? submitDocument(newDoc, props.update) : submitDocument(newDoc, props.create) }}
-            />
+              />
+              {/* </div> */}
           </div>
         </Fade>
       </Modal>
