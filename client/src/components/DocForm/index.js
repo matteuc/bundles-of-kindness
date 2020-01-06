@@ -85,6 +85,7 @@ function DocForm(props) {
   //  https://itnext.io/how-to-build-a-dynamic-controlled-form-with-react-hooks-2019-b39840f75c4f
   
   const [fields, setFields] = useState(DOC_VALUES);
+  const [files, setFiles] = useState([]);
   const [dropzones, setDropzones] = useState([]);
   const [errors, setErrors] = useState({});
   const [isEnabled, setIsEnabled] = useState(true);
@@ -157,13 +158,12 @@ const handleSubmit = (e) => {
         if(dropzones.length) {
             Promise.all(
                 dropzones.map(dropzoneId => 
-                    uploadImageAsPromise(fields[dropzoneId], dropzoneId)
+                    uploadImageAsPromise(files[dropzoneId], dropzoneId)
                 )
             )
             // After all images are uploaded...
             // SUBMIT TO DATABASE
             .then( result => {
-                console.log(result);
                 DOC_SUB(fields);
 
             })
@@ -209,7 +209,6 @@ const uploadImageAsPromise = (image, id) => {
             // Retrieve image URL
             return snapshot.ref.getDownloadURL()
                 .then(url => {
-                    console.log(url);
                     // Set image URL 
                     let tmp = fields;
                     tmp[id] = url;
@@ -246,11 +245,20 @@ const handleDrop = (imageFiles, id) => {
     // Add dropzone ID to state variable
     if (!dropzones.includes(id)) {
         addDropzoneId(id);
-        console.log(id);
     }
 
-    const image = imageFiles[0];
-    let tmp = fields;
+    let image = imageFiles[0];
+
+    // Store File object
+    let tmp = files;
+    tmp[id] = image;
+    setFiles({...tmp});
+    
+    if (typeof image == "object") {
+        image = URL.createObjectURL(image);
+    }
+    
+    tmp = fields;
     tmp[id] = image;
     setFields({...tmp});
 
@@ -426,19 +434,49 @@ const handleDrop = (imageFiles, id) => {
                             </div>
                         )
                     case "image": 
-                        // Add field name to images array
-                        // addDropzoneId(field.name);
                         return (
                             <div key={`form-${idx}`}>
+                                <TextField
+                                id={field.name}
+                                disabled
+                                onChange={handleFormChange}
+                                value={fields[field.name]  || DOC_VALUES[field.name] || ''}
+                                label={field.label}
+                                placeholder={field.placeholder}
+                                error={errors[field.name] ? true: false}
+                                helperText={errors[field.name] ? field.error : field.helper}
+                                fullWidth
+                                style={{margin: "0.5em"}}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                required={field.required}
+                            />
+                                
+                                {/* DROPZONE WITH PREVIEW */}
                                 <Dropzone 
+                                
                                     style={{margin: "0.5em"}}  
                                     onDrop={(img) => handleDrop(img, field.name)}>
                                         {({ getRootProps, getInputProps }) => (
                                             <Box >
                                                 <div {...getRootProps({ className: `${errors[field.name] ? 'dropzone-error' : 'dropzone'}` })}>
                                                     <input {...getInputProps({ multiple: false, accept: 'image/*' })} />
-                                                    <p>Drag 'n' drop an image here, or click to select one</p>
-                                                    <p>{field.helper}</p>
+                                                    <div className="image-overlay">
+                                                        <p className="image-overlay-text">Drag 'n' drop an image here, or click to select one</p>
+                                                    </div>
+                                                <img 
+                                                    id={field.name}
+                                                    onError={addDefaultSrc} 
+                                                    name=""
+                                                    style={{margin: "auto", width: "100%"}}
+                                                    // src={fields[field.name] ? URL.createObjectURL(fields[field.name]) : "https://pbs.twimg.com/media/DnE2oP6UYAAJr8R.jpg"} 
+                                                    src={ 
+                                                        fields[field.name] === undefined ? 
+                                                            "https://pbs.twimg.com/media/DnE2oP6UYAAJr8R.jpg"
+                                                        : fields[field.name]
+                                                        } 
+                                                />
                                                 </div>
                                             </Box>
                                         )}
@@ -447,14 +485,7 @@ const handleDrop = (imageFiles, id) => {
                                 { errors[field.name] && 
                                     <span style={{ "fontSize": "0.8rem", color: "red" }} >{field.error}</span>
                                 }
-                                <div style={{textAlign: "center"}} >
-                                    <img 
-                                    id={field.name}
-                                    onError={addDefaultSrc} 
-                                    name=""
-                                    style={{margin: "auto", width: "100%"}}
-                                    src={fields[field.name] ? URL.createObjectURL(fields[field.name]) : "https://pbs.twimg.com/media/DnE2oP6UYAAJr8R.jpg"} />
-                                </div>
+                                
                             </div>
                         )
                     default: 
@@ -478,7 +509,7 @@ const handleDrop = (imageFiles, id) => {
 
         }
 
-        <Box className={classes.centerElementParent} style={{ color: "white", margin: "0.5em" }} >
+        <Box className={classes.centerElementParent} style={{ color: "white", margin: "1em" }} >
 
             <Fab disabled={!isEnabled} style={{ backgroundColor: props.submitBtn.color || "" }} variant="extended" type="submit" aria-label="Login" className={clsx("hvr-bob", classes.centerElement, classes.btnIcon)}>
             <span style={{ color: "rgb(255, 255, 255)" }}>
