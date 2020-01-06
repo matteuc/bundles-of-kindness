@@ -86,7 +86,7 @@ const InstaFeedGrid = (props) => {
                     )
                 })}
             </GridList>
-            <Box className={classes.centerElementParent} style={{ color: "grey", marginTop: "1em" }} >
+            <Box className={classes.centerElementParent} style={{ color: "grey", marginTop: "3em", marginBottom: "3em" }} >
                     <FAIcon onClick={() => handleLoad()} size="lg" name="ellipsis-h" solid className={clsx(classes.centerElement, "hvr-grow")} />
             </Box>
 
