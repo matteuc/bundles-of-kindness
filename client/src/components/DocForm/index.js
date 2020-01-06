@@ -19,6 +19,8 @@ import {
 } from '@material-ui/pickers';
 import { Box, Fab, TextField } from "@material-ui/core";
 import LocationAutocomplete from 'location-autocomplete';
+import Dropzone from 'react-dropzone';
+import storage from "./firebaseConfig";
 
 // STYLESHEETS
 import "../../utils/flowHeaders.min.css";
@@ -58,6 +60,13 @@ const useStyles = makeStyles(theme => ({
       },
       extendedBtnIcon: {
         marginRight: "0.5em"
+      },
+      form: {
+          overflowY: "scroll",
+          overflowX: "hidden",
+          paddingRight: "50px",
+          marginRight: "-50px",
+          height: "100%"
       }
 }));
 
@@ -76,6 +85,7 @@ function DocForm(props) {
   //  https://itnext.io/how-to-build-a-dynamic-controlled-form-with-react-hooks-2019-b39840f75c4f
   
   const [fields, setFields] = useState(DOC_VALUES);
+  const [dropzones, setDropzones] = useState([]);
   const [errors, setErrors] = useState({});
   const [isEnabled, setIsEnabled] = useState(true);
 
@@ -141,11 +151,33 @@ const handleSubmit = (e) => {
 
     if(errors === 0) {
         setIsEnabled(false);
-        DOC_SUB(fields);
+
+        // UPLOAD IMAGES TO FIREBASE AND RETRIEVE LINKS
+        // BEFORE SUBMITTING
+        if(dropzones.length) {
+            Promise.all(
+                dropzones.map(dropzoneId => 
+                    uploadImageAsPromise(fields[dropzoneId], dropzoneId)
+                )
+            )
+            // After all images are uploaded...
+            // SUBMIT TO DATABASE
+            .then( result => {
+                console.log(result);
+                DOC_SUB(fields);
+
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
+            
+
+        } 
+        else {
+            DOC_SUB(fields);
+        }
         
-        // .then(res => {
-        //     setIsEnabled(true);
-        // });
+
     }
     
 }
@@ -158,14 +190,83 @@ const unmarkError = (id) => {
     setErrors({...tmpErrors});
 }
 
+const markError = (id) => {
+    let tmpErrors = errors;
+
+    tmpErrors[id] = true;
+
+    setErrors({...tmpErrors});
+}
+
+// REACT-DROPZONE FUNCTIONS
+const uploadImageAsPromise = (image, id) => {
+    const imageBlob = new Blob([image], { type: `image/${image.name.split(".")[1]}` });    
+    return storage.ref(`images/${image.name}`)
+        // Upload image to database
+        .put(imageBlob)
+        // After image has finished uploading...
+        .then(snapshot => {
+            // Retrieve image URL
+            return snapshot.ref.getDownloadURL()
+                .then(url => {
+                    console.log(url);
+                    // Set image URL 
+                    let tmp = fields;
+                    tmp[id] = url;
+
+                    setFields({...tmp});
+                })
+                
+        })
+        // Handle Uploading Error
+        .catch(err => {
+            console.log(err);
+        })
+
+
+}
+
+const addDropzoneId = id => {
+    let tmp = dropzones;
+    tmp.push(id);
+
+    setDropzones([...tmp]);
+
+}
+
+const addDefaultSrc = ev => {
+  ev.target.src = "https://pbs.twimg.com/media/DnE2oP6UYAAJr8R.jpg";
+  const dropzoneId = ev.target.name;
+  if (fields[dropzoneId]) {
+      markError(dropzoneId);
+  }
+}
+
+const handleDrop = (imageFiles, id) => {
+    // Add dropzone ID to state variable
+    if (!dropzones.includes(id)) {
+        addDropzoneId(id);
+        console.log(id);
+    }
+
+    const image = imageFiles[0];
+    let tmp = fields;
+    tmp[id] = image;
+    setFields({...tmp});
+
+    unmarkError(id);
+    
+}
+
   useEffect(() => {
     window.mdc.autoInit();
   }, [])
 
+
   // LOADING  
   return (
     <>
-        <form onSubmit={handleSubmit} autoComplete="off">
+        <form onSubmit={handleSubmit} autoComplete="off" className={classes.form}>
         {
             DOC_FIELDS.map((field, idx) => {
                 switch(field.type) {
@@ -274,7 +375,7 @@ const unmarkError = (id) => {
                             </MuiPickersUtilsProvider>
                         )
 
-                        case "date-time": 
+                    case "date-time": 
                         return (
                             <MuiPickersUtilsProvider key={`form-${idx}`} utils={DateFnsUtils}>
                                 <DateTimePicker
@@ -321,6 +422,38 @@ const unmarkError = (id) => {
                                     <div style={{color: errors[field.name] ? ERROR_COLOR : ""}} className={`mdc-text-field-helper-text`}>
                                         {errors[field.name] ? field.error : field.helper}
                                     </div>
+                                </div>
+                            </div>
+                        )
+                    case "image": 
+                        // Add field name to images array
+                        // addDropzoneId(field.name);
+                        return (
+                            <div key={`form-${idx}`}>
+                                <Dropzone 
+                                    style={{margin: "0.5em"}}  
+                                    onDrop={(img) => handleDrop(img, field.name)}>
+                                        {({ getRootProps, getInputProps }) => (
+                                            <Box >
+                                                <div {...getRootProps({ className: `${errors[field.name] ? 'dropzone-error' : 'dropzone'}` })}>
+                                                    <input {...getInputProps({ multiple: false, accept: 'image/*' })} />
+                                                    <p>Drag 'n' drop an image here, or click to select one</p>
+                                                    <p>{field.helper}</p>
+                                                </div>
+                                            </Box>
+                                        )}
+                                </Dropzone>
+                                
+                                { errors[field.name] && 
+                                    <span style={{ "fontSize": "0.8rem", color: "red" }} >{field.error}</span>
+                                }
+                                <div style={{textAlign: "center"}} >
+                                    <img 
+                                    id={field.name}
+                                    onError={addDefaultSrc} 
+                                    name=""
+                                    style={{margin: "auto", width: "100%"}}
+                                    src={fields[field.name] ? URL.createObjectURL(fields[field.name]) : "https://pbs.twimg.com/media/DnE2oP6UYAAJr8R.jpg"} />
                                 </div>
                             </div>
                         )
