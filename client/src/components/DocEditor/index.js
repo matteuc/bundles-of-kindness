@@ -269,7 +269,7 @@ function DocEditor(props) {
         <Fade in={open}>
           <div className={clsx(classes.paper, classes.formModal)}>
             <DocForm
-              fields={props.uniform && Array.isArray(values.fields)? props.fields : Array.isArray(props.fields)? props.fields : []}
+              fields={props.uniform && Array.isArray(values.fields)? values.fields : Array.isArray(props.fields)? props.fields : []}
               values={values}
               submitBtn={
                 isUpdate ? props.updateBtn : props.createBtn
