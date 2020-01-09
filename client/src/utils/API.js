@@ -17,6 +17,12 @@ export default {
   getVolunteerEvents: function () {
     return axios.get(`/api/volunteerEvent`);
   },
+  getPage: function (pageId) {
+    return axios.get(`/api/pageContent/${pageId}`);
+  },
+  getPages: function () {
+    return axios.get(`/api/pageContent`);
+  },
   sendMail: function(name, sender, message) {
     return axios.post(`/api/email`, { data: { name, sender, message } })
   },
@@ -40,6 +46,9 @@ export default {
   },
   updateAdmin: function (newAdmin, adminId) {
     return axios.put(`/api/admin/${adminId}?key=${process.env.REACT_APP_API_SECRET}`,  { data: newAdmin });
+  },
+  updatePage: function (newPage, pageId) {
+    return axios.put(`/api/pageContent/${pageId}?key=${process.env.REACT_APP_API_SECRET}`,  { data: newPage });
   },
   updateVolunteerEvent: function (newVolunteerEvent, volunteerEventId) {
     return axios.put(`/api/volunteerEvent/${volunteerEventId}?key=${process.env.REACT_APP_API_SECRET}`,  { data: newVolunteerEvent });

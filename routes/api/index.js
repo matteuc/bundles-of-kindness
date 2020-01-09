@@ -3,6 +3,8 @@ const dropzoneRoutes = require("./dropzone");
 const sponsorCompanyRoutes = require("./sponsorCompany");
 const volunteerEventRoutes = require("./volunteerEvent");
 const adminRoutes = require("./admin");
+const pageContentRoutes = require("./pageContent");
+
 const sendMail = require("../../nodemailer");
 
 
@@ -17,6 +19,9 @@ router.use("/volunteerEvent", volunteerEventRoutes);
 
 // Admin routes
 router.use("/admin", adminRoutes);
+
+// PageContent routes
+router.use("/pageContent", pageContentRoutes);
 
 // Nodemailer API route
 router.post('/email', (req, res) => {

@@ -6,7 +6,11 @@ import API from "../../utils/API";
 import "../../utils/flowHeaders.min.css";
 import "./main.css";
 import { Grid, GridList, GridListTile, Paper, Typography } from "@material-ui/core";
-import { PAGE_DESCRIPTION } from "./sponsorsData.js"
+
+import Spinner from "../../components/Spinner";
+
+import { ACCENT_COLOR } from "../../utils/colors";
+
 
 const useStyles = makeStyles(theme => ({
   gridPaper: {
@@ -16,11 +20,12 @@ const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: "rgb(91, 39, 188)",
+    color: ACCENT_COLOR,
     fontFamily: "Lilita One, cursive"
   }
 }));
 
+let PAGE_DESCRIPTION;
 function Sponsors() {
   const classes = useStyles();
   const isSmallSize = useMediaQuery({ query: '(max-width: 600px)' });
@@ -28,16 +33,40 @@ function Sponsors() {
   const isLargeSize = useMediaQuery({ query: '(max-width: 1280px)' });
   // const isExtraLargeSize = useMediaQuery({ query: '(max-width: 1920px)' });
   const [companies, setCompanies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    API.getSponsorCompanies()
+    const sponsorsPromise = API.getSponsorCompanies()
     .then((scObj) => {
       if(scObj) {
         setCompanies(scObj.data);
       } 
     });
+
+    const contentPromise = API.getPage("5e16d2c3703b64d92fa95edd")
+    .then((contentObj) => {
+      ({PAGE_DESCRIPTION} = contentObj.data[0]);
+      
+    });
+
+    Promise.all([sponsorsPromise, contentPromise])
+    .then(() => { 
+      setLoading(false);
+    })
  
   }, [])
+
+  if (loading) {
+    return (
+        <div style={{ minHeight: "100%", width: "100%", position: "absolute", backgroundColor: "snow" }}>
+          {
+            loading ?
+              <Spinner value="Loading..." src={"https://media0.giphy.com/media/xUOxf7gg8AztZMfyMM/source.gif"} color={ACCENT_COLOR} />
+              : ""
+          }
+        </div>
+      )
+  }
 
   return (
     <>
@@ -59,7 +88,7 @@ function Sponsors() {
       </Grid>
 
       {/* COMPANY LOGO CONTAINER */}
-      <Grid styles={{marginBottom: "2em"}} container justify="center">
+      <Grid style={{marginBottom: "2em"}} container justify="center">
         <Grid item xs={12} lg={10} xl={8}>
           {/* COMPANY LOGO GRIDLIST */}
           <GridList spacing={8} cellHeight="auto" style={{ width: "100%", height: "auto", padding: 0, marginTop: "2em" }} cols={isSmallSize ? 2 : isMediumSize ? 3 : isLargeSize ? 4 : 5}>
