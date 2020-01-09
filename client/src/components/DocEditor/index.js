@@ -121,6 +121,7 @@ function DocEditor(props) {
     // Populate values with passed in object
     // Parse a non-uniform collection document fields if necessary
     let strValues = values;
+
     if(!props.uniform && !Array.isArray(strValues.fields)) {
       strValues.fields = JSON.parse(strValues.fields);
     }
@@ -268,7 +269,7 @@ function DocEditor(props) {
         <Fade in={open}>
           <div className={clsx(classes.paper, classes.formModal)}>
             <DocForm
-              fields={props.uniform && Array.isArray(values.fields)? props.fields : Array.isArray(values.fields)? values.fields : []}
+              fields={props.uniform && Array.isArray(values.fields)? props.fields : Array.isArray(props.fields)? props.fields : []}
               values={values}
               submitBtn={
                 isUpdate ? props.updateBtn : props.createBtn
