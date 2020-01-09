@@ -16,6 +16,7 @@ import AdminDash from "./pages/AdminDash/index";
 // COMPONENTS
 import NoMatch from "./components/NoMatch";
 import NavBarApp from "./components/NavBarApp";
+import DocForm from "./components/DocForm";
 // import Footer from "./components/Footer";
 import { Box } from "@material-ui/core";
 // import { makeStyles } from "@material-ui/styles";
@@ -89,7 +90,7 @@ function App() {
       >
         
         <Box style={{overflow: "hidden"}}>
-
+          
         <Switch >
           <Route exact path="/" component={Landing} />
           <Route exact path="/help-out" component={HelpOut} />

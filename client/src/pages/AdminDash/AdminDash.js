@@ -416,7 +416,7 @@ function AdminDash(props) {
                         uniform={true}
                         fields={[
                           {type: "single", name: "name", placeholder: "", required: true, label: "Admin Name", helper: "This is the name of the new admin!"},
-                          {type: "single", name: "email", placeholder: "", required: true, label: "Admin Email", helper: "This is the new admin's email!"}
+                          {type: "email", name: "email", placeholder: "", required: true, label: "Admin Email", helper: "This is the new admin's email!"}
                         ]}
                         createBtn={
                           {
