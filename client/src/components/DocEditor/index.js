@@ -104,6 +104,7 @@ function DocEditor(props) {
 
   const handleClose = () => {
     setOpen(false);
+
   };
 
   const handleAlertOpen = (doc) => {
@@ -118,7 +119,14 @@ function DocEditor(props) {
 
   const handleFormOpen = (values, isUpdate, id) => {
     // Populate values with passed in object
-    setValues(values);
+    // Parse a non-uniform collection document fields if necessary
+    let strValues = values;
+    if(!props.uniform && !Array.isArray(strValues.fields)) {
+      strValues.fields = JSON.parse(strValues.fields);
+    }
+
+    setValues(strValues);
+
     setIsUpdate(isUpdate);
     setOpenDocument(id);
     handleOpen();
@@ -133,13 +141,20 @@ function DocEditor(props) {
   }
 
   const submitDocument = async (newDoc, submit) => {
+    // STRINGIFY FIELDS IF COLLECTION IS NON-UNIFORM
+    let payload = newDoc;
+    if(!props.uniform) {
+      payload.fields = JSON.stringify(payload.fields);
+    }
+
     // PASS IN DOCUMENT & ID TO BE SUBMITTED
-      await submit(newDoc, openDocument)
-      .then(() => {
-        // Refresh documents after submission
-        getDocuments();
-        // Close modal
-        handleClose();
+    await submit(payload, openDocument)
+    .then(() => {
+      // Refresh documents after submission
+
+      getDocuments();
+      // Close modal
+      handleClose();
       })
       .catch((err) => {
         // TODO: ERROR CATCHING
@@ -182,21 +197,28 @@ function DocEditor(props) {
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText style={{wordBreak: "break-all"}} primary={document[props.primary]} secondary={document[props.secondary]} />
-                  <ListItemSecondaryAction onClick={() =>  handleAlertOpen(document) }>
-                    <IconButton edge="end" aria-label="delete">
-                      <FAIcon size={"sm"} name={"trash"} solid />
-                    </IconButton>
-                  </ListItemSecondaryAction>
+                  {
+                    !props.updateOnly && 
+                      <ListItemSecondaryAction onClick={() =>  handleAlertOpen(document) }>
+                        <IconButton edge="end" aria-label="delete">
+                          <FAIcon size={"sm"} name={"trash"} solid />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                  }
                 </ListItem>
               ))
             }
           </List>
         </div>
-        <Box className={classes.centerElementParent} style={{ color: "white", marginTop: "1.5em" }} >
-            <span style={{ color: "rgb(255, 255, 255)" }} onClick={() => handleFormOpen({}, false, "")} className={clsx("hvr-grow", classes.centerElement)} >
-              <FAIcon size="2x" name={props.addIcon.name} solid={props.addIcon.solid} className={classes.extendedBtnIcon} style={{color: props.addIcon.color}} />
-            </span>
-        </Box>
+        {/* RENDER ADD BUTTON ONLY IF DOCUMENT CREATION IS ALLOWED */}
+        {!props.updateOnly ?
+          <Box className={classes.centerElementParent} style={{ color: "white", marginTop: "1.5em" }} >
+              <span style={{ color: "rgb(255, 255, 255)" }} onClick={() => handleFormOpen({}, false, "")} className={classes.centerElement} >
+                <FAIcon size="2x" name={props.addIcon.name} solid={props.addIcon.solid} className={classes.extendedBtnIcon} style={{color: props.addIcon.color}} />
+              </span>
+          </Box>
+          : ""
+        }
       </>
       :
        <div style={{marginTop: "2em"}}>
@@ -207,14 +229,24 @@ function DocEditor(props) {
                 </Typography>
               </Grid>
               <Grid item xs={10} style={{textAlign: "center"}}>
+                {/* SHOW OPTION TO CREATE DOCUMENT ONLY IF ALLOWED */}
+                {
+                  !props.updateOnly ?
+                    <>
+                      <Typography style={{color: "grey"}} align="center" variant="body1">
+                        Click the icon below to create a '{props.name}'!
+                      </Typography>
+                      <Box className={classes.centerElementParent} style={{ color: "grey", margin: "1.5em 0em" }} >
+                        <FAIcon size={"10x"} name={props.icon.name} solid={props.icon.solid} className={clsx("hvr-bob", classes.centerElement)} onClick={() => handleFormOpen({}, false, "")}/>
+                        
+                      </Box>
+                    </>
+                  :
+                    <Box className={classes.centerElementParent} style={{ color: "grey", margin: "1.5em 0em" }} >
+                      <FAIcon size={"10x"} name={props.icon.name} solid={props.icon.solid} className={clsx("hvr-bob", classes.centerElement)} />
+                    </Box>
 
-                <Typography style={{color: "grey"}} align="center" variant="body1">
-                  Click the icon below to create a '{props.name}'!
-                </Typography>
-                <Box className={classes.centerElementParent} style={{ color: "grey", margin: "1.5em 0em" }} >
-                  <FAIcon size={"10x"} name={props.icon.name} solid={props.icon.solid} className={clsx("hvr-bob", classes.centerElement)} onClick={() => handleFormOpen({}, false, "")}/>
-                  
-                </Box>
+                }
               </Grid>
             </Grid>
        </div>
@@ -235,17 +267,14 @@ function DocEditor(props) {
       >
         <Fade in={open}>
           <div className={clsx(classes.paper, classes.formModal)}>
-            {/* <div style={{height: "100%", overflowY: "scroll", marginRight: "-50px", paddingRight: "50px"}}> */}
-
             <DocForm
-              fields={props.fields}
+              fields={props.uniform && Array.isArray(values.fields)? props.fields : Array.isArray(values.fields)? values.fields : []}
               values={values}
               submitBtn={
                 isUpdate ? props.updateBtn : props.createBtn
               }
               submit={(newDoc) => { isUpdate ? submitDocument(newDoc, props.update) : submitDocument(newDoc, props.create) }}
               />
-              {/* </div> */}
           </div>
         </Fade>
       </Modal>

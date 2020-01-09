@@ -1,15 +1,17 @@
 // HOOKS, FUNCTIONS, ETC.
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useMediaQuery } from "react-responsive";
 import { CSSTransition } from 'react-transition-group';
+import API from "../../utils/API";
 
 // COMPONENTS
 import FAIcon from "../../components/FAIcon";
 import { Box, Grid, AppBar, Tabs, Tab, Typography, Paper, Fab, FormControl, InputLabel, Input, InputAdornment } from "@material-ui/core";
+import Spinner from "../../components/Spinner";
 
 // ICONS
 import Face from '@material-ui/icons/Face';
@@ -19,7 +21,7 @@ import "../../utils/flowHeaders.min.css";
 import "./main.css";
 
 // DATA
-import {PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, VOLUNTEER_FORM_EMBED_URL, VOLUNTEER_COLOR, BOF_LOGO, AMAZON_WISH_URL, AMAZON_COLOR } from "./helpOutData.js";
+import { VOLUNTEER_FORM_EMBED_URL, VOLUNTEER_COLOR, AMAZON_COLOR } from "./helpOutData.js";
 
 import { MAIN_COLOR, ACCENT_COLOR } from "../../utils/colors";
 
@@ -94,13 +96,16 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
+let PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, BOF_LOGO, AMAZON_WISH_URL;
 function HelpOut() {
   const classes = useStyles();
   const theme = useTheme();
   const [tabIdx, setTabIdx] = React.useState(0);
   const [showOptions, setShowOptions] = useState(true);
   const [showDonationForm, setShowDonationForm] = useState(false);
-  const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
+  const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' });
+  const [loading, setLoading] = useState(true);
+
 
   // FUNCTIONS FOR MUI TAB PANEL
   const handleChange = (event, newValue) => {
@@ -110,6 +115,28 @@ function HelpOut() {
   const handleChangeIndex = index => {
     setTabIdx(index);
   };
+
+  useEffect(() => {
+    const contentPromise = API.getPage("5e16d2c1703b64d92fa95edc")
+    .then((contentObj) => {
+      ({PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, BOF_LOGO, AMAZON_WISH_URL} = contentObj.data[0]);
+      setLoading(false);
+      
+    });
+ 
+  }, [])
+
+  if (loading) {
+    return (
+        <div style={{ minHeight: "100%", width: "100%", position: "absolute", backgroundColor: "snow" }}>
+          {
+            loading ?
+              <Spinner value="Loading..." src={"https://media0.giphy.com/media/xUOxf7gg8AztZMfyMM/source.gif"} color={ACCENT_COLOR} />
+              : ""
+          }
+        </div>
+      )
+  }
 
   return (
     <>

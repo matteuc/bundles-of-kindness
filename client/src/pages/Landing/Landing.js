@@ -11,6 +11,7 @@ import API from "../../utils/API";
 import Masthead from "../../components/Masthead";
 import CirclePicture from "../../components/CirclePicture";
 import InstaFeedGrid from "../../components/InstaFeedGrid";
+import Spinner from "../../components/Spinner";
 import GoogleMap from "../../components/GoogleMap";
 import FAIcon from "../../components/FAIcon";
 import { Box, Button, Grid, InputAdornment, Typography, FormControl, TextField, Fab, Fade } from "@material-ui/core";
@@ -27,7 +28,7 @@ import "./main.css";
 import 'aos/dist/aos.css';
 
 // DATA
-import { COVER_IMAGE, COVER_TEXT, PRESS_LOGOS, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, IG_TOKEN, SOCIAL_TEXT, IG_URL, FB_URL, CONTACT_WARNING, CONTACT_API, CONTACT_TEXT, mapOptions, mapType, LOCATIONS_TEXT } from "./landingData.js";
+import { IG_TOKEN, IG_URL, FB_URL, mapOptions, mapType } from "./landingData.js";
 
 import {MAIN_COLOR, ACCENT_COLOR} from "../../utils/colors";
 
@@ -63,6 +64,13 @@ const useStyles = makeStyles(theme => ({
     marginRight: "10px"
   }
 }));
+
+let COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME, PRESS_LOGOS;
+
+function PressLogo(src, name) {
+  this.src = src;
+  this.name = name;
+};
 
 function Landing() {
   const classes = useStyles();
@@ -101,6 +109,7 @@ function Landing() {
   const [mailError, setMailError] = useState(false);
   const [mailMessageVisible, setMailMessageVisible] = useState(false);
   const [sendDisabled, setSendDisabled] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // FUNCTIONS
   const handleFormChange = (e) => {
@@ -145,14 +154,39 @@ function Landing() {
   }
 
   useEffect(() => {
-    API.getDropzones()
+    const markersPromise = API.getDropzones()
     .then((dObj) => {
       if(dObj) {
         setMapMarkers(dObj.data);
       } 
     });
- 
+
+    const contentPromise = API.getPage("5e16d2be703b64d92fa95edb")
+    .then((contentObj) => {
+      ({COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME} = contentObj.data[0]);
+
+      PRESS_LOGOS = [ new PressLogo(FIRST_PRESS_IMG, FIRST_PRESS_NAME), new PressLogo(SECOND_PRESS_IMG, SECOND_PRESS_NAME), new PressLogo(THIRD_PRESS_IMG, THIRD_PRESS_NAME)];
+      
+    });
+
+    Promise.all([markersPromise, contentPromise])
+    .then(() => { 
+      setLoading(false);
+    })
+
   }, [])
+
+  if (loading) {
+    return (
+        <div style={{ minHeight: "100%", width: "100%", position: "absolute", backgroundColor: "snow" }}>
+          {
+            loading ?
+              <Spinner value="Loading..." src={"https://media0.giphy.com/media/xUOxf7gg8AztZMfyMM/source.gif"} color={ACCENT_COLOR} />
+              : ""
+          }
+        </div>
+      )
+  }
 
   return (
     <>
@@ -188,7 +222,7 @@ function Landing() {
         <Grid container spacing={isMobileSize ? 5 : 0} justify="center">
           <Grid item xs={12}>
             <h5 className="flow-text" style={{ textAlign: "center" }}>
-              <Typography style={{ fontSize: "inherit" }} variant={"overline"}> As Featured On</Typography>
+              <Typography style={{ fontSize: "inherit" }} variant={"overline"}> As Featured In</Typography>
             </h5>
           </Grid>
           {PRESS_LOGOS.map(logo => (

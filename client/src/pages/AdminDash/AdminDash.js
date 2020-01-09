@@ -32,8 +32,8 @@ function TabPanel(props) {
       component="div"
       role="tabpanel"
       hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
       {...other}
     >
       {value === index && <Box p={3}>{children}</Box>}
@@ -49,8 +49,8 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
+    id: `scrollable-auto-tab-${index}`,
+    'aria-controls': `scrollable-auto-tabpanel-${index}`,
   };
 }
 // END: MUI TAB PANEL FUNCTIONS 
@@ -251,13 +251,16 @@ function AdminDash(props) {
                       onChange={handleChange}
                       indicatorColor="secondary"
                       textColor="primary"
-                      variant="fullWidth"
+                      variant={isMobileSize? "fullWidth" : "scrollable"}
+                      scrollButtons="auto"
                       aria-label="full width tabs example"
                     >
                       <Tab label={isMobileSize ? "" : "Dropzones"} icon={<FAIcon solid size={"lg"} name="parachute-box" />} {...a11yProps(0)} />
                       <Tab label={isMobileSize ? "" : "Volunteering"} icon={<FAIcon solid size={"lg"} name="people-carry" />} {...a11yProps(1)} />
                       <Tab label={isMobileSize ? "" : "Sponsors"} icon={<FAIcon solid size={"lg"} name="donate" />} {...a11yProps(2)} />
                       <Tab label={isMobileSize ? "" : "Admin"} icon={<FAIcon solid size={"lg"} name="user-tie" />} {...a11yProps(3)} />
+                      <Tab label={isMobileSize ? "" : "Page Content"} icon={<FAIcon solid size={"lg"} name="file-alt" />} {...a11yProps(4)} />
+
 
 
                     </Tabs>
@@ -274,6 +277,7 @@ function AdminDash(props) {
                     <TabPanel className={classes.tabPanel} value={tabIdx} index={0} dir={theme.direction} >
                         
                       <DocEditor 
+                        uniform={true}                        
                         fields={[
                           {type: "single", name: "iw_title", placeholder: "", required: true, label: "Marker Popup Title", helper: "This is the name of the dropzone location!"},
                           {type: "multi", name: "iw_text", placeholder: "", required: true, label: "Marker Popup Description", helper: "This is a description of the dropzone location!"},
@@ -295,6 +299,7 @@ function AdminDash(props) {
                             icon: "edit"
                           }
                         }
+                        updateOnly={false}
                         get={API.getDropzones}
                         create={addDropzone}
                         update={updateDropzone}
@@ -318,6 +323,7 @@ function AdminDash(props) {
                     {/* VOLUNTEERING TAB */}
                     <TabPanel className={classes.tabPanel} value={tabIdx} index={1} dir={theme.direction} >
                       <DocEditor 
+                        uniform={true}
                         fields={[
                           {type: "single", name: "title", placeholder: "", required: true, label: "Event Title", helper: "This is the title of the volunteer event!"},
                           {type: "multi", name: "description", placeholder: "", required: false, label: "Event Description", helper: "This is a description of the volunteer event!"},
@@ -340,6 +346,7 @@ function AdminDash(props) {
                             icon: "edit"
                           }
                         }
+                        updateOnly={false}
                         get={API.getVolunteerEvents}
                         create={API.addVolunteerEvent}
                         update={API.updateVolunteerEvent}
@@ -363,8 +370,9 @@ function AdminDash(props) {
                     {/* SPONSORS TAB */}
                     <TabPanel className={classes.tabPanel} value={tabIdx} index={2} dir={theme.direction} >
                       <DocEditor 
+                        uniform={true}
                         fields={[
-                          {type: "single", name: "src", placeholder: "", required: true, label: "Sponsor Company Logo (PNG)", helper: "This a link to the sponsor company's logo!"},
+                          {type: "image", name: "src", placeholder: "", required: true, label: "Sponsor Company Logo (PNG)", helper: "This a link to the sponsor company's logo!"},
                           {type: "single", name: "name", placeholder: "", required: true, label: "Sponsor Company Name", helper: "This is the name of the sponsor company!"},
                         ]}
                         createBtn={
@@ -381,6 +389,7 @@ function AdminDash(props) {
                             icon: "edit"
                           }
                         }
+                        updateOnly={false}
                         get={API.getSponsorCompanies}
                         create={API.addSponsorCompany}
                         update={API.updateSponsorCompany}
@@ -404,6 +413,7 @@ function AdminDash(props) {
                     {/* ADMIN TAB */}
                     <TabPanel className={classes.tabPanel} value={tabIdx} index={3} dir={theme.direction} >
                       <DocEditor 
+                        uniform={true}
                         fields={[
                           {type: "single", name: "name", placeholder: "", required: true, label: "Admin Name", helper: "This is the name of the new admin!"},
                           {type: "single", name: "email", placeholder: "", required: true, label: "Admin Email", helper: "This is the new admin's email!"}
@@ -422,6 +432,7 @@ function AdminDash(props) {
                             icon: "edit"
                           }
                         }
+                        updateOnly={false}
                         get={API.getAdmin}
                         create={API.addAdmin}
                         update={API.updateAdmin}
@@ -439,6 +450,36 @@ function AdminDash(props) {
                         primary={"name"}
                         secondary={"email"}
                         name="Admin"
+                      />
+                    </TabPanel>
+
+                    {/* PAGE CONTENT TAB */}
+                    <TabPanel className={classes.tabPanel} value={tabIdx} index={4} dir={theme.direction} >
+                      <DocEditor 
+                        uniform={false}
+                        fields={[]}
+                        createBtn={{}}
+                        updateBtn={
+                          {
+                            color: "orange",
+                            text: "Update",
+                            icon: "edit"
+                          }
+                        }
+                        updateOnly={true}
+                        get={API.getPages}
+                        create={()=>{}}
+                        update={API.updatePage}
+                        delete={()=>{}}
+                        icon={{
+                          name: "file-alt",
+                          color: "blue",
+                          solid: true
+                        }}
+                        addIcon={{}}
+                        primary={"name"}
+                        secondary={"_id"}
+                        name="PageContent"
                       />
                     </TabPanel>
 
