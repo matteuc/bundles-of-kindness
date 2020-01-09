@@ -12,7 +12,7 @@ const pageContentSchema = new Schema({
         required: true
     }
 
-});
+}, { strict: false });
 
 const PageContent = mongoose.model("PageContent", pageContentSchema);
 
