@@ -96,7 +96,7 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-let PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, BOF_LOGO, AMAZON_WISH_URL;
+let PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, PAYPAL_DONATION_URL, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, BOF_LOGO, AMAZON_WISH_URL;
 function HelpOut() {
   const classes = useStyles();
   const theme = useTheme();
@@ -119,7 +119,7 @@ function HelpOut() {
   useEffect(() => {
     const contentPromise = API.getPage("5e16d2c1703b64d92fa95edc")
     .then((contentObj) => {
-      ({PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, BOF_LOGO, AMAZON_WISH_URL} = contentObj.data[0]);
+      ({PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, PAYPAL_DONATION_URL, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, BOF_LOGO, AMAZON_WISH_URL} = contentObj.data[0]);
       setLoading(false);
       
     });
@@ -214,13 +214,14 @@ function HelpOut() {
                           {PAYPAL_DONATION_TEXT}
                         </Typography>
                         <Box style={{ marginTop: "2em", display: "flex", color: "rgb(255, 255, 255)" }} >
-
-                          <Fab style={{ margin: "auto", backgroundColor: ACCENT_COLOR }} variant="extended" aria-label="Donate via Paypal" className="hvr-bob">
-                            <span style={{ color: "rgb(255, 255, 255)" }} >
-                              { !isMobileSize && <FAIcon size="lg" name="donate" solid style={{ marginRight: "10px" }} />}
-                              Donate
-                            </span>
-                          </Fab>
+                          <a className={classes.link} target="_blank" rel="noopener noreferrer" href={PAYPAL_DONATION_URL} style={{ margin: "auto"}}>
+                            <Fab style={{ backgroundColor: ACCENT_COLOR }} variant="extended" aria-label="Donate via Paypal" className="hvr-bob">
+                              <span style={{ color: "rgb(255, 255, 255)" }} >
+                                { !isMobileSize && <FAIcon size="lg" name="donate" solid style={{ marginRight: "10px" }} />}
+                                Donate
+                              </span>
+                            </Fab>
+                          </a>
                         </Box>
                       </Box>
                     </Grid>
