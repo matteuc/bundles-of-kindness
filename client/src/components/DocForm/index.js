@@ -488,6 +488,49 @@ const handleDrop = (imageFiles, id) => {
                                 
                             </div>
                         )
+
+                    case "url":
+                        return (
+                            <TextField
+                                type="url"
+                                key={`form-${idx}`}
+                                id={field.name}
+                                onChange={handleFormChange}
+                                // defaultValue={DOC_VALUES[field.name]}
+                                value={fields[field.name]  || DOC_VALUES[field.name] || ''}
+                                label={field.label}
+                                placeholder={field.placeholder}
+                                error={errors[field.name] ? true: false}
+                                helperText={errors[field.name] ? field.error : field.helper}
+                                fullWidth
+                                style={{margin: "0.5em"}}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                required={field.required}
+                            />
+                        )
+                    case "email":
+                        return (
+                            <TextField
+                                type="email"
+                                key={`form-${idx}`}
+                                id={field.name}
+                                onChange={handleFormChange}
+                                // defaultValue={DOC_VALUES[field.name]}
+                                value={fields[field.name]  || DOC_VALUES[field.name] || ''}
+                                label={field.label}
+                                placeholder={field.placeholder}
+                                error={errors[field.name] ? true: false}
+                                helperText={errors[field.name] ? field.error : field.helper}
+                                fullWidth
+                                style={{margin: "0.5em"}}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                required={field.required}
+                            />
+                        )
                     default: 
                         return "";
                     // case "toggle":
