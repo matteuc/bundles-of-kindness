@@ -161,7 +161,7 @@ function Landing() {
       } 
     });
 
-    const contentPromise = API.getPages()
+    const contentPromise = API.getPage("5e16d2be703b64d92fa95edb")
     .then((contentObj) => {
       console.log(contentObj)
       ({COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME} = contentObj.data[0]);
