@@ -43,9 +43,15 @@ function Sponsors() {
       } 
     });
 
-    const contentPromise = API.getPage("5e16d2c3703b64d92fa95edd")
+    const contentPromise = API.getPages()
     .then((contentObj) => {
-      ({PAGE_DESCRIPTION} = contentObj.data[0]);
+      let currentPage;
+      for(let pageObj of contentObj.data) {
+        if (pageObj._id === "5e16d2c3703b64d92fa95edd") {
+          currentPage = pageObj;
+        }
+      }
+      ({PAGE_DESCRIPTION} = currentPage);
       
     });
 

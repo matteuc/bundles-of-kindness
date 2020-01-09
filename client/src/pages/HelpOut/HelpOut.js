@@ -117,9 +117,15 @@ function HelpOut() {
   };
 
   useEffect(() => {
-    const contentPromise = API.getPage("5e16d2c1703b64d92fa95edc")
+    API.getPages()
     .then((contentObj) => {
-      ({PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, BOF_LOGO, AMAZON_WISH_URL} = contentObj.data[0]);
+      let currentPage;
+      for(let pageObj of contentObj.data) {
+        if (pageObj._id === "5e16d2c1703b64d92fa95edc") {
+          currentPage = pageObj;
+        }
+      }
+      ({PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, BOF_LOGO, AMAZON_WISH_URL} = currentPage);
       setLoading(false);
       
     });
