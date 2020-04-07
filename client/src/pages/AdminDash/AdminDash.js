@@ -151,7 +151,6 @@ function AdminDash(props) {
     API.getAdmin()
       .then((result) => {
         if (isAuthenticated && user) {
-          console.log(user)
           // Check to see if user email is within list of admin 
          for(const admin of result.data) {
            if (admin.email === user.email) {
