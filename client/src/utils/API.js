@@ -5,6 +5,9 @@ export default {
   geocodeLocation: function(address) {
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`);
   },
+  getAlbumPhotos: function(albumId) {
+    return axios.get(`/api/galbum?id=${albumId}`)
+  },
   getSponsorCompanies: function () {
     return axios.get(`/api/sponsorCompany`);
   },

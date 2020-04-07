@@ -3,6 +3,7 @@ const dropzoneRoutes = require("./dropzone");
 const sponsorCompanyRoutes = require("./sponsorCompany");
 const volunteerEventRoutes = require("./volunteerEvent");
 const adminRoutes = require("./admin");
+const galbumRoutes = require("./galbum");
 const pageContentRoutes = require("./pageContent");
 
 const sendMail = require("../../nodemailer");
@@ -19,6 +20,9 @@ router.use("/volunteerEvent", volunteerEventRoutes);
 
 // Admin routes
 router.use("/admin", adminRoutes);
+
+// Google Photo routes
+router.use("/galbum", galbumRoutes);
 
 // PageContent routes
 router.use("/pageContent", pageContentRoutes);

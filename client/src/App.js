@@ -12,6 +12,7 @@ import Landing from "./pages/Landing/index";
 import HelpOut from "./pages/HelpOut/index";
 import Sponsors from "./pages/Sponsors/index";
 import AdminDash from "./pages/AdminDash/index";
+import Gallery from "./pages/Gallery/index";
 
 // COMPONENTS
 import NoMatch from "./components/NoMatch";
@@ -80,6 +81,10 @@ function App() {
             path: "/help-out"
           },
           {
+            name: "Gallery",
+            path: "/gallery"
+          },
+          {
             name: "Sponsors",
             path: "/sponsors"
           }
@@ -95,6 +100,7 @@ function App() {
           <Route exact path="/" component={Landing} />
           <Route exact path="/help-out" component={HelpOut} />
           <Route exact path="/sponsors" component={Sponsors} />
+          <Route exact path="/gallery" component={Gallery} />
           <Route exact path="/admin" component={AdminDash} />
           <Route component={NoMatch} />
         </Switch>
