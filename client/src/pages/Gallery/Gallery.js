@@ -79,7 +79,7 @@ function Gallery() {
           </h3>
           {/* PAGE DESCRIPTION */}
           <Typography color="primary" align="center" variant="body1">
-            {/* {PAGE_DESCRIPTION} */}
+            {PAGE_DESCRIPTION}
           </Typography>
 
 
