@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from 'clsx';
 import { useMediaQuery } from 'react-responsive'
 import { NavLink } from "react-router-dom";
@@ -151,6 +151,8 @@ function NavBarApp(props) {
 
     setOpen(isOpen);
   };
+
+  useEffect(() => setOpen(false), [isMobileSize])
 
   return (
     <>

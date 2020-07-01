@@ -81,8 +81,8 @@ function App() {
             path: "/help-out"
           },
           {
-            name: "Gallery",
-            path: "/gallery"
+            name: "Photos",
+            path: "/photos"
           },
           {
             name: "Sponsors",
@@ -100,7 +100,7 @@ function App() {
           <Route exact path="/" component={Landing} />
           <Route exact path="/help-out" component={HelpOut} />
           <Route exact path="/sponsors" component={Sponsors} />
-          <Route exact path="/gallery" component={Gallery} />
+          <Route exact path="/photos" component={Gallery} />
           <Route exact path="/admin" component={AdminDash} />
           <Route component={NoMatch} />
         </Switch>

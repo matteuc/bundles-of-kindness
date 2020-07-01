@@ -30,7 +30,7 @@ import 'aos/dist/aos.css';
 // DATA
 import { IG_TOKEN, IG_URL, FB_URL, mapOptions, mapType } from "./landingData.js";
 
-import {MAIN_COLOR, ACCENT_COLOR} from "../../utils/colors";
+import { MAIN_COLOR, ACCENT_COLOR } from "../../utils/colors";
 
 // Initialize AOS
 // Parent container of AOS Elements must have style {overflow: hidden}
@@ -103,7 +103,7 @@ function Landing() {
   const whoText = (fadeDir) => lineText("Who are we?", WHO_TEXT, fadeDir);
 
   // HOOKS 
-  const [ mapMarkers, setMapMarkers ] = useState([]);
+  const [mapMarkers, setMapMarkers] = useState([]);
   const [messageForm, setMessageForm] = useState({});
   const [mailMessage, setMailMessage] = useState("");
   const [mailError, setMailError] = useState(false);
@@ -117,75 +117,75 @@ function Landing() {
 
     let tmp = messageForm;
     tmp[name] = value;
-    setMessageForm({...tmp});
+    setMessageForm({ ...tmp });
 
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSendDisabled(true);
-    
+
     API.sendMail(messageForm.name, messageForm.sender, messageForm.content)
-    .then(result => {
-      // Mail successfully sent!
-      if(result.status === 200) {
-        setMailError(false);
-        setMailMessage("Your message has been sent! 🥳");
-        setMailMessageVisible(true);
+      .then(result => {
+        // Mail successfully sent!
+        if (result.status === 200) {
+          setMailError(false);
+          setMailMessage("Your message has been sent! 🥳");
+          setMailMessageVisible(true);
 
-        // Clear form and mailMessage after a brief amount of time
-        setTimeout(function() {
-          setMailMessageVisible(false);
-          setMessageForm({});
-        }, 3000)
-      } 
-      // Mail not sent!
-      else {
-        setMailError(true);
-        setMailMessage("Your message was not sent. Please try again later 🥺");
-        setMailMessageVisible(true);
+          // Clear form and mailMessage after a brief amount of time
+          setTimeout(function () {
+            setMailMessageVisible(false);
+            setMessageForm({});
+          }, 3000)
+        }
+        // Mail not sent!
+        else {
+          setMailError(true);
+          setMailMessage("Your message was not sent. Please try again later 🥺");
+          setMailMessageVisible(true);
 
-      }
+        }
 
-      // Enable Send Button
-      setSendDisabled(false);
+        // Enable Send Button
+        setSendDisabled(false);
 
-    })
+      })
   }
 
   useEffect(() => {
     const markersPromise = API.getDropzones()
-    .then((dObj) => {
-      if(dObj) {
-        setMapMarkers(dObj.data);
-      } 
-    });
+      .then((dObj) => {
+        if (dObj) {
+          setMapMarkers(dObj.data);
+        }
+      });
 
     const contentPromise = API.getPage("5e16d2be703b64d92fa95edb")
-    .then((contentObj) => {
-      ({COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME} = contentObj.data[0]);
+      .then((contentObj) => {
+        ({ COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME } = contentObj.data[0]);
 
-      PRESS_LOGOS = [ new PressLogo(FIRST_PRESS_IMG, FIRST_PRESS_NAME), new PressLogo(SECOND_PRESS_IMG, SECOND_PRESS_NAME), new PressLogo(THIRD_PRESS_IMG, THIRD_PRESS_NAME)];
-      
-    });
+        PRESS_LOGOS = [new PressLogo(FIRST_PRESS_IMG, FIRST_PRESS_NAME), new PressLogo(SECOND_PRESS_IMG, SECOND_PRESS_NAME), new PressLogo(THIRD_PRESS_IMG, THIRD_PRESS_NAME)];
+
+      });
 
     Promise.all([markersPromise, contentPromise])
-    .then(() => { 
-      setLoading(false);
-    })
+      .then(() => {
+        setLoading(false);
+      })
 
   }, [])
 
   if (loading) {
     return (
-        <div style={{ minHeight: "100%", width: "100%", position: "absolute", backgroundColor: "snow" }}>
-          {
-            loading ?
-              <Spinner value="Loading..." src={"https://media0.giphy.com/media/xUOxf7gg8AztZMfyMM/source.gif"} color={ACCENT_COLOR} />
-              : ""
-          }
-        </div>
-      )
+      <div style={{ minHeight: "100%", width: "100%", position: "absolute", backgroundColor: "snow" }}>
+        {
+          loading ?
+            <Spinner value="Loading..." src={"https://media0.giphy.com/media/xUOxf7gg8AztZMfyMM/source.gif"} color={ACCENT_COLOR} />
+            : ""
+        }
+      </div>
+    )
   }
 
   return (
@@ -225,9 +225,11 @@ function Landing() {
               <Typography style={{ fontSize: "inherit" }} variant={"overline"}> As Featured In</Typography>
             </h5>
           </Grid>
-          {PRESS_LOGOS.map(logo => (
-            <Grid key={logo.src} item xs={12} sm={4} style={{ textAlign: "center"}} className={classes.centerElementParent}>
-              <img width={isMobileSize ? "50%" : "70%"} className={classes.centerElement} style={{ maxWidth: "300px"}} src={logo.src} alt={logo.name} />
+          {PRESS_LOGOS.map(({src, article, name}) => (
+            <Grid key={src} item xs={12} sm={4} style={{ textAlign: "center" }} className={classes.centerElementParent}>
+              <a href={article} style={{textDecoration: "none"}}>
+                <img width={isMobileSize ? "50%" : "70%"} className={classes.centerElement} style={{ maxWidth: "300px" }} src={src} alt={name} />
+              </a>
             </Grid>
           )
 
@@ -317,7 +319,7 @@ function Landing() {
           <Box className={classes.contentSection}>
             <Grid style={{ marginBottom: "2em" }} data-aos="zoom-in" container spacing={3} justify="center">
 
-              <Grid item  xs={12} sm={10} md={8}>
+              <Grid item xs={12} sm={10} md={8}>
 
                 <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
                   Where have we been?
@@ -444,12 +446,12 @@ function Landing() {
                   </Fab>
                 </Box>
 
-                <Fade 
+                <Fade
                   in={mailMessageVisible}
                   timeout={{
                     enter: 500,
                     exit: 500
-                  }}  
+                  }}
                 >
                   <Typography className={"flow-text"} variant="subtitle2" align="center" gutterBottom style={{ color: mailError ? "red" : "green", marginTop: "1em" }}>
                     {mailMessage}

@@ -75,7 +75,7 @@ function Gallery() {
         <Grid item xs={10} md={8} lg={6}>
           {/* PAGE TITLE */}
           <h3 className="flow-text" >
-            <Paper elevation={0} className={classes.paper}> Gallery <img alt="Heart GIF" src="https://media3.giphy.com/media/Lqx1czoPLTQg3I68d1/giphy.gif?cid=790b76115ba9aee006629b4d81ee0e4da1c15596b742b06f&rid=giphy.gif" style={{ height: "1em", verticalAlign: "text-top" }} /> </Paper>
+            <Paper elevation={0} className={classes.paper}> Photos <img alt="Heart GIF" src="https://media3.giphy.com/media/Lqx1czoPLTQg3I68d1/giphy.gif?cid=790b76115ba9aee006629b4d81ee0e4da1c15596b742b06f&rid=giphy.gif" style={{ height: "1em", verticalAlign: "text-top" }} /> </Paper>
           </h3>
           {/* PAGE DESCRIPTION */}
           <Typography color="primary" align="center" variant="body1">
