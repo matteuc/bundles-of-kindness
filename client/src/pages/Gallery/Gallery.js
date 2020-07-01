@@ -31,9 +31,6 @@ let PAGE_DESCRIPTION, ALBUM_ID;
 function Gallery() {
   const classes = useStyles();
   const [photos, setPhotos] = useState([]);
-  const isSmallSize = useMediaQuery({ query: '(max-width: 600px)' });
-  const isMediumSize = useMediaQuery({ query: '(max-width: 960px)' });
-  const isLargeSize = useMediaQuery({ query: '(max-width: 1280px)' });
 
   const [loading, setLoading] = useState(true);
 
@@ -87,20 +84,9 @@ function Gallery() {
 
       </Grid>
 
-      {/* <Grid style={{ marginBottom: "2em" }} container justify="center"> */}
-        {/* <Grid item xs={12} lg={10} xl={8}> */}
+
           <div className="row">
-              {/* <GridList
-            spacing={3}
-            cellHeight="auto"
-            style={{
-              width: "100%",
-              height: "auto",
-              padding: 10,
-              marginTop: "2em"
-            }}
-            cols={isSmallSize ? 2 : isMediumSize ? 3 : isLargeSize ? 4 : 5}
-          > */}
+
           <div className="column">
               {photos.slice(0, (photos.length / 4)).map((src, index) => (
                 <img style={{ width: "100%"}} src={src} key={"Image: " + src} alt={"Image: " + src} className="photo-tile hvr-reveal" />
@@ -125,11 +111,8 @@ function Gallery() {
               )
               )}
             </div>
-              {/* </GridList> */}
           </div>
-        {/* </Grid> */}
 
-      {/* </Grid> */}
     </>
 
   );

@@ -31,6 +31,7 @@ import 'aos/dist/aos.css';
 import { IG_TOKEN, IG_URL, FB_URL, mapOptions, mapType } from "./landingData.js";
 
 import { MAIN_COLOR, ACCENT_COLOR } from "../../utils/colors";
+import SafeMultilineOverflowText from "../../components/SafeMultilineOverflowText";
 
 // Initialize AOS
 // Parent container of AOS Elements must have style {overflow: hidden}
@@ -100,7 +101,7 @@ function Landing() {
 
   const whoImg = (fadeDir) => lineImg(WHO_IMG, WHO_IMG_ALT, fadeDir);
 
-  const whoText = (fadeDir) => lineText("Who are we?", WHO_TEXT, fadeDir);
+  const whoText = (fadeDir) => lineText("Who are we?", <SafeMultilineOverflowText text={WHO_TEXT} linesToShow={10} fade />, fadeDir);
 
   // HOOKS 
   const [mapMarkers, setMapMarkers] = useState([]);
@@ -225,9 +226,9 @@ function Landing() {
               <Typography style={{ fontSize: "inherit" }} variant={"overline"}> As Featured In</Typography>
             </h5>
           </Grid>
-          {PRESS_LOGOS.map(({src, article, name}) => (
+          {PRESS_LOGOS.map(({ src, article, name }) => (
             <Grid key={src} item xs={12} sm={4} style={{ textAlign: "center" }} className={classes.centerElementParent}>
-              <a href={article} style={{textDecoration: "none"}}>
+              <a href={article} style={{ textDecoration: "none" }}>
                 <img width={isMobileSize ? "50%" : "70%"} className={classes.centerElement} style={{ maxWidth: "300px" }} src={src} alt={name} />
               </a>
             </Grid>

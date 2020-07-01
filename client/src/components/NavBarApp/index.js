@@ -139,7 +139,7 @@ function ScrollTop(props) {
 
 function NavBarApp(props) {
 
-  const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
+  const isMobileSize = useMediaQuery({ query: '(max-width: 960px)' })
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
