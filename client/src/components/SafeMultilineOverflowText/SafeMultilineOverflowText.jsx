@@ -16,7 +16,7 @@ import clsx from "clsx";
 // }
 
 // Text Container that detects overflow, replacing overflowed text with an ellipsis and providing the full text with a tooltip if specified
-const SafeMultilineOverflowText = ({ Container, fade = true, text, fontSize = 16, lineHeight = 1.43, linesToShow = 3 }) => {
+const SafeMultilineOverflowText = ({ onOverflow = () => {}, Container, fade = true, text, fontSize = 16, lineHeight = 1.43, linesToShow = 3 }) => {
     
     const maxHeight = fontSize * linesToShow * lineHeight
     const useStyles = makeStyles((theme) => createStyles({
@@ -38,7 +38,7 @@ const SafeMultilineOverflowText = ({ Container, fade = true, text, fontSize = 16
         root: {
             maxHeight: `${maxHeight}px`,
             width: "100%",
-            fontSize: `${fontSize}`,
+            fontSize: `${fontSize}px`,
             lineHeight: `${lineHeight}`,
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -57,6 +57,8 @@ const SafeMultilineOverflowText = ({ Container, fade = true, text, fontSize = 16
         }
 
     }, [elRef])
+
+    React.useEffect(() => onOverflow(), [overflow])
 
     return (
         <>

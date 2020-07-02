@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useMediaQuery } from "react-responsive";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import AOS from 'aos';
 import API from "../../utils/API";
 
@@ -14,7 +14,7 @@ import InstaFeedGrid from "../../components/InstaFeedGrid";
 import Spinner from "../../components/Spinner";
 import GoogleMap from "../../components/GoogleMap";
 import FAIcon from "../../components/FAIcon";
-import { Box, Button, Grid, InputAdornment, Typography, FormControl, TextField, Fab, Fade } from "@material-ui/core";
+import { Box, Button, Grid, InputAdornment, Typography, FormControl, TextField, Fab, Fade, useTheme, IconButton } from "@material-ui/core";
 
 // ICONS
 import Face from '@material-ui/icons/Face';
@@ -66,16 +66,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-let COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME, PRESS_LOGOS;
+let COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME, FIRST_PRESS_ARTICLE, SECOND_PRESS_ARTICLE, THIRD_PRESS_ARTICLE, PRESS_LOGOS;
 
-function PressLogo(src, name) {
+function PressLogo(src, name, article) {
   this.src = src;
   this.name = name;
+  this.article = article;
 };
 
 function Landing() {
   const classes = useStyles();
   const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
+  const [aboutOverflow, setAboutOverflow] = useState(false);
 
   // COMPONENTS
   const lineText = (heading, text, fadeDir) => (
@@ -83,7 +85,7 @@ function Landing() {
       <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="left" gutterBottom>
         {heading}
       </Typography>
-      <Typography className={"flow-text"} variant="body1" align="left" gutterBottom>
+      <Typography component="div" className={"flow-text"} variant="body1" align="left" gutterBottom>
         {text}
       </Typography>
     </Grid>
@@ -101,7 +103,23 @@ function Landing() {
 
   const whoImg = (fadeDir) => lineImg(WHO_IMG, WHO_IMG_ALT, fadeDir);
 
-  const whoText = (fadeDir) => lineText("Who are we?", <SafeMultilineOverflowText text={WHO_TEXT} linesToShow={10} fade />, fadeDir);
+  const whoText = (fadeDir) => lineText("Who are we?", <>
+    <SafeMultilineOverflowText
+      text={WHO_TEXT}
+      linesToShow={10}
+      fade
+      onOverflow={() => setAboutOverflow(true)}
+    />
+    {aboutOverflow ?
+      <div style={{ display: "flex", margin: "1rem 0" }}>
+        <NavLink to="/about" style={{ margin: "auto", textDecoration: "none", color: "inherit" }}
+        >
+          <Button style={{ color: theme.palette.text.secondary }}>Read More</Button>
+        </NavLink>
+      </div>
+      : ''}
+  </>
+    , fadeDir);
 
   // HOOKS 
   const [mapMarkers, setMapMarkers] = useState([]);
@@ -111,6 +129,7 @@ function Landing() {
   const [mailMessageVisible, setMailMessageVisible] = useState(false);
   const [sendDisabled, setSendDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme()
 
   // FUNCTIONS
   const handleFormChange = (e) => {
@@ -164,9 +183,9 @@ function Landing() {
 
     const contentPromise = API.getPage("5e16d2be703b64d92fa95edb")
       .then((contentObj) => {
-        ({ COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME } = contentObj.data[0]);
+        ({ COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME, FIRST_PRESS_ARTICLE, SECOND_PRESS_ARTICLE, THIRD_PRESS_ARTICLE } = contentObj.data[0]);
 
-        PRESS_LOGOS = [new PressLogo(FIRST_PRESS_IMG, FIRST_PRESS_NAME), new PressLogo(SECOND_PRESS_IMG, SECOND_PRESS_NAME), new PressLogo(THIRD_PRESS_IMG, THIRD_PRESS_NAME)];
+        PRESS_LOGOS = [new PressLogo(FIRST_PRESS_IMG, FIRST_PRESS_NAME, FIRST_PRESS_ARTICLE), new PressLogo(SECOND_PRESS_IMG, SECOND_PRESS_NAME, SECOND_PRESS_ARTICLE), new PressLogo(THIRD_PRESS_IMG, THIRD_PRESS_NAME, THIRD_PRESS_ARTICLE)];
 
       });
 
@@ -228,8 +247,8 @@ function Landing() {
           </Grid>
           {PRESS_LOGOS.map(({ src, article, name }) => (
             <Grid key={src} item xs={12} sm={4} style={{ textAlign: "center" }} className={classes.centerElementParent}>
-              <a href={article} style={{ textDecoration: "none" }}>
-                <img width={isMobileSize ? "50%" : "70%"} className={classes.centerElement} style={{ maxWidth: "300px" }} src={src} alt={name} />
+              <a target="_blank" className={classes.centerElement} href={article} style={{ textDecoration: "none", width: isMobileSize ? "50%" : "70%", maxWidth: "300px" }}>
+                <img width={"100%"} src={src} alt={name} />
               </a>
             </Grid>
           )
@@ -239,7 +258,7 @@ function Landing() {
         </Grid>
 
         {/* ALL OTHER SECTIONS */}
-        <Box mt={7} pt={5} pb={5} p={3} style={{ backgroundColor: "#f4f4f4" }}>
+        <Box mt={7} pt={5} pb={5} p={3} style={{ backgroundColor: theme.palette.background.default }}>
 
           {/* WHO ARE WE */}
           <Box>
@@ -380,8 +399,17 @@ function Landing() {
               <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1.5em" }}>
                 {CONTACT_TEXT}
               </Typography>
+              <Box className={classes.centerElementParent} style={{ color: "white" }} >
 
-              {/* <form action={CONTACT_API} method="POST"> */}
+                  <Fab href="mailto:support@bundlesofkindness.org" disabled={sendDisabled ? true : false} style={{ backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Send Email" className={classes.centerElement}>
+                    <span style={{ color: "rgb(255, 255, 255)" }} >
+                      <FAIcon size="lg" name="paper-plane" solid className={classes.extendedBtnIcon} />
+                      Send
+
+                    </span>
+                  </Fab>
+                </Box>
+            {/* 
               <form onSubmit={handleSubmit} autoComplete="off">
                 <FormControl fullWidth >
                   <TextField
@@ -459,10 +487,11 @@ function Landing() {
                   </Typography>
                 </Fade>
               </form>
-            </Grid>
+             */}
           </Grid>
-        </Box>
+          </Grid>
       </Box>
+    </Box>
     </>
 
   );

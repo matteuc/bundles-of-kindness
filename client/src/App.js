@@ -75,7 +75,7 @@ function App() {
           <Switch >
             <Route exact path="/" component={Landing} />
             {
-              publicPages.map(({ path, component }) => <Route exact path={path} component={component} />)
+              publicPages.map(({ path, component }) => <Route exact key={path} path={path} component={component} />)
             }
             <Route exact path="/admin" component={AdminDash} />
             <Route component={NoMatch} />
