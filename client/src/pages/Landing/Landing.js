@@ -47,6 +47,9 @@ const useStyles = makeStyles(theme => ({
   heading: {
     fontFamily: "Lilita One, cursive"
   },
+  caption: {
+    margin: `${theme.spacing(1)}px 0px`
+  },
   link: {
     textDecoration: "none",
     color: "inherit"
@@ -365,6 +368,9 @@ function Landing() {
                 <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
                   What are we up to?
                 </Typography>
+                <Typography className={clsx("flow-text", classes.caption)} variant="body1" align="center" gutterBottom>
+                  Check us out on Instagram or Facebook!
+                </Typography>
                 <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
                   <a style={{ color: "inherit" }} target="_blank" rel="noopener noreferrer" href={IG_URL} >
                     <FAIcon size={"2x"} name={"instagram"} brand style={{ marginRight: "1em" }} className="hvr-grow-rotate ig-icon" />
@@ -376,7 +382,7 @@ function Landing() {
                 <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
                   {SOCIAL_TEXT}
                 </Typography>
-                <InstaFeedGrid token={IG_TOKEN} initial={9} step={3} postHeight={"auto"} width="100%" height="auto" />
+                {/* <InstaFeedGrid token={IG_TOKEN} initial={9} step={3} postHeight={"auto"} width="100%" height="auto" /> */}
               </Grid>
             </Grid>
           </Box>
