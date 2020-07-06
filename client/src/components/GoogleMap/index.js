@@ -78,7 +78,7 @@ const GoogleMap = (props) => {
             }
         }
 
-    });
+    }, []);
 
     return (
         <div className="google-map" ref={mapCanvas} style={{ display: "flex" }}>

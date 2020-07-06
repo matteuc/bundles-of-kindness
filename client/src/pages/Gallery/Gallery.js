@@ -31,9 +31,6 @@ let PAGE_DESCRIPTION, ALBUM_ID;
 function Gallery() {
   const classes = useStyles();
   const [photos, setPhotos] = useState([]);
-  const isSmallSize = useMediaQuery({ query: '(max-width: 600px)' });
-  const isMediumSize = useMediaQuery({ query: '(max-width: 960px)' });
-  const isLargeSize = useMediaQuery({ query: '(max-width: 1280px)' });
 
   const [loading, setLoading] = useState(true);
 
@@ -75,7 +72,7 @@ function Gallery() {
         <Grid item xs={10} md={8} lg={6}>
           {/* PAGE TITLE */}
           <h3 className="flow-text" >
-            <Paper elevation={0} className={classes.paper}> Gallery <img alt="Heart GIF" src="https://media3.giphy.com/media/Lqx1czoPLTQg3I68d1/giphy.gif?cid=790b76115ba9aee006629b4d81ee0e4da1c15596b742b06f&rid=giphy.gif" style={{ height: "1em", verticalAlign: "text-top" }} /> </Paper>
+            <Paper elevation={0} className={classes.paper}> Photos <img alt="Heart GIF" src="https://media3.giphy.com/media/Lqx1czoPLTQg3I68d1/giphy.gif?cid=790b76115ba9aee006629b4d81ee0e4da1c15596b742b06f&rid=giphy.gif" style={{ height: "1em", verticalAlign: "text-top" }} /> </Paper>
           </h3>
           {/* PAGE DESCRIPTION */}
           <Typography color="primary" align="center" variant="body1">
@@ -87,20 +84,9 @@ function Gallery() {
 
       </Grid>
 
-      {/* <Grid style={{ marginBottom: "2em" }} container justify="center"> */}
-        {/* <Grid item xs={12} lg={10} xl={8}> */}
+
           <div className="row">
-              {/* <GridList
-            spacing={3}
-            cellHeight="auto"
-            style={{
-              width: "100%",
-              height: "auto",
-              padding: 10,
-              marginTop: "2em"
-            }}
-            cols={isSmallSize ? 2 : isMediumSize ? 3 : isLargeSize ? 4 : 5}
-          > */}
+
           <div className="column">
               {photos.slice(0, (photos.length / 4)).map((src, index) => (
                 <img style={{ width: "100%"}} src={src} key={"Image: " + src} alt={"Image: " + src} className="photo-tile hvr-reveal" />
@@ -125,11 +111,8 @@ function Gallery() {
               )
               )}
             </div>
-              {/* </GridList> */}
           </div>
-        {/* </Grid> */}
 
-      {/* </Grid> */}
     </>
 
   );
