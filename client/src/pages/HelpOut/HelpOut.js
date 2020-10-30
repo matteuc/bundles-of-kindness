@@ -93,6 +93,7 @@ const useStyles = makeStyles(theme => ({
     textDecoration: "none",
     color: "inherit"
   }
+  
 
 }));
 
@@ -119,7 +120,7 @@ function HelpOut() {
   useEffect(() => {
     const contentPromise = API.getPage("5e16d2c1703b64d92fa95edc")
     .then((contentObj) => {
-      ({PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, PAYPAL_DONATION_TEXT, PAYPAL_DONATION_URL, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, BOF_LOGO, AMAZON_WISH_URL} = contentObj.data[0]);
+      ({PAGE_DESCRIPTION, DONATION_TEXT, VOLUNTEER_TEXT, ITEM_DONATION_TEXT, DONATION_FORM_EMBED_URL, BOF_LOGO, AMAZON_WISH_URL} = contentObj.data[0]);
       setLoading(false);
       
     });
@@ -201,39 +202,9 @@ function HelpOut() {
                   {/* TYPES OF DONATIONS */}
                   <Grid style={{ marginTop: "1em" }} container spacing={1} justify="center">
 
-                    {/* PAYPAL OPTION */}
-                    <Grid item xs={12} xl={5} className={classes.gridPaper}>
-                      <Box className={clsx(classes.donationOption, "hvr-grow-shadow")}>
-                        <Typography style={{ marginBottom: 0 }} className={clsx("flow-text", classes.heading)} variant="h5" align="center" gutterBottom>
-                          Cash
-                    </Typography>
-                        <Box style={{ display: "flex", color: "rgb(255, 255, 255)" }} >
-                          <img width={"50px"} src="https://i.ibb.co/cYj6tbN/Paypal-Logo-Transparent-PNG-Cropped.png" alt="PayPal logo" style={{ margin: "auto" }} />
-                        </Box>
-                        <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "0.5em" }}>
-                          {PAYPAL_DONATION_TEXT}
-                        </Typography>
-                        <Box style={{ marginTop: "2em", display: "flex", color: "rgb(255, 255, 255)" }} >
-                          <a className={classes.link} target="_blank" rel="noopener noreferrer" href={PAYPAL_DONATION_URL} style={{ margin: "auto"}}>
-                            <Fab style={{ backgroundColor: ACCENT_COLOR }} variant="extended" aria-label="Donate via Paypal" className="hvr-bob">
-                              <span style={{ color: "rgb(255, 255, 255)" }} >
-                                { !isMobileSize && <FAIcon size="lg" name="donate" solid style={{ marginRight: "10px" }} />}
-                                Donate
-                              </span>
-                            </Fab>
-                          </a>
-                        </Box>
-                      </Box>
-                    </Grid>
-
-                    {/* OPTION SEPARATOR */}
-                    <Grid style={{ display: "flex" }} item xs={12} xl={2}>
-                      <Paper style={{ backgroundColor: "transparent", margin: "auto" }} elevation={0} className={classes.gridPaper}> <Typography className={classes.heading} variant={"h5"} style={{ textDecoration: "underline" }}>or</Typography> </Paper>
-                    </Grid>
-
                     {/* GOODS & SERVICES OPTION */}
                     <Grid item xs={12} xl={5} className={classes.gridPaper}>
-                      <Box className={clsx(classes.donationOption, "hvr-grow-shadow")}>
+                      <Box className={clsx(classes.donationOption)}>
                         <Typography style={{ marginBottom: 0 }} className={clsx("flow-text", classes.heading)} variant="h5" align="center" gutterBottom>
                           Goods & Services
                         </Typography>

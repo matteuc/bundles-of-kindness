@@ -12,6 +12,7 @@ import Landing from "./pages/Landing/index";
 import HelpOut from "./pages/HelpOut/index";
 import Sponsors from "./pages/Sponsors/index";
 import AdminDash from "./pages/AdminDash/index";
+import Gallery from "./pages/Gallery/index";
 
 // COMPONENTS
 import NoMatch from "./components/NoMatch";
@@ -30,42 +31,31 @@ import "./App.css";
 
 // DATA
 import { MAIN_COLOR, ACCENT_COLOR } from "./utils/colors";
+import About from "./pages/About";
 
-// const useStyles = makeStyles(theme => ({
- 
-// }));
-
+const publicPages = [
+  {
+    name: "About",
+    path: "/about",
+    component: About
+  },
+  {
+    name: "Help Out",
+    path: "/help-out",
+    component: HelpOut
+  },
+  {
+    name: "Photos",
+    path: "/photos",
+    component: Gallery
+  },
+  {
+    name: "Sponsors",
+    path: "/sponsors",
+    component: Sponsors
+  }
+]
 function App() {
-  // const user = {
-  //   name: "Matt Chen",
-  //   email: "matt@email.com",
-  //   picture: "https://link.com"
-  // }
-  // const { loading, user, isAuthenticated } = useAuth0();
-  // const [userInfo, setUserInfo] = useState();
-
-  // useEffect(() => {
-  //   updateUser();
-  // }, [loading]);
-
-  // Retrieve/create userInfo document after Auth0 login
-  // const updateUser = () => {
-  //   if (isAuthenticated && user && !loading) {
-  //     setUserInfo(user);
-  //   }
-  // };
-
-  // if (!loading && isAuthenticated && user) {
-  //   return (
-  //     <div className="App text-center">
-  //       <div className="mt-5">
-  //         {user.email}
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-  // const classes = useStyles();
 
   return (
     <div className="App">
@@ -74,41 +64,23 @@ function App() {
         accentColor={ACCENT_COLOR}
         title={<img alt="Bundles of Kindness logo" style={{ marginTop: "10px", width: "225px" }} src={Logo} />}
         center
-        routes={[
-          {
-            name: "Help Out",
-            path: "/help-out"
-          },
-          {
-            name: "Sponsors",
-            path: "/sponsors"
-          }
-        ]}
+        routes={publicPages}
         activeStyle={{
           borderBottom: `2px solid ${ACCENT_COLOR}`
         }}
       >
-        
-        <Box style={{overflow: "hidden"}}>
-          
-        <Switch >
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/help-out" component={HelpOut} />
-          <Route exact path="/sponsors" component={Sponsors} />
-          <Route exact path="/admin" component={AdminDash} />
-          <Route component={NoMatch} />
-        </Switch>
-        {/* <Footer color={"rgb(246, 246, 246)"}> */}
-            {/* <Grid container spacing={3}>
-              <Grid item xs={12} sm={3}>
-                <Paper className={classes.paper}>Sitemap section #1</Paper>
-              </Grid>
-              <Grid item xs={12} sm={3}>
-                <Paper className={classes.paper}>Sitemap section #2</Paper>
-              </Grid>
-            </Grid> */}
 
-        {/* </Footer> */}
+        <Box style={{ overflow: "hidden" }}>
+
+          <Switch >
+            <Route exact path="/" component={Landing} />
+            {
+              publicPages.map(({ path, component }) => <Route exact key={path} path={path} component={component} />)
+            }
+            <Route exact path="/admin" component={AdminDash} />
+            <Route component={NoMatch} />
+          </Switch>
+          
         </Box>
       </NavBarApp>
 

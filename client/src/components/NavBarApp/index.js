@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from 'clsx';
 import { useMediaQuery } from 'react-responsive'
 import { NavLink } from "react-router-dom";
@@ -139,7 +139,7 @@ function ScrollTop(props) {
 
 function NavBarApp(props) {
 
-  const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
+  const isMobileSize = useMediaQuery({ query: '(max-width: 960px)' })
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -151,6 +151,8 @@ function NavBarApp(props) {
 
     setOpen(isOpen);
   };
+
+  useEffect(() => setOpen(false), [isMobileSize])
 
   return (
     <>

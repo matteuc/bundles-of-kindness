@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useMediaQuery } from "react-responsive";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import AOS from 'aos';
 import API from "../../utils/API";
 
@@ -14,7 +14,7 @@ import InstaFeedGrid from "../../components/InstaFeedGrid";
 import Spinner from "../../components/Spinner";
 import GoogleMap from "../../components/GoogleMap";
 import FAIcon from "../../components/FAIcon";
-import { Box, Button, Grid, InputAdornment, Typography, FormControl, TextField, Fab, Fade } from "@material-ui/core";
+import { Box, Button, Grid, InputAdornment, Typography, FormControl, TextField, Fab, Fade, useTheme, IconButton } from "@material-ui/core";
 
 // ICONS
 import Face from '@material-ui/icons/Face';
@@ -30,7 +30,8 @@ import 'aos/dist/aos.css';
 // DATA
 import { IG_TOKEN, IG_URL, FB_URL, mapOptions, mapType } from "./landingData.js";
 
-import {MAIN_COLOR, ACCENT_COLOR} from "../../utils/colors";
+import { MAIN_COLOR, ACCENT_COLOR } from "../../utils/colors";
+import SafeMultilineOverflowText from "../../components/SafeMultilineOverflowText";
 
 // Initialize AOS
 // Parent container of AOS Elements must have style {overflow: hidden}
@@ -45,6 +46,9 @@ const useStyles = makeStyles(theme => ({
   },
   heading: {
     fontFamily: "Lilita One, cursive"
+  },
+  caption: {
+    margin: `${theme.spacing(1)}px 0px`
   },
   link: {
     textDecoration: "none",
@@ -65,16 +69,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-let COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME, PRESS_LOGOS;
+let COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME, FIRST_PRESS_ARTICLE, SECOND_PRESS_ARTICLE, THIRD_PRESS_ARTICLE, PRESS_LOGOS;
 
-function PressLogo(src, name) {
+function PressLogo(src, name, article) {
   this.src = src;
   this.name = name;
+  this.article = article;
 };
 
 function Landing() {
   const classes = useStyles();
   const isMobileSize = useMediaQuery({ query: '(max-width: 600px)' })
+  const [aboutOverflow, setAboutOverflow] = useState(false);
 
   // COMPONENTS
   const lineText = (heading, text, fadeDir) => (
@@ -82,7 +88,7 @@ function Landing() {
       <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="left" gutterBottom>
         {heading}
       </Typography>
-      <Typography className={"flow-text"} variant="body1" align="left" gutterBottom>
+      <Typography component="div" className={"flow-text"} variant="body1" align="left" gutterBottom>
         {text}
       </Typography>
     </Grid>
@@ -100,16 +106,33 @@ function Landing() {
 
   const whoImg = (fadeDir) => lineImg(WHO_IMG, WHO_IMG_ALT, fadeDir);
 
-  const whoText = (fadeDir) => lineText("Who are we?", WHO_TEXT, fadeDir);
+  const whoText = (fadeDir) => lineText("Who are we?", <>
+    <SafeMultilineOverflowText
+      text={WHO_TEXT}
+      linesToShow={10}
+      fade
+      onOverflow={() => setAboutOverflow(true)}
+    />
+    {aboutOverflow ?
+      <div style={{ display: "flex", margin: "1rem 0" }}>
+        <NavLink to="/about" style={{ margin: "auto", textDecoration: "none", color: "inherit" }}
+        >
+          <Button style={{ color: theme.palette.text.secondary }}>Read More</Button>
+        </NavLink>
+      </div>
+      : ''}
+  </>
+    , fadeDir);
 
   // HOOKS 
-  const [ mapMarkers, setMapMarkers ] = useState([]);
+  const [mapMarkers, setMapMarkers] = useState([]);
   const [messageForm, setMessageForm] = useState({});
   const [mailMessage, setMailMessage] = useState("");
   const [mailError, setMailError] = useState(false);
   const [mailMessageVisible, setMailMessageVisible] = useState(false);
   const [sendDisabled, setSendDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme()
 
   // FUNCTIONS
   const handleFormChange = (e) => {
@@ -117,75 +140,75 @@ function Landing() {
 
     let tmp = messageForm;
     tmp[name] = value;
-    setMessageForm({...tmp});
+    setMessageForm({ ...tmp });
 
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSendDisabled(true);
-    
+
     API.sendMail(messageForm.name, messageForm.sender, messageForm.content)
-    .then(result => {
-      // Mail successfully sent!
-      if(result.status === 200) {
-        setMailError(false);
-        setMailMessage("Your message has been sent! 🥳");
-        setMailMessageVisible(true);
+      .then(result => {
+        // Mail successfully sent!
+        if (result.status === 200) {
+          setMailError(false);
+          setMailMessage("Your message has been sent! 🥳");
+          setMailMessageVisible(true);
 
-        // Clear form and mailMessage after a brief amount of time
-        setTimeout(function() {
-          setMailMessageVisible(false);
-          setMessageForm({});
-        }, 3000)
-      } 
-      // Mail not sent!
-      else {
-        setMailError(true);
-        setMailMessage("Your message was not sent. Please try again later 🥺");
-        setMailMessageVisible(true);
+          // Clear form and mailMessage after a brief amount of time
+          setTimeout(function () {
+            setMailMessageVisible(false);
+            setMessageForm({});
+          }, 3000)
+        }
+        // Mail not sent!
+        else {
+          setMailError(true);
+          setMailMessage("Your message was not sent. Please try again later 🥺");
+          setMailMessageVisible(true);
 
-      }
+        }
 
-      // Enable Send Button
-      setSendDisabled(false);
+        // Enable Send Button
+        setSendDisabled(false);
 
-    })
+      })
   }
 
   useEffect(() => {
     const markersPromise = API.getDropzones()
-    .then((dObj) => {
-      if(dObj) {
-        setMapMarkers(dObj.data);
-      } 
-    });
+      .then((dObj) => {
+        if (dObj) {
+          setMapMarkers(dObj.data);
+        }
+      });
 
     const contentPromise = API.getPage("5e16d2be703b64d92fa95edb")
-    .then((contentObj) => {
-      ({COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME} = contentObj.data[0]);
+      .then((contentObj) => {
+        ({ COVER_IMAGE, COVER_TEXT, WHO_IMG, WHO_IMG_ALT, WHO_TEXT, MISSION_IMG, MISSION_IMG_ALT, MISSION_TEXT, BUNDLE_IMG, BUNDLE_IMG_ALT, BUNDLE_TEXT, DONATION_TEXT, SOCIAL_TEXT, CONTACT_TEXT, LOCATIONS_TEXT, FIRST_PRESS_IMG, SECOND_PRESS_IMG, THIRD_PRESS_IMG, FIRST_PRESS_NAME, SECOND_PRESS_NAME, THIRD_PRESS_NAME, FIRST_PRESS_ARTICLE, SECOND_PRESS_ARTICLE, THIRD_PRESS_ARTICLE } = contentObj.data[0]);
 
-      PRESS_LOGOS = [ new PressLogo(FIRST_PRESS_IMG, FIRST_PRESS_NAME), new PressLogo(SECOND_PRESS_IMG, SECOND_PRESS_NAME), new PressLogo(THIRD_PRESS_IMG, THIRD_PRESS_NAME)];
-      
-    });
+        PRESS_LOGOS = [new PressLogo(FIRST_PRESS_IMG, FIRST_PRESS_NAME, FIRST_PRESS_ARTICLE), new PressLogo(SECOND_PRESS_IMG, SECOND_PRESS_NAME, SECOND_PRESS_ARTICLE), new PressLogo(THIRD_PRESS_IMG, THIRD_PRESS_NAME, THIRD_PRESS_ARTICLE)];
+
+      });
 
     Promise.all([markersPromise, contentPromise])
-    .then(() => { 
-      setLoading(false);
-    })
+      .then(() => {
+        setLoading(false);
+      })
 
   }, [])
 
   if (loading) {
     return (
-        <div style={{ minHeight: "100%", width: "100%", position: "absolute", backgroundColor: "snow" }}>
-          {
-            loading ?
-              <Spinner value="Loading..." src={"https://media0.giphy.com/media/xUOxf7gg8AztZMfyMM/source.gif"} color={ACCENT_COLOR} />
-              : ""
-          }
-        </div>
-      )
+      <div style={{ minHeight: "100%", width: "100%", position: "absolute", backgroundColor: "snow" }}>
+        {
+          loading ?
+            <Spinner value="Loading..." src={"https://media0.giphy.com/media/xUOxf7gg8AztZMfyMM/source.gif"} color={ACCENT_COLOR} />
+            : ""
+        }
+      </div>
+    )
   }
 
   return (
@@ -225,9 +248,11 @@ function Landing() {
               <Typography style={{ fontSize: "inherit" }} variant={"overline"}> As Featured In</Typography>
             </h5>
           </Grid>
-          {PRESS_LOGOS.map(logo => (
-            <Grid key={logo.src} item xs={12} sm={4} style={{ textAlign: "center"}} className={classes.centerElementParent}>
-              <img width={isMobileSize ? "50%" : "70%"} className={classes.centerElement} style={{ maxWidth: "300px"}} src={logo.src} alt={logo.name} />
+          {PRESS_LOGOS.map(({ src, article, name }) => (
+            <Grid key={src} item xs={12} sm={4} style={{ textAlign: "center" }} className={classes.centerElementParent}>
+              <a target="_blank" className={classes.centerElement} href={article} style={{ textDecoration: "none", width: isMobileSize ? "50%" : "70%", maxWidth: "300px" }}>
+                <img width={"100%"} src={src} alt={name} />
+              </a>
             </Grid>
           )
 
@@ -236,7 +261,7 @@ function Landing() {
         </Grid>
 
         {/* ALL OTHER SECTIONS */}
-        <Box mt={7} pt={5} pb={5} p={3} style={{ backgroundColor: "#f4f4f4" }}>
+        <Box mt={7} pt={5} pb={5} p={3} style={{ backgroundColor: theme.palette.background.default }}>
 
           {/* WHO ARE WE */}
           <Box>
@@ -317,7 +342,7 @@ function Landing() {
           <Box className={classes.contentSection}>
             <Grid style={{ marginBottom: "2em" }} data-aos="zoom-in" container spacing={3} justify="center">
 
-              <Grid item  xs={12} sm={10} md={8}>
+              <Grid item xs={12} sm={10} md={8}>
 
                 <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
                   Where have we been?
@@ -343,6 +368,9 @@ function Landing() {
                 <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
                   What are we up to?
                 </Typography>
+                <Typography className={clsx("flow-text", classes.caption)} variant="body1" align="center" gutterBottom>
+                  Check us out on Instagram or Facebook!
+                </Typography>
                 <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
                   <a style={{ color: "inherit" }} target="_blank" rel="noopener noreferrer" href={IG_URL} >
                     <FAIcon size={"2x"} name={"instagram"} brand style={{ marginRight: "1em" }} className="hvr-grow-rotate ig-icon" />
@@ -354,7 +382,7 @@ function Landing() {
                 <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1em" }}>
                   {SOCIAL_TEXT}
                 </Typography>
-                <InstaFeedGrid token={IG_TOKEN} initial={9} step={3} postHeight={"auto"} width="100%" height="auto" />
+                {/* <InstaFeedGrid token={IG_TOKEN} initial={9} step={3} postHeight={"auto"} width="100%" height="auto" /> */}
               </Grid>
             </Grid>
           </Box>
@@ -377,8 +405,17 @@ function Landing() {
               <Typography color={"textSecondary"} className={"flow-text"} variant="body1" align="center" gutterBottom style={{ marginBottom: "1.5em" }}>
                 {CONTACT_TEXT}
               </Typography>
+              <Box className={classes.centerElementParent} style={{ color: "white" }} >
 
-              {/* <form action={CONTACT_API} method="POST"> */}
+                  <Fab href="mailto:support@bundlesofkindness.org" disabled={sendDisabled ? true : false} style={{ backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Send Email" className={classes.centerElement}>
+                    <span style={{ color: "rgb(255, 255, 255)" }} >
+                      <FAIcon size="lg" name="paper-plane" solid className={classes.extendedBtnIcon} />
+                      Send
+
+                    </span>
+                  </Fab>
+                </Box>
+            {/* 
               <form onSubmit={handleSubmit} autoComplete="off">
                 <FormControl fullWidth >
                   <TextField
@@ -444,22 +481,23 @@ function Landing() {
                   </Fab>
                 </Box>
 
-                <Fade 
+                <Fade
                   in={mailMessageVisible}
                   timeout={{
                     enter: 500,
                     exit: 500
-                  }}  
+                  }}
                 >
                   <Typography className={"flow-text"} variant="subtitle2" align="center" gutterBottom style={{ color: mailError ? "red" : "green", marginTop: "1em" }}>
                     {mailMessage}
                   </Typography>
                 </Fade>
               </form>
-            </Grid>
+             */}
           </Grid>
-        </Box>
+          </Grid>
       </Box>
+    </Box>
     </>
 
   );

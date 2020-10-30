@@ -1,0 +1,3 @@
+import SafeMultilineOverflowText from "./SafeMultilineOverflowText"
+
+export default SafeMultilineOverflowText

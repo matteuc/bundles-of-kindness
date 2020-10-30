@@ -37,35 +37,35 @@ function Sponsors() {
 
   useEffect(() => {
     const sponsorsPromise = API.getSponsorCompanies()
-    .then((scObj) => {
-      if(scObj) {
-        setCompanies(scObj.data);
-      } 
-    });
+      .then((scObj) => {
+        if (scObj) {
+          setCompanies(scObj.data);
+        }
+      });
 
     const contentPromise = API.getPage("5e16d2c3703b64d92fa95edd")
-    .then((contentObj) => {
-      ({PAGE_DESCRIPTION} = contentObj.data[0]);
-      
-    });
+      .then((contentObj) => {
+        ({ PAGE_DESCRIPTION } = contentObj.data[0]);
+
+      });
 
     Promise.all([sponsorsPromise, contentPromise])
-    .then(() => { 
-      setLoading(false);
-    })
- 
+      .then(() => {
+        setLoading(false);
+      })
+
   }, [])
 
   if (loading) {
     return (
-        <div style={{ minHeight: "100%", width: "100%", position: "absolute", backgroundColor: "snow" }}>
-          {
-            loading ?
-              <Spinner value="Loading..." src={"https://media0.giphy.com/media/xUOxf7gg8AztZMfyMM/source.gif"} color={ACCENT_COLOR} />
-              : ""
-          }
-        </div>
-      )
+      <div style={{ minHeight: "100%", width: "100%", position: "absolute", backgroundColor: "snow" }}>
+        {
+          loading ?
+            <Spinner value="Loading..." src={"https://media0.giphy.com/media/xUOxf7gg8AztZMfyMM/source.gif"} color={ACCENT_COLOR} />
+            : ""
+        }
+      </div>
+    )
   }
 
   return (
@@ -88,11 +88,18 @@ function Sponsors() {
       </Grid>
 
       {/* COMPANY LOGO CONTAINER */}
-      <Grid style={{marginBottom: "2em"}} container justify="center">
+      <Grid style={{ marginBottom: "2em" }} container justify="center">
         <Grid item xs={12} lg={10} xl={8}>
           {/* COMPANY LOGO GRIDLIST */}
           <GridList spacing={8} cellHeight="auto" style={{ width: "100%", height: "auto", padding: 0, marginTop: "2em" }} cols={isSmallSize ? 2 : isMediumSize ? 3 : isLargeSize ? 4 : 5}>
-            {companies.map(({ src, name }, index) => (
+            {companies.sort((a, b) => {
+              const aName = a.name.toLowerCase()
+              const bName = b.name.toLowerCase()
+
+              if (aName < bName) { return -1; }
+              if (aName > bName) { return 1; }
+              return 0;
+            }).map(({ src, name }, index) => (
 
               <GridListTile style={{ display: "flex" }} key={index} cols={1} >
                 <span style={{ display: "flex", width: "100%", height: "100%" }}>

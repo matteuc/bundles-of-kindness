@@ -110,35 +110,35 @@ function AdminDash(props) {
     // Acquire lat. and lng. coordinates 
     return new Promise(resolve => {
       API.geocodeLocation(newDropzone.address)
-      .then((geoData) => {
-        const { lat, lng } = geoData.data.results[0].geometry.location;
-        
-        let modDropzone = newDropzone;
-        modDropzone.lat = lat;
-        modDropzone.lng = lng;
-        
-        resolve(API.addDropzone(modDropzone)) 
-      })
+        .then((geoData) => {
+          const { lat, lng } = geoData.data.results[0].geometry.location;
+
+          let modDropzone = newDropzone;
+          modDropzone.lat = lat;
+          modDropzone.lng = lng;
+
+          resolve(API.addDropzone(modDropzone))
+        })
 
     })
   }
 
   const updateDropzone = (newDropzone, id) => {
     // Acquire lat. and lng. coordinates IF changed
-    if(newDropzone.address) {
+    if (newDropzone.address) {
       return new Promise(resolve => {
         API.geocodeLocation(newDropzone.address)
-        .then((geoData) => {
-          const { lat, lng } = geoData.data.results[0].geometry.location;
-          
-          let modDropzone = newDropzone;
-          modDropzone.lat = lat;
-          modDropzone.lng = lng;
-          
-          resolve(API.updateDropzone(modDropzone, id)) 
-        })
+          .then((geoData) => {
+            const { lat, lng } = geoData.data.results[0].geometry.location;
+
+            let modDropzone = newDropzone;
+            modDropzone.lat = lat;
+            modDropzone.lng = lng;
+
+            resolve(API.updateDropzone(modDropzone, id))
+          })
       })
-    } 
+    }
 
     return API.updateDropzone(newDropzone, id);
 
@@ -152,11 +152,11 @@ function AdminDash(props) {
       .then((result) => {
         if (isAuthenticated && user) {
           // Check to see if user email is within list of admin 
-         for(const admin of result.data) {
-           if (admin.email === user.email) {
-             setIsAdmin(true);
-           }
-         }
+          for (const admin of result.data) {
+            if (admin.email === user.email) {
+              setIsAdmin(true);
+            }
+          }
         }
         setIsVerifying(false);
       })
@@ -172,14 +172,14 @@ function AdminDash(props) {
           :
           !isAuthenticated ?
             <div style={{ minHeight: "100%", width: "100%", position: "absolute", display: "flex" }}>
-              <div style={{ padding: "1em", borderRadius: "10%", width:"85vw", maxWidth: "500px", minHeight: "60vh", margin: "auto", backgroundColor: MAIN_COLOR, display: "flex", boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
-                <Grid container justify="center" style={{margin:"auto"}}>
-                  <Grid item xs={10} md={8} lg={6} style={{textAlign: "center"}}>
+              <div style={{ padding: "1em", borderRadius: "10%", width: "85vw", maxWidth: "500px", minHeight: "60vh", margin: "auto", backgroundColor: MAIN_COLOR, display: "flex", boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
+                <Grid container justify="center" style={{ margin: "auto" }}>
+                  <Grid item xs={10} md={8} lg={6} style={{ textAlign: "center" }}>
                     <Typography className={clsx("flow-text", classes.heading)} variant="h3" align="center" gutterBottom>
                       Admin <FAIcon name="user-tie" solid />
                     </Typography>
-                    
-                    <img style={{width:"80%", marginTop: "1em"}} src="https://i.ibb.co/C6220FL/ezgif-com-crop.gif" alt="Cat Admin GIF"/>
+
+                    <img style={{ width: "80%", marginTop: "1em" }} src="https://i.ibb.co/C6220FL/ezgif-com-crop.gif" alt="Cat Admin GIF" />
 
                     <Box className={classes.centerElementParent} style={{ color: "white", margin: "1em" }} >
 
@@ -198,299 +198,299 @@ function AdminDash(props) {
             :
             (isAuthenticated && isVerifying) ?
               <Spinner value="Verifying..." color={ACCENT_COLOR} />
-            :
+              :
               (isAuthenticated && user && !isVerifying && !isAdmin) ?
-              <div style={{ minHeight: "100%", width: "100%", position: "absolute", display: "flex" }}>
-                <div style={{ padding: "1em", borderRadius: "10%", width:"70vw", maxWidth: "500px", height: "60vh", margin: "auto", backgroundColor: MAIN_COLOR, display: "flex", boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
-                  <Grid container justify="center" style={{margin:"auto"}}>
-                    <Grid item xs={10} md={8} lg={6} style={{textAlign: "center"}}>
-                      <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
-                        Access Denied <FAIcon name="ban" solid />
-                      </Typography>
-                      
-                      <img style={{width:"80%", marginTop: "1em"}} src="https://i.ibb.co/C6220FL/ezgif-com-crop.gif" alt="Cat Admin GIF" />
+                <div style={{ minHeight: "100%", width: "100%", position: "absolute", display: "flex" }}>
+                  <div style={{ padding: "1em", borderRadius: "10%", width: "70vw", maxWidth: "500px", height: "60vh", margin: "auto", backgroundColor: MAIN_COLOR, display: "flex", boxShadow: `0 0 40px -20px ${ACCENT_COLOR}` }}>
+                    <Grid container justify="center" style={{ margin: "auto" }}>
+                      <Grid item xs={10} md={8} lg={6} style={{ textAlign: "center" }}>
+                        <Typography className={clsx("flow-text", classes.heading)} variant="h4" align="center" gutterBottom>
+                          Access Denied <FAIcon name="ban" solid />
+                        </Typography>
 
-                      <Box className={classes.centerElementParent} style={{ color: "white", margin: "1em" }} >
+                        <img style={{ width: "80%", marginTop: "1em" }} src="https://i.ibb.co/C6220FL/ezgif-com-crop.gif" alt="Cat Admin GIF" />
 
-                        <Fab style={{ backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Login" className={clsx("hvr-bob", classes.centerElement, classes.btnIcon)}>
-                          <span style={{ color: "rgb(255, 255, 255)" }} onClick={() => logout({
-                          })} >
-                            <FAIcon size="lg" name="sign-out-alt" solid className={classes.extendedBtnIcon} />
+                        <Box className={classes.centerElementParent} style={{ color: "white", margin: "1em" }} >
+
+                          <Fab style={{ backgroundColor: ACCENT_COLOR }} variant="extended" type="submit" aria-label="Login" className={clsx("hvr-bob", classes.centerElement, classes.btnIcon)}>
+                            <span style={{ color: "rgb(255, 255, 255)" }} onClick={() => logout({
+                            })} >
+                              <FAIcon size="lg" name="sign-out-alt" solid className={classes.extendedBtnIcon} />
                             Logout
                           </span>
-                        </Fab>
-                      </Box>
+                          </Fab>
+                        </Box>
+                      </Grid>
                     </Grid>
-                  </Grid>
+                  </div>
                 </div>
-              </div>
-            :
-            <>
-              {/* PAGE HEADER */}
-              <Grid container justify="center">
-                <Grid item xs={10} md={8} lg={6}>
-                  {/* PAGE TITLE */}
-                  <h3 className="flow-text" >
-                    <Paper elevation={0} className={classes.paper}> Website Management </Paper>
-                  </h3>
-                  {/* PAGE DESCRIPTION */}
-                  <Typography color="secondary" align="center" variant="body1">
-                  </Typography>
-                </Grid>
-              </Grid>
+                : (isAuthenticated && user && !isVerifying && isAdmin) ?
+                  <>
+                    {/* PAGE HEADER */}
+                    <Grid container justify="center">
+                      <Grid item xs={10} md={8} lg={6}>
+                        {/* PAGE TITLE */}
+                        <h3 className="flow-text" >
+                          <Paper elevation={0} className={classes.paper}> Website Management </Paper>
+                        </h3>
+                        {/* PAGE DESCRIPTION */}
+                        <Typography color="secondary" align="center" variant="body1">
+                        </Typography>
+                      </Grid>
+                    </Grid>
 
-              {/* OPTIONS CONTAINER */}
-              <Grid style={{ marginTop: "0.5em" }} container justify="center">
+                    {/* OPTIONS CONTAINER */}
+                    <Grid style={{ marginTop: "0.5em" }} container justify="center">
 
-                {/* OPTION TABS */}
-                <Grid item xs={12} sm={10} md={8} lg={6}>
-                  {/* TAB NAV */}
-                  <AppBar position="static" color="default">
-                    <Tabs
-                      value={tabIdx}
-                      onChange={handleChange}
-                      indicatorColor="secondary"
-                      textColor="primary"
-                      variant={isMobileSize? "fullWidth" : "scrollable"}
-                      scrollButtons="auto"
-                      aria-label="full width tabs example"
-                    >
-                      <Tab label={isMobileSize ? "" : "Dropzones"} icon={<FAIcon solid size={"lg"} name="parachute-box" />} {...a11yProps(0)} />
-                      <Tab label={isMobileSize ? "" : "Volunteering"} icon={<FAIcon solid size={"lg"} name="people-carry" />} {...a11yProps(1)} />
-                      <Tab label={isMobileSize ? "" : "Sponsors"} icon={<FAIcon solid size={"lg"} name="donate" />} {...a11yProps(2)} />
-                      <Tab label={isMobileSize ? "" : "Admin"} icon={<FAIcon solid size={"lg"} name="user-tie" />} {...a11yProps(3)} />
-                      <Tab label={isMobileSize ? "" : "Page Content"} icon={<FAIcon solid size={"lg"} name="file-alt" />} {...a11yProps(4)} />
-
-
-
-                    </Tabs>
-                  </AppBar>
-
-                  {/* OPTION PANELS */}
-                  <SwipeableViews
-                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                    index={tabIdx}
-                    onChangeIndex={handleChangeIndex}
-                    style={{ marginBottom: "2em" }}
-                  >
-                    {/* DROPZONES TAB */}
-                    <TabPanel className={classes.tabPanel} value={tabIdx} index={0} dir={theme.direction} >
-                        
-                      <DocEditor 
-                        uniform={true}                        
-                        fields={[
-                          {type: "single", name: "iw_title", placeholder: "", required: true, label: "Marker Popup Title", helper: "This is the name of the dropzone location!"},
-                          {type: "multi", name: "iw_text", placeholder: "", required: true, label: "Marker Popup Description", helper: "This is a description of the dropzone location!"},
-                          {type: "image", name: "iw_imgUrl", placeholder: "", required: true, label: "Marker Popup Image", helper: "This is an URL to the image at the dropzone location!"},
-                          {type: "location", name: "address", placeholder: "", required: true, label: "Marker Location", helper: "This is the address of the dropzone location!"},
-                          {type: "image", name: "icon", placeholder: "", required: true, label: "Marker Icon", helper: "This is an URL to the marker icon!"}
-                        ]}
-                        createBtn={
-                          {
-                            color: "blue",
-                            text: "Create",
-                            icon: "map-marker-alt"
-                          }
-                        }
-                        updateBtn={
-                          {
-                            color: "orange",
-                            text: "Update",
-                            icon: "edit"
-                          }
-                        }
-                        updateOnly={false}
-                        get={API.getDropzones}
-                        create={addDropzone}
-                        update={updateDropzone}
-                        delete={API.deleteDropzone}
-                        icon={{
-                          name: "map-marker-alt",
-                          color: "red",
-                          solid: true
-                        }}
-                        addIcon={{
-                          name: "plus-circle",
-                          color: "grey",
-                          solid: true
-                        }}
-                        primary={"iw_title"}
-                        secondary={"address"}
-                        name="Dropzone"
-                      />
-                    </TabPanel>
-
-                    {/* VOLUNTEERING TAB */}
-                    <TabPanel className={classes.tabPanel} value={tabIdx} index={1} dir={theme.direction} >
-                      <DocEditor 
-                        uniform={true}
-                        fields={[
-                          {type: "single", name: "title", placeholder: "", required: true, label: "Event Title", helper: "This is the title of the volunteer event!"},
-                          {type: "multi", name: "description", placeholder: "", required: false, label: "Event Description", helper: "This is a description of the volunteer event!"},
-                          {type: "location", name: "location", placeholder: "", required: true, label: "Event Location", helper: "This is the location of the volunteer event!"},
-                          {type: "single", name: "form", placeholder: "", required: true, label: "Event Form", helper: "This is a Google Forms embed link for the volunteer event!"},
-                          {type: "date-time", name: "startTime", placeholder: "", required: true, label: "Event Start Time", helper: "This is the start time of the event!"},
-                          {type: "date-time", name: "endTime", placeholder: "", required: false, label: "Event End Time", helper: "This is the end time of the event!"}
-                        ]}
-                        createBtn={
-                          {
-                            color: "blue",
-                            text: "Create",
-                            icon: "hands-helping"
-                          }
-                        }
-                        updateBtn={
-                          {
-                            color: "orange",
-                            text: "Update",
-                            icon: "edit"
-                          }
-                        }
-                        updateOnly={false}
-                        get={API.getVolunteerEvents}
-                        create={API.addVolunteerEvent}
-                        update={API.updateVolunteerEvent}
-                        delete={API.deleteVolunteerEvent}
-                        icon={{
-                          name: "hands-helping",
-                          color: "rgb(234, 196, 255)",
-                          solid: true
-                        }}
-                        addIcon={{
-                          name: "plus-circle",
-                          color: "grey",
-                          solid: true
-                        }}
-                        primary={"title"}
-                        secondary={"location"}
-                        name="VolunteerEvent"
-                      />
-                    </TabPanel>
-
-                    {/* SPONSORS TAB */}
-                    <TabPanel className={classes.tabPanel} value={tabIdx} index={2} dir={theme.direction} >
-                      <DocEditor 
-                        uniform={true}
-                        fields={[
-                          {type: "image", name: "src", placeholder: "", required: true, label: "Sponsor Company Logo (PNG)", helper: "This a link to the sponsor company's logo!"},
-                          {type: "single", name: "name", placeholder: "", required: true, label: "Sponsor Company Name", helper: "This is the name of the sponsor company!"},
-                        ]}
-                        createBtn={
-                          {
-                            color: "blue",
-                            text: "Create",
-                            icon: "hand-holding-usd"
-                          }
-                        }
-                        updateBtn={
-                          {
-                            color: "orange",
-                            text: "Update",
-                            icon: "edit"
-                          }
-                        }
-                        updateOnly={false}
-                        get={API.getSponsorCompanies}
-                        create={API.addSponsorCompany}
-                        update={API.updateSponsorCompany}
-                        delete={API.deleteSponsorCompany}
-                        icon={{
-                          name: "building",
-                          color: "orange",
-                          solid: true
-                        }}
-                        addIcon={{
-                          name: "plus-circle",
-                          color: "grey",
-                          solid: true
-                        }}
-                        primary={"name"}
-                        secondary={"src"}
-                        name="SponsorCompany"
-                      />
-                    </TabPanel>
-
-                    {/* ADMIN TAB */}
-                    <TabPanel className={classes.tabPanel} value={tabIdx} index={3} dir={theme.direction} >
-                      <DocEditor 
-                        uniform={true}
-                        fields={[
-                          {type: "single", name: "name", placeholder: "", required: true, label: "Admin Name", helper: "This is the name of the new admin!"},
-                          {type: "email", name: "email", placeholder: "", required: true, label: "Admin Email", helper: "This is the new admin's email!"}
-                        ]}
-                        createBtn={
-                          {
-                            color: "blue",
-                            text: "Create",
-                            icon: "user-plus"
-                          }
-                        }
-                        updateBtn={
-                          {
-                            color: "orange",
-                            text: "Update",
-                            icon: "edit"
-                          }
-                        }
-                        updateOnly={false}
-                        get={API.getAdmin}
-                        create={API.addAdmin}
-                        update={API.updateAdmin}
-                        delete={API.deleteAdmin}
-                        icon={{
-                          name: "user-tie",
-                          color: "blue",
-                          solid: true
-                        }}
-                        addIcon={{
-                          name: "plus-circle",
-                          color: "grey",
-                          solid: true
-                        }}
-                        primary={"name"}
-                        secondary={"email"}
-                        name="Admin"
-                      />
-                    </TabPanel>
-
-                    {/* PAGE CONTENT TAB */}
-                    <TabPanel className={classes.tabPanel} value={tabIdx} index={4} dir={theme.direction} >
-                      <DocEditor 
-                        uniform={false}
-                        fields={[]}
-                        createBtn={{}}
-                        updateBtn={
-                          {
-                            color: "orange",
-                            text: "Update",
-                            icon: "edit"
-                          }
-                        }
-                        updateOnly={true}
-                        get={API.getPages}
-                        create={()=>{}}
-                        update={API.updatePage}
-                        delete={()=>{}}
-                        icon={{
-                          name: "file-alt",
-                          color: "blue",
-                          solid: true
-                        }}
-                        addIcon={{}}
-                        primary={"name"}
-                        secondary={"_id"}
-                        name="PageContent"
-                      />
-                    </TabPanel>
-
-                  </SwipeableViews>
-                </Grid>
-              </Grid>
+                      {/* OPTION TABS */}
+                      <Grid item xs={12} sm={10} md={8} lg={6}>
+                        {/* TAB NAV */}
+                        <AppBar position="static" color="default">
+                          <Tabs
+                            value={tabIdx}
+                            onChange={handleChange}
+                            indicatorColor="secondary"
+                            textColor="primary"
+                            variant={isMobileSize ? "fullWidth" : "scrollable"}
+                            scrollButtons="auto"
+                            aria-label="full width tabs example"
+                          >
+                            <Tab label={isMobileSize ? "" : "Dropzones"} icon={<FAIcon solid size={"lg"} name="parachute-box" />} {...a11yProps(0)} />
+                            <Tab label={isMobileSize ? "" : "Volunteering"} icon={<FAIcon solid size={"lg"} name="people-carry" />} {...a11yProps(1)} />
+                            <Tab label={isMobileSize ? "" : "Sponsors"} icon={<FAIcon solid size={"lg"} name="donate" />} {...a11yProps(2)} />
+                            <Tab label={isMobileSize ? "" : "Admin"} icon={<FAIcon solid size={"lg"} name="user-tie" />} {...a11yProps(3)} />
+                            <Tab label={isMobileSize ? "" : "Page Content"} icon={<FAIcon solid size={"lg"} name="file-alt" />} {...a11yProps(4)} />
 
 
 
-            </>
+                          </Tabs>
+                        </AppBar>
 
+                        {/* OPTION PANELS */}
+                        <SwipeableViews
+                          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                          index={tabIdx}
+                          onChangeIndex={handleChangeIndex}
+                          style={{ marginBottom: "2em" }}
+                        >
+                          {/* DROPZONES TAB */}
+                          <TabPanel className={classes.tabPanel} value={tabIdx} index={0} dir={theme.direction} >
+
+                            <DocEditor
+                              uniform={true}
+                              fields={[
+                                { type: "single", name: "iw_title", placeholder: "", required: true, label: "Marker Popup Title", helper: "This is the name of the dropzone location!" },
+                                { type: "multi", name: "iw_text", placeholder: "", required: true, label: "Marker Popup Description", helper: "This is a description of the dropzone location!" },
+                                { type: "image", name: "iw_imgUrl", placeholder: "", required: true, label: "Marker Popup Image", helper: "This is an URL to the image at the dropzone location!" },
+                                { type: "location", name: "address", placeholder: "", required: true, label: "Marker Location", helper: "This is the address of the dropzone location!" },
+                                { type: "image", name: "icon", placeholder: "", required: true, label: "Marker Icon", helper: "This is an URL to the marker icon!" }
+                              ]}
+                              createBtn={
+                                {
+                                  color: "blue",
+                                  text: "Create",
+                                  icon: "map-marker-alt"
+                                }
+                              }
+                              updateBtn={
+                                {
+                                  color: "orange",
+                                  text: "Update",
+                                  icon: "edit"
+                                }
+                              }
+                              updateOnly={false}
+                              get={API.getDropzones}
+                              create={addDropzone}
+                              update={updateDropzone}
+                              delete={API.deleteDropzone}
+                              icon={{
+                                name: "map-marker-alt",
+                                color: "red",
+                                solid: true
+                              }}
+                              addIcon={{
+                                name: "plus-circle",
+                                color: "grey",
+                                solid: true
+                              }}
+                              primary={"iw_title"}
+                              secondary={"address"}
+                              name="Dropzone"
+                            />
+                          </TabPanel>
+
+                          {/* VOLUNTEERING TAB */}
+                          <TabPanel className={classes.tabPanel} value={tabIdx} index={1} dir={theme.direction} >
+                            <DocEditor
+                              uniform={true}
+                              fields={[
+                                { type: "single", name: "title", placeholder: "", required: true, label: "Event Title", helper: "This is the title of the volunteer event!" },
+                                { type: "multi", name: "description", placeholder: "", required: false, label: "Event Description", helper: "This is a description of the volunteer event!" },
+                                { type: "location", name: "location", placeholder: "", required: true, label: "Event Location", helper: "This is the location of the volunteer event!" },
+                                { type: "single", name: "form", placeholder: "", required: true, label: "Event Form", helper: "This is a Google Forms embed link for the volunteer event!" },
+                                { type: "date-time", name: "startTime", placeholder: "", required: true, label: "Event Start Time", helper: "This is the start time of the event!" },
+                                { type: "date-time", name: "endTime", placeholder: "", required: false, label: "Event End Time", helper: "This is the end time of the event!" }
+                              ]}
+                              createBtn={
+                                {
+                                  color: "blue",
+                                  text: "Create",
+                                  icon: "hands-helping"
+                                }
+                              }
+                              updateBtn={
+                                {
+                                  color: "orange",
+                                  text: "Update",
+                                  icon: "edit"
+                                }
+                              }
+                              updateOnly={false}
+                              get={API.getVolunteerEvents}
+                              create={API.addVolunteerEvent}
+                              update={API.updateVolunteerEvent}
+                              delete={API.deleteVolunteerEvent}
+                              icon={{
+                                name: "hands-helping",
+                                color: "rgb(234, 196, 255)",
+                                solid: true
+                              }}
+                              addIcon={{
+                                name: "plus-circle",
+                                color: "grey",
+                                solid: true
+                              }}
+                              primary={"title"}
+                              secondary={"location"}
+                              name="VolunteerEvent"
+                            />
+                          </TabPanel>
+
+                          {/* SPONSORS TAB */}
+                          <TabPanel className={classes.tabPanel} value={tabIdx} index={2} dir={theme.direction} >
+                            <DocEditor
+                              uniform={true}
+                              fields={[
+                                { type: "image", name: "src", placeholder: "", required: true, label: "Sponsor Company Logo (PNG)", helper: "This a link to the sponsor company's logo!" },
+                                { type: "single", name: "name", placeholder: "", required: true, label: "Sponsor Company Name", helper: "This is the name of the sponsor company!" },
+                              ]}
+                              createBtn={
+                                {
+                                  color: "blue",
+                                  text: "Create",
+                                  icon: "hand-holding-usd"
+                                }
+                              }
+                              updateBtn={
+                                {
+                                  color: "orange",
+                                  text: "Update",
+                                  icon: "edit"
+                                }
+                              }
+                              updateOnly={false}
+                              get={API.getSponsorCompanies}
+                              create={API.addSponsorCompany}
+                              update={API.updateSponsorCompany}
+                              delete={API.deleteSponsorCompany}
+                              icon={{
+                                name: "building",
+                                color: "orange",
+                                solid: true
+                              }}
+                              addIcon={{
+                                name: "plus-circle",
+                                color: "grey",
+                                solid: true
+                              }}
+                              primary={"name"}
+                              secondary={"src"}
+                              name="SponsorCompany"
+                            />
+                          </TabPanel>
+
+                          {/* ADMIN TAB */}
+                          <TabPanel className={classes.tabPanel} value={tabIdx} index={3} dir={theme.direction} >
+                            <DocEditor
+                              uniform={true}
+                              fields={[
+                                { type: "single", name: "name", placeholder: "", required: true, label: "Admin Name", helper: "This is the name of the new admin!" },
+                                { type: "email", name: "email", placeholder: "", required: true, label: "Admin Email", helper: "This is the new admin's email!" }
+                              ]}
+                              createBtn={
+                                {
+                                  color: "blue",
+                                  text: "Create",
+                                  icon: "user-plus"
+                                }
+                              }
+                              updateBtn={
+                                {
+                                  color: "orange",
+                                  text: "Update",
+                                  icon: "edit"
+                                }
+                              }
+                              updateOnly={false}
+                              get={API.getAdmin}
+                              create={API.addAdmin}
+                              update={API.updateAdmin}
+                              delete={API.deleteAdmin}
+                              icon={{
+                                name: "user-tie",
+                                color: "blue",
+                                solid: true
+                              }}
+                              addIcon={{
+                                name: "plus-circle",
+                                color: "grey",
+                                solid: true
+                              }}
+                              primary={"name"}
+                              secondary={"email"}
+                              name="Admin"
+                            />
+                          </TabPanel>
+
+                          {/* PAGE CONTENT TAB */}
+                          <TabPanel className={classes.tabPanel} value={tabIdx} index={4} dir={theme.direction} >
+                            <DocEditor
+                              uniform={false}
+                              fields={[]}
+                              createBtn={{}}
+                              updateBtn={
+                                {
+                                  color: "orange",
+                                  text: "Update",
+                                  icon: "edit"
+                                }
+                              }
+                              updateOnly={true}
+                              get={API.getPages}
+                              create={() => { }}
+                              update={API.updatePage}
+                              delete={() => { }}
+                              icon={{
+                                name: "file-alt",
+                                color: "blue",
+                                solid: true
+                              }}
+                              addIcon={{}}
+                              primary={"name"}
+                              secondary={"_id"}
+                              name="PageContent"
+                            />
+                          </TabPanel>
+
+                        </SwipeableViews>
+                      </Grid>
+                    </Grid>
+
+
+
+                  </>
+                  : ''
 
       }
     </div>
